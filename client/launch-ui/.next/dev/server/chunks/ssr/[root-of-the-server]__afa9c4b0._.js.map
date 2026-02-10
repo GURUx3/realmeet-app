@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/guru_21/real-meet/client/launch-ui/app/signin/page.tsx"],"sourcesContent":["import { SignIn } from \"@clerk/nextjs\";\r\n\r\nexport default function SignInPage() {\r\n  return (\r\n    <div className=\"flex min-h-screen items-center justify-center\">\r\n      <SignIn />\r\n    </div>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;AAAA;;;AAEe,SAAS;IACtB,qBACE,8OAAC;QAAI,WAAU;kBACb,cAAA,8OAAC,gMAAM;;;;;;;;;;AAGb"}}]
+}

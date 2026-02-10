@@ -1,0 +1,18 @@
+🚀 Starting WebRTC Flow Test
+✅ [UserA] Connected HJQZPUGKqwRpRO19ABWO
+   [UserA] Join Response: {"status":"joined","currentSize":0,"slotsFreed":0,"debugInfo":["Room is empty or undefined."]}
+✅ [UserB] Connected pZcCjdYMW5zrLwZmABWQ
+   [UserB] Join Response: {"status":"joined","currentSize":1,"slotsFreed":0,"debugInfo":["Scanning room members: HJQZPUGKqwRpRO19ABWO"]}
+👤 [UserA] Peer joined: pZcCjdYMW5zrLwZmABWQ
+🔄 User A Reconnecting...
+✅ [UserA_New] Connected 4SdgiO_5uIAEXTrWABWS
+⚠️ [UserA] Disconnected: io server disconnect
+   [UserA_New] Join Response: {"status":"joined","currentSize":1,"slotsFreed":0,"debugInfo":["Scanning room members: pZcCjdYMW5zrLwZmABWQ"]}
+👤 [UserB] Peer joined: 4SdgiO_5uIAEXTrWABWS
+Testing Room Full...
+✅ [UserC] Connected busnmQP6kaWvx5gJABWU
+❌ [UserC] Room Full!
+✅ Room Full logic working correctly (User C rejected)
+⚠️ [UserB] Disconnected: io client disconnect
+⚠️ [UserA_New] Disconnected: io client disconnect
+⚠️ [UserC] Disconnected: io client disconnect
