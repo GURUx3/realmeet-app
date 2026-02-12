@@ -1,203 +1,87 @@
-[00:00:01.882] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-[00:00:02.099] Server  LOG      ✓ Ready in 1713ms
-[00:00:09.259] Server  ERROR   React does not recognize the `asChild` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `aschild` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
-[00:00:10.445] Browser ERROR   React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element. asChild aschild
-[00:00:10.445] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:00:16.947] Browser ERROR   React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element. asChild aschild
-[00:00:17.170] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:00:21.428] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:00:21.428] Browser ERROR   React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element. asChild aschild
-[00:00:24.298] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:00:25.252] Browser ERROR   unhandledRejection: Error: 
-Clerk: The <SignIn/> component is not configured correctly. The most likely reasons for this error are:
-
-1. The "/signin" route is not a catch-all route.
-It is recommended to convert this route to a catch-all route, eg: "/signin/[[...rest]]/page.tsx". Alternatively, you can update the <SignIn/> component to use hash-based routing by setting the "routing" prop to "hash".
-
-2. The <SignIn/> component is mounted in a catch-all route, but all routes under "/signin" are protected by the middleware.
-To resolve this, ensure that the middleware does not protect the catch-all route or any of its children. If you are using the "createRouteMatcher" helper, consider adding "(.*)" to the end of the route pattern, eg: "/signin(.*)". For more information, see: https://clerk.com/docs/reference/nextjs/clerk-middleware#create-route-matcher
-
-[00:00:31.830] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:00:32.220] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:32.220] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:32.220] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:32.220] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:32.220] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:32.220] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:34.571] Browser ERROR   [API] Network error: {}
-[00:00:34.571] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:34.571] Browser ERROR   [API] Network error: {}
-[00:00:34.571] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:34.571] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:34.571] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:34.571] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:34.571] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:34.571] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:34.571] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:34.819] Browser ERROR   [API] Network error: {}
-[00:00:34.819] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:34.819] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:34.819] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:34.819] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:36.914] Browser ERROR   [API] Network error: {}
-[00:00:36.914] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:36.914] Browser ERROR   [API] Network error: {}
-[00:00:36.914] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:36.914] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:36.914] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:36.914] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:36.914] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:36.914] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:36.914] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:37.141] Browser ERROR   [API] Network error: {}
-[00:00:37.141] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:37.141] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:37.141] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:37.141] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:39.278] Browser ERROR   [API] Network error: {}
-[00:00:39.278] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:39.278] Browser ERROR   [API] Network error: {}
-[00:00:39.278] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:39.278] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:39.278] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:39.278] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:39.278] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:39.278] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:39.278] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:39.500] Browser ERROR   [API] Network error: {}
-[00:00:39.500] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:39.500] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:39.500] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:39.500] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:41.612] Browser ERROR   [API] Network error: {}
-[00:00:41.613] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:41.613] Browser ERROR   [API] Network error: {}
-[00:00:41.613] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:41.613] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:41.613] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:41.613] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:41.613] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:41.613] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:41.613] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:41.835] Browser ERROR   [API] Network error: {}
-[00:00:41.835] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:41.835] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:41.835] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:41.835] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:43.966] Browser ERROR   [API] Network error: {}
-[00:00:43.966] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:43.966] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:43.966] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:43.966] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:43.966] Browser ERROR   [API] Network error: {}
-[00:00:43.966] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:43.966] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:43.966] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:43.966] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:44.173] Browser ERROR   [API] Network error: {}
-[00:00:44.173] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:44.173] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:44.173] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:44.173] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:46.306] Browser ERROR   [API] Network error: {}
-[00:00:46.306] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:46.306] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:46.306] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:46.306] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:46.306] Browser ERROR   [API] Network error: {}
-[00:00:46.306] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:46.306] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:46.306] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:46.306] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:46.510] Browser ERROR   [API] Network error: {}
-[00:00:46.510] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:46.510] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:46.510] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:46.510] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:48.669] Browser ERROR   [API] Network error: {}
-[00:00:48.669] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:48.669] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:48.669] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:48.669] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:48.669] Browser ERROR   [API] Network error: {}
-[00:00:48.669] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:48.669] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:48.669] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:48.669] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:48.841] Browser ERROR   [API] Network error: {}
-[00:00:48.841] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:48.841] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:48.841] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:48.841] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:51.009] Browser ERROR   [API] Network error: {}
-[00:00:51.009] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:51.009] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:51.009] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:51.009] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:51.009] Browser ERROR   [API] Network error: {}
-[00:00:51.009] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:51.009] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:51.009] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:51.009] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:51.181] Browser ERROR   [API] Network error: {}
-[00:00:51.181] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:51.181] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:51.181] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:51.181] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:53.369] Browser ERROR   [API] Network error: {}
-[00:00:53.369] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:53.369] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:53.369] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:53.369] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:53.369] Browser ERROR   [API] Network error: {}
-[00:00:53.369] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:53.369] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:53.369] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:53.369] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:53.503] Browser ERROR   [API] Network error: {}
-[00:00:53.503] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:53.503] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:53.503] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:53.503] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:54.429] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:00:54.970] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:54.970] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:54.970] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:54.970] Browser INFO    🔒 Clerk:
-The <SignIn/> component cannot render when a user is already signed in, unless the application allows multiple sessions. Since a user is signed in and this application only allows a single session, Clerk is redirecting to the `afterSignIn` URL instead.
-(This notice only appears in development)
-[00:00:54.970] Browser ERROR   unhandledRejection: Error: 
-Clerk: The <SignIn/> component is not configured correctly. The most likely reasons for this error are:
-
-1. The "/signin" route is not a catch-all route.
-It is recommended to convert this route to a catch-all route, eg: "/signin/[[...rest]]/page.tsx". Alternatively, you can update the <SignIn/> component to use hash-based routing by setting the "routing" prop to "hash".
-
-2. The <SignIn/> component is mounted in a catch-all route, but all routes under "/signin" are protected by the middleware.
-To resolve this, ensure that the middleware does not protect the catch-all route or any of its children. If you are using the "createRouteMatcher" helper, consider adding "(.*)" to the end of the route pattern, eg: "/signin(.*)". For more information, see: https://clerk.com/docs/reference/nextjs/clerk-middleware#create-route-matcher
-
-[00:00:54.970] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:54.970] Browser LOG     [2;38;2;124;124;124m%s[0m [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:54.970] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:54.970] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:54.970] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:54.970] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:55.853] Browser ERROR   [API] Network error: {}
-[00:00:55.853] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:55.853] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:55.853] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:55.853] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:57.374] Browser ERROR   [API] Network error: {}
-[00:00:57.374] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:57.374] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:57.374] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:57.374] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:57.374] Browser ERROR   [API] Network error: {}
-[00:00:57.374] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:57.374] Browser ERROR   [API] Network error: {}
-[00:00:57.374] Browser ERROR   [useUserSync] ❌ Sync failed: Network error Failed to fetch
-[00:00:57.374] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:57.374] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:57.374] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:57.374] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:00:57.374] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:57.374] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:00:05.612] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:05.968] Server  LOG      ✓ Ready in 3.1s
+[00:01:24.021] Server  LOG      ○ Compiling /dashboard ...
+[00:01:27.525] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:01:38.659] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:01:38.659] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:01:38.659] Browser LOG     [useUserSync] Got session token, calling API...
+[00:01:38.659] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:01:38.659] Browser LOG     [useUserSync] Got session token, calling API...
+[00:01:38.659] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:01:40.672] Browser ERROR   React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element. asChild aschild
+[00:01:42.235] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:01:42.235] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:01:44.002] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:01:44.003] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:01:47.123] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:01:47.874] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
+[00:01:47.874] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
+[00:01:47.874] Browser LOG     [useUserSync] Got session token, calling API...
+[00:01:47.874] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:01:47.874] Browser LOG     [useUserSync] Got session token, calling API...
+[00:01:47.874] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:01:49.750] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:01:49.750] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
+[00:01:49.750] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:01:49.750] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
+[00:01:52.804] Browser ERROR   React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element. asChild aschild
+[00:02:05.003] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:02:05.003] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:02:05.003] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:02:05.003] Browser LOG     [useUserSync] Got session token, calling API...
+[00:02:05.003] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:02:05.003] Browser LOG     [useUserSync] Got session token, calling API...
+[00:02:05.003] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:02:06.704] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:02:06.704] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:02:06.704] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:02:06.704] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:02:10.001] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:02:10.001] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
+[00:02:10.001] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
+[00:02:10.001] Browser LOG     [useUserSync] Got session token, calling API...
+[00:02:10.001] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:02:10.001] Browser LOG     [useUserSync] Got session token, calling API...
+[00:02:10.001] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:02:11.999] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:02:11.999] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
+[00:02:11.999] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:02:11.999] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
+[00:02:15.597] Browser ERROR   Auto-play failed: {}
+[00:02:20.936] Browser ERROR   Auto-play failed: {}
+[00:02:20.997] Browser ERROR   Auto-play failed: {}
+[00:02:53.198] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:53.544] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:02:53.967] Browser LOG     [useUserSync] Starting user sync for userId: user_39X7jzDuADRjoxhuDsX7NCjc48E
+[00:02:53.967] Browser LOG     [useUserSync] Starting user sync for userId: user_39X7jzDuADRjoxhuDsX7NCjc48E
+[00:02:53.967] Browser LOG     [useUserSync] Got session token, calling API...
+[00:02:53.967] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:02:53.967] Browser LOG     [useUserSync] Got session token, calling API...
+[00:02:53.967] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:02:56.193] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:02:56.193] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-11T17:25:08.017Z","email":"zenhere21@gmail.com","id":"user_39X7jzDuADRjoxhuDsX7NCjc48E","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVg3anlHOVVUWFpHRVZKa3lzSFQ5amRubEQifQ","name":"Zen","updatedAt":"2026-02-11T17:25:08.017Z"}
+[00:02:56.193] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:02:56.193] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-11T17:25:08.017Z","email":"zenhere21@gmail.com","id":"user_39X7jzDuADRjoxhuDsX7NCjc48E","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVg3anlHOVVUWFpHRVZKa3lzSFQ5amRubEQifQ","name":"Zen","updatedAt":"2026-02-11T17:25:08.017Z"}
+[00:02:58.099] Browser ERROR   Auto-play failed: {}
+[00:02:59.089] Browser ERROR   Auto-play failed: {}
+[00:02:59.089] Browser ERROR   Auto-play failed: {}
+[00:02:59.997] Browser ERROR   Auto-play failed: {}
+[00:03:00.000] Browser ERROR   Auto-play failed: {}
+[00:03:39.828] Browser LOG     [useUserSync] Starting user sync for userId: user_39X7jzDuADRjoxhuDsX7NCjc48E
+[00:03:39.828] Browser LOG     [useUserSync] Starting user sync for userId: user_39X7jzDuADRjoxhuDsX7NCjc48E
+[00:03:39.828] Browser LOG     [useUserSync] Got session token, calling API...
+[00:03:39.828] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:03:39.828] Browser LOG     [useUserSync] Got session token, calling API...
+[00:03:39.828] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:03:41.981] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:03:41.981] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-11T17:25:08.017Z","email":"zenhere21@gmail.com","id":"user_39X7jzDuADRjoxhuDsX7NCjc48E","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVg3anlHOVVUWFpHRVZKa3lzSFQ5amRubEQifQ","name":"Zen","updatedAt":"2026-02-11T17:25:08.017Z"}
+[00:03:46.174] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:03:46.175] Browser LOG     [2;38;2;124;124;124m%s[0m [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:03:46.175] Browser LOG     [useUserSync] Got session token, calling API...
+[00:03:46.175] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:03:46.175] Browser LOG     [useUserSync] Got session token, calling API...
+[00:03:46.175] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:03:48.107] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:03:48.107] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:03:48.223] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:03:48.223] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}

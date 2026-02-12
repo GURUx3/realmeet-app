@@ -21,4 +21,48 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@map("users")
+  participations MeetingParticipant[]
+  messages      Message[]
+  meetings      Meeting[] // Meetings created by this user
+}
+
+model Meeting {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  creatorId String
+  createdAt DateTime @default(now())
+  endedAt   DateTime?
+
+  creator      User                @relation(fields: [creatorId], references: [id])
+  participants MeetingParticipant[]
+  messages     Message[]
+
+  @@map("meetings")
+}
+
+model MeetingParticipant {
+  id        String   @id @default(uuid())
+  meetingId String
+  userId    String
+  joinedAt  DateTime @default(now())
+  leftAt    DateTime?
+
+  meeting   Meeting @relation(fields: [meetingId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+
+  @@unique([meetingId, userId]) // User can only be active once per meeting (conceptually)
+  @@map("meeting_participants")
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  meetingId String
+  senderId  String
+  content   String
+  createdAt DateTime @default(now())
+
+  meeting   Meeting @relation(fields: [meetingId], references: [id])
+  sender    User    @relation(fields: [senderId], references: [id])
+
+  @@map("messages")
 }

@@ -559,31 +559,31 @@ function MeetingPage() {
     const meetingCode = params.code;
     // State
     const [isConnected, setIsConnected] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [isPeerConnected, setIsPeerConnected] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    // Multi-user State
+    const [peers, setPeers] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(new Map());
     const [localStream, setLocalStream] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
-    const [remoteStream, setRemoteStream] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [isMuted, setIsMuted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [isVideoOff, setIsVideoOff] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null); // Critical errors
     const [isSidebarOpen, setIsSidebarOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [sidebarTab, setSidebarTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('chat');
     const [unreadCount, setUnreadCount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
     const [chatMessages, setChatMessages] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [chatInput, setChatInput] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     const [hasCopied, setHasCopied] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [isRemoteVideoOff, setIsRemoteVideoOff] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [isRemoteAudioOff, setIsRemoteAudioOff] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [remoteUserImage, setRemoteUserImage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    // Track remote media states (muted/video off) per socketId
+    const [remoteMediaStates, setRemoteMediaStates] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({});
     // Refs
-    const peerConnectionRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
+    // socketId -> RTCPeerConnection
+    const peerConnections = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(new Map());
     const localVideoRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const remoteVideoRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const socketRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const initialized = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(false);
-    const iceCandidatesQueue = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])([]);
+    // socketId -> Array of candidates
+    const iceCandidatesQueues = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(new Map());
     const isMutedRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(false);
     const isVideoOffRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(false);
-    // --- [LOGIC SECTION - KEPT IDENTICAL] ---
+    // --- [LOGIC SECTION] ---
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (!isLoaded || !user || !meetingCode || initialized.current) return;
         initialized.current = true;
@@ -606,24 +606,9 @@ function MeetingPage() {
         user,
         meetingCode
     ]);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        if (remoteStream && remoteVideoRef.current) {
-            remoteVideoRef.current.srcObject = remoteStream;
-            setTimeout(()=>{
-                if (remoteVideoRef.current) remoteVideoRef.current.play().catch(console.error);
-            }, 100);
-        } else if (!remoteStream && remoteVideoRef.current) {
-            remoteVideoRef.current.srcObject = null;
-        }
-    }, [
-        remoteStream
-    ]);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        if (isSidebarOpen && sidebarTab === 'chat') setUnreadCount(0);
-    }, [
-        isSidebarOpen,
-        sidebarTab
-    ]);
+    // Force re-render when peers map changes (React doesn't detect Map mutations)
+    const [_, setTick] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
+    const updatePeers = ()=>setTick((t)=>t + 1);
     const connectSocket = (currentStream)=>{
         if (socketRef.current?.connected) return;
         if (socketRef.current) {
@@ -653,12 +638,32 @@ function MeetingPage() {
             if (reason === "io server disconnect") socketInstance.connect();
         });
         socketInstance.on("room-full", ()=>{
-            setError("Room full. Redirecting...");
+            setError("Room is full (Max 4 participants). Redirecting...");
             setTimeout(()=>router.push("/dashboard"), 3000);
         });
-        socketInstance.on("user-joined", ()=>{
-            if (!peerConnectionRef.current) initiateCall(currentStream);
-            // Sync media state with the new user
+        // Chat History
+        socketInstance.on("chat-history", (history)=>{
+            setChatMessages(history.map((msg)=>({
+                    id: msg.id,
+                    sender: msg.senderName,
+                    senderId: msg.senderId,
+                    message: msg.message,
+                    timestamp: new Date(msg.timestamp)
+                })));
+        });
+        // 1. Existing participants (Mesh initialization)
+        socketInstance.on("existing-users", (existingUsers)=>{
+            existingUsers.forEach(async (peer)=>{
+                if (!peerConnections.current.has(peer.socketId)) {
+                    await initiateConnection(peer.socketId, peer.userId, currentStream);
+                }
+            });
+        });
+        // 2. New user joined
+        socketInstance.on("user-joined", ({ socketId, userId })=>{
+            // We just prepare to receive an offer.
+            // We can add to UI placeholder if we want, but stream comes later.
+            // Send our media state
             if (isMutedRef.current) {
                 socketInstance.emit('toggle-media', {
                     roomId: meetingCode,
@@ -675,110 +680,151 @@ function MeetingPage() {
                 });
             }
         });
-        socketInstance.on("offer", (data)=>handleReceiveOffer(data, currentStream));
-        socketInstance.on("answer", handleReceiveAnswer);
-        socketInstance.on("ice-candidate", handleReceiveIceCandidate);
-        socketInstance.on("user-left", handleUserLeft);
+        // Signaling
+        socketInstance.on("offer", async ({ offer, senderId, senderUserId })=>{
+            await handleReceiveOffer(offer, senderId, senderUserId, currentStream);
+        });
+        socketInstance.on("answer", async ({ answer, senderId })=>{
+            await handleReceiveAnswer(answer, senderId);
+        });
+        socketInstance.on("ice-candidate", async ({ candidate, senderId })=>{
+            await handleReceiveIceCandidate(candidate, senderId);
+        });
+        socketInstance.on("user-left", ({ socketId })=>{
+            handleUserLeft(socketId);
+        });
         socketInstance.on("receive-message", handleReceiveMessage);
         socketInstance.on("media-toggled", ({ kind, status, senderId, userImage })=>{
-            if (kind === 'video') {
-                setIsRemoteVideoOff(!status);
-                if (userImage) setRemoteUserImage(userImage);
-            }
-            if (kind === 'audio') setIsRemoteAudioOff(!status);
+            setRemoteMediaStates((prev)=>({
+                    ...prev,
+                    [senderId]: {
+                        ...prev[senderId],
+                        [kind === 'video' ? 'isVideoOff' : 'isAudioOff']: !status,
+                        ...userImage ? {
+                            userImage
+                        } : {}
+                    }
+                }));
         });
     };
-    const createPeerConnection = (stream)=>{
-        if (peerConnectionRef.current) {
-            peerConnectionRef.current.close();
+    // --- WebRTC Core ---
+    const createPeerConnection = (targetSocketId, targetUserId, stream)=>{
+        if (peerConnections.current.has(targetSocketId)) {
+            peerConnections.current.get(targetSocketId)?.close();
         }
         const pc = new RTCPeerConnection(RTC_CONFIG);
+        // Add local tracks
         stream.getTracks().forEach((track)=>pc.addTrack(track, stream));
         pc.ontrack = (event)=>{
-            if (event.streams && event.streams[0]) setRemoteStream(event.streams[0]);
+            if (event.streams && event.streams[0]) {
+                setPeers((prev)=>{
+                    const newMap = new Map(prev);
+                    newMap.set(targetSocketId, {
+                        socketId: targetSocketId,
+                        userId: targetUserId,
+                        stream: event.streams[0]
+                    });
+                    return newMap;
+                });
+                updatePeers();
+            }
         };
         pc.onicecandidate = (event)=>{
             if (event.candidate && socketRef.current) {
                 socketRef.current.emit("ice-candidate", {
                     candidate: event.candidate,
-                    roomId: meetingCode
+                    roomId: meetingCode,
+                    targetSocketId: targetSocketId
                 });
             }
         };
         pc.onconnectionstatechange = ()=>{
-            setIsPeerConnected(pc.connectionState === "connected");
-            if (pc.connectionState === "disconnected" || pc.connectionState === "failed") {
-                setRemoteStream(null);
+            // Optional: handle different states
+            if (pc.connectionState === 'failed' || pc.connectionState === 'disconnected') {
+            // handleUserLeft(targetSocketId); // Let explicit leave handle this primarily
             }
         };
-        peerConnectionRef.current = pc;
+        peerConnections.current.set(targetSocketId, pc);
         return pc;
     };
-    const initiateCall = async (stream)=>{
-        const pc = createPeerConnection(stream);
+    const initiateConnection = async (targetSocketId, targetUserId, stream)=>{
+        const pc = createPeerConnection(targetSocketId, targetUserId, stream);
         try {
             const offer = await pc.createOffer();
             await pc.setLocalDescription(offer);
             socketRef.current?.emit("offer", {
                 offer,
-                roomId: meetingCode
+                roomId: meetingCode,
+                targetSocketId: targetSocketId
             });
         } catch (err) {
-            console.error(err);
+            console.error("Error creating offer:", err);
         }
     };
-    const processIceQueue = async ()=>{
-        const pc = peerConnectionRef.current;
-        if (!pc || !pc.remoteDescription) return;
-        while(iceCandidatesQueue.current.length > 0){
-            const candidate = iceCandidatesQueue.current.shift();
-            if (candidate) await pc.addIceCandidate(candidate).catch(console.error);
-        }
-    };
-    const handleReceiveOffer = async ({ offer }, stream)=>{
-        if (peerConnectionRef.current) peerConnectionRef.current.close();
-        const pc = createPeerConnection(stream);
+    const handleReceiveOffer = async (offer, senderId, senderUserId, stream)=>{
+        const pc = createPeerConnection(senderId, senderUserId, stream);
         try {
             await pc.setRemoteDescription(new RTCSessionDescription(offer));
-            await processIceQueue();
+            // Process queued candidates
+            const queue = iceCandidatesQueues.current.get(senderId) || [];
+            while(queue.length > 0){
+                await pc.addIceCandidate(queue.shift()).catch(console.error);
+            }
+            iceCandidatesQueues.current.delete(senderId);
             const answer = await pc.createAnswer();
             await pc.setLocalDescription(answer);
             socketRef.current?.emit("answer", {
                 answer,
-                roomId: meetingCode
+                roomId: meetingCode,
+                targetSocketId: senderId
             });
         } catch (err) {
-            console.error(err);
+            console.error("Error handling offer:", err);
         }
     };
-    const handleReceiveAnswer = async ({ answer })=>{
-        const pc = peerConnectionRef.current;
+    const handleReceiveAnswer = async (answer, senderId)=>{
+        const pc = peerConnections.current.get(senderId);
         if (pc && pc.signalingState !== "stable") {
             await pc.setRemoteDescription(new RTCSessionDescription(answer));
-            await processIceQueue();
         }
     };
-    const handleReceiveIceCandidate = async ({ candidate })=>{
-        const pc = peerConnectionRef.current;
+    const handleReceiveIceCandidate = async (candidate, senderId)=>{
+        const pc = peerConnections.current.get(senderId);
         if (pc && pc.remoteDescription) {
             await pc.addIceCandidate(new RTCIceCandidate(candidate)).catch(console.error);
         } else {
-            iceCandidatesQueue.current.push(new RTCIceCandidate(candidate));
+            const queue = iceCandidatesQueues.current.get(senderId) || [];
+            queue.push(new RTCIceCandidate(candidate));
+            iceCandidatesQueues.current.set(senderId, queue);
         }
     };
-    const handleUserLeft = ()=>{
-        setRemoteStream(null);
-        setIsPeerConnected(false);
-        if (peerConnectionRef.current) {
-            peerConnectionRef.current.close();
-            peerConnectionRef.current = null;
+    const handleUserLeft = (socketId)=>{
+        if (peerConnections.current.has(socketId)) {
+            peerConnections.current.get(socketId)?.close();
+            peerConnections.current.delete(socketId);
         }
+        setPeers((prev)=>{
+            const newMap = new Map(prev);
+            newMap.delete(socketId);
+            return newMap;
+        });
+        updatePeers();
+        // Cleanup media state
+        setRemoteMediaStates((prev)=>{
+            const newState = {
+                ...prev
+            };
+            delete newState[socketId];
+            return newState;
+        });
     };
-    const handleReceiveMessage = ({ message, senderName, timestamp })=>{
+    // --- Chat ---
+    const handleReceiveMessage = ({ message, senderName, senderId, timestamp })=>{
         setChatMessages((prev)=>[
                 ...prev,
                 {
                     sender: senderName,
+                    senderId,
                     message,
                     timestamp: new Date(timestamp),
                     id: `${Date.now()}-${Math.random()}`
@@ -788,12 +834,17 @@ function MeetingPage() {
     };
     const sendMessage = (message)=>{
         if (!message.trim() || !socketRef.current) return;
+        // Optimistic update
         const newMessage = {
             sender: 'You',
+            senderId: user.id,
             message,
             timestamp: new Date(),
             id: `${Date.now()}-${Math.random()}`
         };
+        // We rely on server broadcast for consistency in this version to match valid timestamps,
+        // but optimistic is better for UX.
+        // For now, let's append it.
         setChatMessages((prev)=>[
                 ...prev,
                 newMessage
@@ -804,20 +855,20 @@ function MeetingPage() {
             senderName: user?.firstName || 'Anonymous'
         });
     };
+    // --- Cleanup & Controls ---
     const cleanup = ()=>{
-        if (localVideoRef.current && localVideoRef.current.srcObject) {
-            localVideoRef.current.srcObject.getTracks().forEach((track)=>track.stop());
+        if (localStream) {
+            localStream.getTracks().forEach((track)=>track.stop());
         }
-        if (peerConnectionRef.current) {
-            peerConnectionRef.current.close();
-            peerConnectionRef.current = null;
-        }
+        peerConnections.current.forEach((pc)=>pc.close());
+        peerConnections.current.clear();
         if (socketRef.current) {
             socketRef.current.disconnect();
             socketRef.current = null;
         }
         initialized.current = false;
     };
+    // --- Controls Logic ---
     const toggleMute = ()=>{
         if (localStream) {
             localStream.getAudioTracks().forEach((track)=>track.enabled = !track.enabled);
@@ -854,7 +905,114 @@ function MeetingPage() {
         setHasCopied(true);
         setTimeout(()=>setHasCopied(false), 2000);
     };
-    // --- [RENDER] ---
+    // --- Layout Logic ---
+    const peerCount = peers.size;
+    const totalParticipants = peerCount + 1; // +1 for self
+    // UI Grid Classes based on count
+    const getGridClass = ()=>{
+        if (peerCount === 0) return "flex items-center justify-center"; // Waiting state
+        if (peerCount === 1) return "flex items-center justify-center p-0"; // 1 on 1 (Full screenish)
+        return "grid grid-cols-2 gap-2 p-2 place-content-center h-full"; // 2+ Participants (Grid)
+    };
+    const renderRemoteVideo = (peer)=>{
+        const mediaState = remoteMediaStates[peer.socketId];
+        const isVideoOff = mediaState?.isVideoOff;
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("relative bg-zinc-900 overflow-hidden shadow-2xl transition-all", peerCount === 1 ? "w-full h-full" : "w-full h-full", // Only round corners if not single view full screen? Let's keep slight rounding for aesthetic but minimal.
+            "rounded-lg border border-white/5"),
+            children: [
+                isVideoOff ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "absolute inset-0 flex flex-col items-center justify-center bg-zinc-800",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Avatar"], {
+                            className: "h-24 w-24 border-4 border-zinc-900 mb-4",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AvatarImage"], {
+                                    src: mediaState?.userImage || "",
+                                    className: "object-cover"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 431,
+                                    columnNumber: 29
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AvatarFallback"], {
+                                    className: "bg-zinc-700 text-zinc-400",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
+                                        className: "h-10 w-10"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/meeting/[code]/page.tsx",
+                                        lineNumber: 432,
+                                        columnNumber: 83
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 432,
+                                    columnNumber: 29
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/meeting/[code]/page.tsx",
+                            lineNumber: 430,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-zinc-400 font-medium",
+                            children: "Camera Off"
+                        }, void 0, false, {
+                            fileName: "[project]/app/meeting/[code]/page.tsx",
+                            lineNumber: 434,
+                            columnNumber: 25
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                    lineNumber: 429,
+                    columnNumber: 21
+                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(VideoPlayer, {
+                    stream: peer.stream
+                }, void 0, false, {
+                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                    lineNumber: 437,
+                    columnNumber: 21
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "absolute bottom-4 left-4 z-10 flex items-center gap-2",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                            className: "px-2 py-1 rounded bg-black/60 backdrop-blur-md text-xs font-medium text-white shadow-sm border border-white/5",
+                            children: "Guest"
+                        }, void 0, false, {
+                            fileName: "[project]/app/meeting/[code]/page.tsx",
+                            lineNumber: 441,
+                            columnNumber: 21
+                        }, this),
+                        mediaState?.isAudioOff && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "p-1 rounded-full bg-red-500/80 backdrop-blur-sm text-white",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mic$2d$off$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MicOff$3e$__["MicOff"], {
+                                className: "h-3 w-3"
+                            }, void 0, false, {
+                                fileName: "[project]/app/meeting/[code]/page.tsx",
+                                lineNumber: 446,
+                                columnNumber: 29
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/app/meeting/[code]/page.tsx",
+                            lineNumber: 445,
+                            columnNumber: 25
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                    lineNumber: 440,
+                    columnNumber: 17
+                }, this)
+            ]
+        }, peer.socketId, true, {
+            fileName: "[project]/app/meeting/[code]/page.tsx",
+            lineNumber: 422,
+            columnNumber: 13
+        }, this);
+    };
     if (error) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex h-screen items-center justify-center bg-[#050505] text-white",
@@ -867,12 +1025,12 @@ function MeetingPage() {
                             className: "h-8 w-8"
                         }, void 0, false, {
                             fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 313,
+                            lineNumber: 459,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 312,
+                        lineNumber: 458,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -880,7 +1038,7 @@ function MeetingPage() {
                         children: "Connection Failed"
                     }, void 0, false, {
                         fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 315,
+                        lineNumber: 461,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -888,7 +1046,7 @@ function MeetingPage() {
                         children: error
                     }, void 0, false, {
                         fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 316,
+                        lineNumber: 462,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -897,573 +1055,438 @@ function MeetingPage() {
                         children: "Return to Dashboard"
                     }, void 0, false, {
                         fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 317,
+                        lineNumber: 463,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/meeting/[code]/page.tsx",
-                lineNumber: 311,
+                lineNumber: 457,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/meeting/[code]/page.tsx",
-            lineNumber: 310,
+            lineNumber: 456,
             columnNumber: 13
         }, this);
     }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "jsx-eeae2edd020c226e" + " " + "relative h-screen w-full bg-[#030303] overflow-hidden font-sans selection:bg-orange-500/30",
+        className: "jsx-9864157fbf06fa67" + " " + "relative h-screen w-full bg-[#030303] overflow-hidden font-sans",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-eeae2edd020c226e" + " " + "absolute inset-0 pointer-events-none opacity-20",
+                className: "jsx-9864157fbf06fa67" + " " + "absolute inset-0 pointer-events-none opacity-20 z-0",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "jsx-eeae2edd020c226e" + " " + "absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"
+                    className: "jsx-9864157fbf06fa67" + " " + "absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"
                 }, void 0, false, {
                     fileName: "[project]/app/meeting/[code]/page.tsx",
-                    lineNumber: 333,
+                    lineNumber: 475,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/meeting/[code]/page.tsx",
-                lineNumber: 332,
+                lineNumber: 474,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-eeae2edd020c226e" + " " + "absolute top-6 left-6 z-30",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "jsx-eeae2edd020c226e" + " " + "group flex items-center gap-0 rounded-xl bg-zinc-900/80 backdrop-blur-md border border-white/10 shadow-xl transition-all hover:border-orange-500/30 overflow-hidden",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "jsx-eeae2edd020c226e" + " " + "px-4 py-2.5 flex flex-col justify-center border-r border-white/5 bg-white/5",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "jsx-eeae2edd020c226e" + " " + "text-[10px] font-bold text-zinc-500 uppercase tracking-widest leading-none mb-1",
-                                    children: "Session"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 340,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "jsx-eeae2edd020c226e" + " " + "text-sm font-mono font-bold text-white tracking-widest leading-none",
-                                    children: meetingCode
-                                }, void 0, false, {
-                                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 341,
-                                    columnNumber: 25
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 339,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            onClick: copyToClipboard,
-                            title: "Copy Code",
-                            className: "jsx-eeae2edd020c226e" + " " + "h-full px-4 py-2 flex items-center justify-center hover:bg-orange-500/10 transition-colors text-zinc-400 hover:text-orange-400",
-                            children: hasCopied ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
-                                className: "h-4 w-4 text-emerald-500"
-                            }, void 0, false, {
-                                fileName: "[project]/app/meeting/[code]/page.tsx",
-                                lineNumber: 348,
-                                columnNumber: 38
-                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$copy$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Copy$3e$__["Copy"], {
-                                className: "h-4 w-4"
-                            }, void 0, false, {
-                                fileName: "[project]/app/meeting/[code]/page.tsx",
-                                lineNumber: 348,
-                                columnNumber: 87
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 343,
-                            columnNumber: 21
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                    lineNumber: 338,
-                    columnNumber: 17
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/app/meeting/[code]/page.tsx",
-                lineNumber: 337,
-                columnNumber: 13
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-eeae2edd020c226e" + " " + "absolute top-6 right-6 z-30 flex flex-col items-end gap-2",
-                children: isPeerConnected ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "jsx-eeae2edd020c226e" + " " + "flex items-center gap-2 rounded-full bg-emerald-500/10 backdrop-blur-md px-3 py-1.5 border border-emerald-500/20 shadow-lg",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "jsx-eeae2edd020c226e" + " " + "h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"
-                        }, void 0, false, {
-                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 357,
-                            columnNumber: 25
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                            className: "jsx-eeae2edd020c226e" + " " + "text-[10px] font-bold uppercase text-emerald-400 tracking-wider",
-                            children: "Secure Link Active"
-                        }, void 0, false, {
-                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 358,
-                            columnNumber: 25
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                    lineNumber: 356,
-                    columnNumber: 21
-                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "jsx-eeae2edd020c226e" + " " + "flex items-center gap-2 rounded-full bg-amber-500/10 backdrop-blur-md px-3 py-1.5 border border-amber-500/20 shadow-lg",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
-                            className: "h-3 w-3 text-amber-500 animate-spin"
-                        }, void 0, false, {
-                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 362,
-                            columnNumber: 25
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                            className: "jsx-eeae2edd020c226e" + " " + "text-[10px] font-bold uppercase text-amber-400 tracking-wider",
-                            children: "Establishing Link"
-                        }, void 0, false, {
-                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 363,
-                            columnNumber: 25
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                    lineNumber: 361,
-                    columnNumber: 21
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/app/meeting/[code]/page.tsx",
-                lineNumber: 354,
-                columnNumber: 13
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-eeae2edd020c226e" + " " + "absolute inset-0 z-0 flex items-center justify-center bg-[#050505]",
-                children: remoteStream ? isRemoteVideoOff ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "jsx-eeae2edd020c226e" + " " + "flex flex-col items-center justify-center animate-in fade-in duration-500",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "jsx-eeae2edd020c226e" + " " + "relative flex h-32 w-32 items-center justify-center rounded-full bg-zinc-900 border border-white/10 shadow-2xl",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "jsx-eeae2edd020c226e" + " " + "absolute inset-0 rounded-full border border-white/5 animate-pulse"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 374,
-                                    columnNumber: 33
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Avatar"], {
-                                    className: "h-full w-full border-4 border-zinc-900",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AvatarImage"], {
-                                            src: remoteUserImage || "",
-                                            className: "object-cover"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                                            lineNumber: 376,
-                                            columnNumber: 37
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AvatarFallback"], {
-                                            className: "bg-zinc-800 text-zinc-400",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
-                                                className: "h-12 w-12"
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/meeting/[code]/page.tsx",
-                                                lineNumber: 378,
-                                                columnNumber: 41
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                                            lineNumber: 377,
-                                            columnNumber: 37
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 375,
-                                    columnNumber: 33
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 373,
-                            columnNumber: 29
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "jsx-eeae2edd020c226e" + " " + "mt-6 text-zinc-500 font-medium tracking-wide",
-                            children: "Remote Camera Off"
-                        }, void 0, false, {
-                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 382,
-                            columnNumber: 29
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                    lineNumber: 372,
-                    columnNumber: 25
-                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "jsx-eeae2edd020c226e" + " " + "relative h-full w-full",
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("video", {
-                        ref: remoteVideoRef,
-                        autoPlay: true,
-                        playsInline: true,
-                        className: "jsx-eeae2edd020c226e" + " " + "h-full w-full object-cover animate-in fade-in duration-1000"
-                    }, void 0, false, {
-                        fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 386,
-                        columnNumber: 29
-                    }, this)
-                }, void 0, false, {
-                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                    lineNumber: 385,
-                    columnNumber: 25
-                }, this) : // --- ORANGE THEMED WAITING STATE ---
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "jsx-eeae2edd020c226e" + " " + "relative flex flex-col items-center justify-center w-full max-w-lg z-10",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "jsx-eeae2edd020c226e" + " " + "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[400px] bg-orange-500/10 blur-[100px] rounded-full pointer-events-none"
-                        }, void 0, false, {
-                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 399,
-                            columnNumber: 25
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "jsx-eeae2edd020c226e" + " " + "relative flex items-center justify-center py-16",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "jsx-eeae2edd020c226e" + " " + "relative z-10 flex h-24 w-24 items-center justify-center rounded-full bg-[#0A0A0A] border border-orange-500/20 shadow-[0_0_40px_rgba(249,115,22,0.2)]",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "jsx-eeae2edd020c226e" + " " + "absolute inset-0 rounded-full border border-orange-500/20 animate-[spin_8s_linear_infinite]"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                                            lineNumber: 404,
-                                            columnNumber: 33
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "jsx-eeae2edd020c226e" + " " + "absolute inset-2 rounded-full border border-amber-500/10 animate-[spin_6s_linear_infinite_reverse]"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                                            lineNumber: 405,
-                                            columnNumber: 33
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "jsx-eeae2edd020c226e" + " " + "absolute inset-0 rounded-full overflow-hidden",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "jsx-eeae2edd020c226e" + " " + "absolute top-0 left-0 w-full h-[2px] bg-orange-500/50 shadow-[0_0_10px_rgba(249,115,22,0.8)] animate-[scan_2s_ease-in-out_infinite]"
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/meeting/[code]/page.tsx",
-                                                lineNumber: 408,
-                                                columnNumber: 37
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                                            lineNumber: 407,
-                                            columnNumber: 33
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$wifi$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Wifi$3e$__["Wifi"], {
-                                            className: "relative h-8 w-8 text-orange-500 animate-ping"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                                            lineNumber: 410,
-                                            columnNumber: 33
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 403,
-                                    columnNumber: 29
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "jsx-eeae2edd020c226e" + " " + "absolute inset-0 flex items-center justify-center pointer-events-none",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "jsx-eeae2edd020c226e" + " " + "absolute h-48 w-48 rounded-full border border-orange-500/10 animate-ping [animation-duration:3s]"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                                            lineNumber: 415,
-                                            columnNumber: 33
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "jsx-eeae2edd020c226e" + " " + "absolute h-64 w-64 rounded-full border border-orange-500/5 animate-ping [animation-duration:3s] [animation-delay:0.5s]"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                                            lineNumber: 416,
-                                            columnNumber: 33
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 414,
-                                    columnNumber: 29
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 401,
-                            columnNumber: 25
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "jsx-eeae2edd020c226e" + " " + "text-center space-y-2 relative z-10 mt-[-20px]",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                    className: "jsx-eeae2edd020c226e" + " " + "text-2xl font-semibold text-white tracking-tight",
-                                    children: [
-                                        "Waiting for peer connection",
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "jsx-eeae2edd020c226e" + " " + "animate-pulse",
-                                            children: "..."
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                                            lineNumber: 423,
-                                            columnNumber: 33
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 421,
-                                    columnNumber: 29
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "jsx-eeae2edd020c226e" + " " + "text-zinc-500 text-sm",
-                                    children: "Share the session code to begin encrypted transmission."
-                                }, void 0, false, {
-                                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 425,
-                                    columnNumber: 29
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "jsx-eeae2edd020c226e" + " " + "pt-8"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 429,
-                                    columnNumber: 29
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 420,
-                            columnNumber: 25
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                    lineNumber: 396,
-                    columnNumber: 21
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/app/meeting/[code]/page.tsx",
-                lineNumber: 369,
-                columnNumber: 13
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-eeae2edd020c226e" + " " + "absolute bottom-6 right-6 z-20 h-40 w-28 sm:h-56 sm:w-40 rounded-2xl bg-zinc-900 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden transition-all hover:scale-105 hover:border-orange-500/30 group",
+                className: "jsx-9864157fbf06fa67" + " " + "absolute top-0 left-0 right-0 p-6 z-20 flex justify-between items-start pointer-events-none",
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("video", {
-                        ref: localVideoRef,
-                        autoPlay: true,
-                        playsInline: true,
-                        muted: true,
-                        className: "jsx-eeae2edd020c226e" + " " + ((0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("h-full w-full object-cover mirror-mode", isVideoOff && "hidden") || "")
-                    }, void 0, false, {
-                        fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 439,
-                        columnNumber: 17
-                    }, this),
-                    isVideoOff && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-eeae2edd020c226e" + " " + "absolute inset-0 flex items-center justify-center bg-zinc-900 border border-white/10 rounded-2xl",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Avatar"], {
-                            className: "h-16 w-16 border-2 border-zinc-800",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AvatarImage"], {
-                                    src: user?.imageUrl,
-                                    className: "object-cover"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 452,
-                                    columnNumber: 29
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AvatarFallback"], {
-                                    className: "bg-zinc-800 text-zinc-400",
-                                    children: "You"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 453,
-                                    columnNumber: 29
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 451,
-                            columnNumber: 25
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 450,
-                        columnNumber: 21
-                    }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-eeae2edd020c226e" + " " + "absolute bottom-2 left-2 right-2 flex justify-between items-center z-10",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "jsx-eeae2edd020c226e" + " " + "flex items-center gap-2",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "jsx-eeae2edd020c226e" + " " + "px-2 py-1 rounded bg-black/60 backdrop-blur-sm text-[10px] font-medium text-white/90 border border-white/5",
-                                    children: "You"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 460,
-                                    columnNumber: 25
-                                }, this),
-                                isMuted && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "jsx-eeae2edd020c226e" + " " + "p-1 rounded-full bg-red-500/80 backdrop-blur-sm shadow-sm",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mic$2d$off$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MicOff$3e$__["MicOff"], {
-                                        className: "h-3 w-3 text-white"
+                        className: "jsx-9864157fbf06fa67" + " " + "pointer-events-auto group flex items-center gap-0 rounded-xl bg-zinc-900/80 backdrop-blur-md border border-white/10 shadow-xl overflow-hidden",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "jsx-9864157fbf06fa67" + " " + "px-4 py-2.5 flex flex-col justify-center border-r border-white/5 bg-white/5",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "jsx-9864157fbf06fa67" + " " + "text-[10px] font-bold text-zinc-500 uppercase tracking-widest leading-none mb-1",
+                                        children: "Session"
                                     }, void 0, false, {
                                         fileName: "[project]/app/meeting/[code]/page.tsx",
-                                        lineNumber: 465,
-                                        columnNumber: 33
+                                        lineNumber: 483,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "jsx-9864157fbf06fa67" + " " + "text-sm font-mono font-bold text-white tracking-widest leading-none",
+                                        children: meetingCode
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/meeting/[code]/page.tsx",
+                                        lineNumber: 484,
+                                        columnNumber: 25
                                     }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/meeting/[code]/page.tsx",
+                                lineNumber: 482,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: copyToClipboard,
+                                className: "jsx-9864157fbf06fa67" + " " + "h-full px-4 py-2 flex items-center justify-center hover:bg-orange-500/10 transition-colors text-zinc-400 hover:text-orange-400",
+                                children: hasCopied ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
+                                    className: "h-4 w-4 text-emerald-500"
                                 }, void 0, false, {
                                     fileName: "[project]/app/meeting/[code]/page.tsx",
-                                    lineNumber: 464,
+                                    lineNumber: 487,
+                                    columnNumber: 38
+                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$copy$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Copy$3e$__["Copy"], {
+                                    className: "h-4 w-4"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 487,
+                                    columnNumber: 87
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/app/meeting/[code]/page.tsx",
+                                lineNumber: 486,
+                                columnNumber: 21
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/app/meeting/[code]/page.tsx",
+                        lineNumber: 481,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "jsx-9864157fbf06fa67" + " " + "pointer-events-auto",
+                        children: peerCount > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "jsx-9864157fbf06fa67" + " " + "flex items-center gap-2 rounded-full bg-emerald-500/10 backdrop-blur-md px-3 py-1.5 border border-emerald-500/20 shadow-lg",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "jsx-9864157fbf06fa67" + " " + "h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 495,
+                                    columnNumber: 29
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "jsx-9864157fbf06fa67" + " " + "text-[10px] font-bold uppercase text-emerald-400 tracking-wider inline-block",
+                                    children: [
+                                        peerCount + 1,
+                                        " Active Limit 4"
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 496,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 459,
-                            columnNumber: 21
+                            lineNumber: 494,
+                            columnNumber: 25
+                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "jsx-9864157fbf06fa67" + " " + "flex items-center gap-2 rounded-full bg-amber-500/10 backdrop-blur-md px-3 py-1.5 border border-amber-500/20 shadow-lg",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                                    className: "h-3 w-3 text-amber-500 animate-spin"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 502,
+                                    columnNumber: 29
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "jsx-9864157fbf06fa67" + " " + "text-[10px] font-bold uppercase text-amber-400 tracking-wider",
+                                    children: "Waiting for others"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 503,
+                                    columnNumber: 29
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/meeting/[code]/page.tsx",
+                            lineNumber: 501,
+                            columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 458,
+                        lineNumber: 492,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/meeting/[code]/page.tsx",
-                lineNumber: 438,
+                lineNumber: 479,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-eeae2edd020c226e" + " " + "absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 p-2 rounded-2xl bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50",
+                className: "jsx-9864157fbf06fa67" + " " + ((0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("absolute inset-0 z-10", getGridClass()) || ""),
+                children: peerCount === 0 ? // Waiting State
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "jsx-9864157fbf06fa67" + " " + "relative flex flex-col items-center justify-center",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "jsx-9864157fbf06fa67" + " " + "relative z-10 flex h-24 w-24 items-center justify-center rounded-full bg-[#0A0A0A] border border-orange-500/20 shadow-[0_0_40px_rgba(249,115,22,0.2)] mb-8",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "jsx-9864157fbf06fa67" + " " + "absolute inset-0 rounded-full border border-orange-500/20 animate-[spin_8s_linear_infinite]"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 515,
+                                    columnNumber: 29
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$wifi$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Wifi$3e$__["Wifi"], {
+                                    className: "relative h-8 w-8 text-orange-500 animate-ping"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 516,
+                                    columnNumber: 29
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/meeting/[code]/page.tsx",
+                            lineNumber: 514,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                            className: "jsx-9864157fbf06fa67" + " " + "text-2xl font-semibold text-white tracking-tight text-center",
+                            children: "Waiting for participants..."
+                        }, void 0, false, {
+                            fileName: "[project]/app/meeting/[code]/page.tsx",
+                            lineNumber: 518,
+                            columnNumber: 25
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "jsx-9864157fbf06fa67" + " " + "text-zinc-500 text-sm mt-2",
+                            children: "Share the code to start the meeting."
+                        }, void 0, false, {
+                            fileName: "[project]/app/meeting/[code]/page.tsx",
+                            lineNumber: 519,
+                            columnNumber: 25
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                    lineNumber: 513,
+                    columnNumber: 21
+                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
+                    children: [
+                        Array.from(peers.values()).map((peer)=>renderRemoteVideo(peer)),
+                        peerCount === 3 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "jsx-9864157fbf06fa67" + " " + "relative bg-zinc-900 rounded-lg overflow-hidden border border-white/5 shadow-2xl",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(VideoPlayer, {
+                                    stream: localStream,
+                                    muted: true,
+                                    mirror: true,
+                                    className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])(isVideoOff && "hidden")
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 529,
+                                    columnNumber: 33
+                                }, this),
+                                isVideoOff && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "jsx-9864157fbf06fa67" + " " + "absolute inset-0 flex items-center justify-center bg-zinc-900",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Avatar"], {
+                                        className: "h-24 w-24 border-4 border-zinc-900",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AvatarImage"], {
+                                                src: user?.imageUrl
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/meeting/[code]/page.tsx",
+                                                lineNumber: 538,
+                                                columnNumber: 45
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AvatarFallback"], {
+                                                children: "You"
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/meeting/[code]/page.tsx",
+                                                lineNumber: 539,
+                                                columnNumber: 45
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/app/meeting/[code]/page.tsx",
+                                        lineNumber: 537,
+                                        columnNumber: 41
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 536,
+                                    columnNumber: 37
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "jsx-9864157fbf06fa67" + " " + "absolute bottom-4 left-4 z-10 px-2 py-1 rounded bg-black/60 backdrop-blur-md text-xs font-medium text-white shadow-sm border border-white/5",
+                                    children: "You"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 543,
+                                    columnNumber: 33
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/meeting/[code]/page.tsx",
+                            lineNumber: 528,
+                            columnNumber: 29
+                        }, this)
+                    ]
+                }, void 0, true)
+            }, void 0, false, {
+                fileName: "[project]/app/meeting/[code]/page.tsx",
+                lineNumber: 510,
+                columnNumber: 13
+            }, this),
+            peerCount < 3 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "jsx-9864157fbf06fa67" + " " + "absolute bottom-6 right-6 z-30 h-40 w-28 sm:h-56 sm:w-40 rounded-2xl bg-zinc-900 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden transition-all hover:scale-105 hover:border-orange-500/30 group",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(VideoPlayer, {
+                        stream: localStream,
+                        muted: true,
+                        mirror: true,
+                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])(isVideoOff && "hidden")
+                    }, void 0, false, {
+                        fileName: "[project]/app/meeting/[code]/page.tsx",
+                        lineNumber: 555,
+                        columnNumber: 21
+                    }, this),
+                    isVideoOff && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "jsx-9864157fbf06fa67" + " " + "absolute inset-0 flex items-center justify-center bg-zinc-900",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Avatar"], {
+                            className: "h-16 w-16 border-2 border-zinc-800",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AvatarImage"], {
+                                    src: user?.imageUrl
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 564,
+                                    columnNumber: 33
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$avatar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AvatarFallback"], {
+                                    children: "You"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/meeting/[code]/page.tsx",
+                                    lineNumber: 565,
+                                    columnNumber: 33
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/meeting/[code]/page.tsx",
+                            lineNumber: 563,
+                            columnNumber: 29
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/app/meeting/[code]/page.tsx",
+                        lineNumber: 562,
+                        columnNumber: 25
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "jsx-9864157fbf06fa67" + " " + "absolute bottom-2 left-2 px-2 py-1 rounded bg-black/60 backdrop-blur-sm text-[10px] font-medium text-white/90 border border-white/5",
+                        children: "You"
+                    }, void 0, false, {
+                        fileName: "[project]/app/meeting/[code]/page.tsx",
+                        lineNumber: 569,
+                        columnNumber: 21
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/app/meeting/[code]/page.tsx",
+                lineNumber: 554,
+                columnNumber: 17
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "jsx-9864157fbf06fa67" + " " + "absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 p-2 rounded-2xl bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: toggleMute,
-                        title: isMuted ? "Unmute" : "Mute",
-                        className: "jsx-eeae2edd020c226e" + " " + ((0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-200", isMuted ? "bg-red-500/10 text-red-500 hover:bg-red-500/20 ring-1 ring-red-500/20" : "bg-white/5 text-zinc-200 hover:bg-white/10 hover:text-white") || ""),
+                        className: "jsx-9864157fbf06fa67" + " " + ((0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("flex h-12 w-12 items-center justify-center rounded-xl transition", isMuted ? "bg-red-500/10 text-red-500" : "bg-white/5 text-zinc-200 hover:text-white") || ""),
                         children: isMuted ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mic$2d$off$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MicOff$3e$__["MicOff"], {
                             className: "h-5 w-5"
                         }, void 0, false, {
                             fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 486,
+                            lineNumber: 579,
                             columnNumber: 32
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mic$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Mic$3e$__["Mic"], {
                             className: "h-5 w-5"
                         }, void 0, false, {
                             fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 486,
+                            lineNumber: 579,
                             columnNumber: 65
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 476,
+                        lineNumber: 578,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: toggleVideo,
-                        title: isVideoOff ? "Start Video" : "Stop Video",
-                        className: "jsx-eeae2edd020c226e" + " " + ((0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-200", isVideoOff ? "bg-red-500/10 text-red-500 hover:bg-red-500/20 ring-1 ring-red-500/20" : "bg-white/5 text-zinc-200 hover:bg-white/10 hover:text-white") || ""),
+                        className: "jsx-9864157fbf06fa67" + " " + ((0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("flex h-12 w-12 items-center justify-center rounded-xl transition", isVideoOff ? "bg-red-500/10 text-red-500" : "bg-white/5 text-zinc-200 hover:text-white") || ""),
                         children: isVideoOff ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$video$2d$off$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__VideoOff$3e$__["VideoOff"], {
                             className: "h-5 w-5"
                         }, void 0, false, {
                             fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 500,
+                            lineNumber: 582,
                             columnNumber: 35
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$video$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Video$3e$__["Video"], {
                             className: "h-5 w-5"
                         }, void 0, false, {
                             fileName: "[project]/app/meeting/[code]/page.tsx",
-                            lineNumber: 500,
+                            lineNumber: 582,
                             columnNumber: 70
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 490,
+                        lineNumber: 581,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-eeae2edd020c226e" + " " + "w-px h-8 bg-white/10 mx-1"
+                        className: "jsx-9864157fbf06fa67" + " " + "w-px h-8 bg-white/10 mx-1"
                     }, void 0, false, {
                         fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 503,
+                        lineNumber: 584,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: ()=>setIsSidebarOpen(!isSidebarOpen),
-                        className: "jsx-eeae2edd020c226e" + " " + ((0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("relative flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-200", isSidebarOpen ? "bg-orange-500/20 text-orange-500 ring-1 ring-orange-500/30" : "bg-white/5 text-zinc-200 hover:bg-white/10 hover:text-white") || ""),
+                        className: "jsx-9864157fbf06fa67" + " " + ((0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("relative flex h-12 w-12 items-center justify-center rounded-xl transition", isSidebarOpen ? "bg-orange-500/20 text-orange-500" : "bg-white/5 text-zinc-200 hover:text-white") || ""),
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$ellipsis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MoreHorizontal$3e$__["MoreHorizontal"], {
                                 className: "h-5 w-5"
                             }, void 0, false, {
                                 fileName: "[project]/app/meeting/[code]/page.tsx",
-                                lineNumber: 515,
+                                lineNumber: 586,
                                 columnNumber: 21
                             }, this),
                             unreadCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "jsx-eeae2edd020c226e" + " " + "absolute top-2 right-2 h-2.5 w-2.5 rounded-full bg-orange-500 ring-2 ring-[#0A0A0A] animate-pulse"
+                                className: "jsx-9864157fbf06fa67" + " " + "absolute top-2 right-2 h-2.5 w-2.5 rounded-full bg-orange-500 animate-pulse"
                             }, void 0, false, {
                                 fileName: "[project]/app/meeting/[code]/page.tsx",
-                                lineNumber: 517,
-                                columnNumber: 25
+                                lineNumber: 587,
+                                columnNumber: 41
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 506,
+                        lineNumber: 585,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: leaveMeeting,
-                        className: "jsx-eeae2edd020c226e" + " " + "ml-2 flex h-12 px-6 items-center justify-center gap-2 rounded-xl bg-red-500 hover:bg-red-600 text-white transition-all shadow-lg shadow-red-500/20 hover:scale-[1.02]",
+                        className: "jsx-9864157fbf06fa67" + " " + "ml-2 flex h-12 px-6 items-center justify-center gap-2 rounded-xl bg-red-500 hover:bg-red-600 text-white shadow-lg",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$phone$2d$off$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__PhoneOff$3e$__["PhoneOff"], {
                                 className: "h-5 w-5"
                             }, void 0, false, {
                                 fileName: "[project]/app/meeting/[code]/page.tsx",
-                                lineNumber: 526,
+                                lineNumber: 590,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "jsx-eeae2edd020c226e" + " " + "text-sm font-semibold hidden sm:inline-block",
+                                className: "jsx-9864157fbf06fa67" + " " + "text-sm font-semibold hidden sm:inline-block",
                                 children: "End"
                             }, void 0, false, {
                                 fileName: "[project]/app/meeting/[code]/page.tsx",
-                                lineNumber: 527,
+                                lineNumber: 591,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/meeting/[code]/page.tsx",
-                        lineNumber: 522,
+                        lineNumber: 589,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/meeting/[code]/page.tsx",
-                lineNumber: 473,
+                lineNumber: 577,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$meeting$2f5b$code$5d2f$MeetingSidebar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -1478,17 +1501,56 @@ function MeetingPage() {
                 unreadCount: unreadCount
             }, void 0, false, {
                 fileName: "[project]/app/meeting/[code]/page.tsx",
-                lineNumber: 532,
+                lineNumber: 596,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                id: "eeae2edd020c226e",
+                id: "9864157fbf06fa67",
                 children: ".mirror-mode{transform:scaleX(-1)}"
             }, void 0, false, void 0, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/meeting/[code]/page.tsx",
-        lineNumber: 329,
+        lineNumber: 472,
+        columnNumber: 9
+    }, this);
+}
+// Helper component for playing streams
+function VideoPlayer({ stream, muted = false, mirror = false, className }) {
+    const videoRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (videoRef.current && stream) {
+            videoRef.current.srcObject = stream;
+            videoRef.current.play().catch((e)=>console.error("Auto-play failed:", e));
+        } else if (videoRef.current) {
+            videoRef.current.srcObject = null;
+        }
+    }, [
+        stream
+    ]);
+    if (!stream) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "flex h-full w-full items-center justify-center bg-zinc-900 border border-white/5 rounded-lg",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+            className: "h-8 w-8 text-white/20 animate-spin"
+        }, void 0, false, {
+            fileName: "[project]/app/meeting/[code]/page.tsx",
+            lineNumber: 640,
+            columnNumber: 13
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/app/meeting/[code]/page.tsx",
+        lineNumber: 639,
+        columnNumber: 9
+    }, this);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("video", {
+        ref: videoRef,
+        autoPlay: true,
+        playsInline: true,
+        muted: muted,
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("h-full w-full object-cover animate-in fade-in", mirror && "transform scale-x-[-1]", className)
+    }, void 0, false, {
+        fileName: "[project]/app/meeting/[code]/page.tsx",
+        lineNumber: 645,
         columnNumber: 9
     }, this);
 }

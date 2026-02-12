@@ -1,6 +1,7 @@
 import { Server as HttpServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import { env } from '../config/env';
+import { prisma } from '../database/client';
 
 /**
  * Socket.io Signaling Service
@@ -37,16 +38,27 @@ export class SocketService {
             this.handleRoomEvents(socket);
             this.handleSignalingEvents(socket);
 
-            socket.on('disconnect', () => {
+            socket.on('disconnect', async () => {
                 console.log(`❌ Client disconnected: ${socket.id}`);
-                // Cleanup map if needed
-                // We interact with the map carefully in join-room, but good to clean up here too if it matches
-                // However, optimization: we might have already replaced it in join-room.
-                // Let's iterate to be safe, or store userId on socket.
                 const userId = socket.data.userId;
+                const roomId = socket.data.roomId;
+
                 if (userId && this.userSocketMap.get(userId) === socket.id) {
                     this.userSocketMap.delete(userId);
                     console.log(`🗑️ Cleared socket map for user ${userId}`);
+                }
+
+                if (roomId && userId) {
+                    // Update participant status in DB
+                    try {
+                        await prisma.meetingParticipant.updateMany({
+                            where: { meetingId: roomId, userId: userId },
+                            data: { leftAt: new Date() }
+                        });
+                    } catch (err) {
+                        console.error("Error updating participant leftAt:", err);
+                    }
+                    socket.to(roomId).emit('user-left', { socketId: socket.id, userId });
                 }
             });
         });
@@ -54,112 +66,198 @@ export class SocketService {
 
     private handleRoomEvents(socket: Socket) {
         // Join a meeting room
-        socket.on('join-room', ({ roomId, userId }: { roomId: string, userId: string }, callback?: (res: any) => void) => {
+        socket.on('join-room', async ({ roomId, userId }: { roomId: string, userId: string }, callback?: (res: any) => void) => {
             console.log(`📥 Join request for room ${roomId} from user ${userId} (socket ${socket.id})`);
 
-            // Attach userId to socket for easier cleanup
             socket.data.userId = userId;
-
-            // 1. Check if this user already has an active socket
-            const existingSocketId = this.userSocketMap.get(userId);
-
-            // DISABLED: This was causing reconnection storms
-            // if (existingSocketId) {
-            //     if (existingSocketId !== socket.id) {
-            //         console.log(`⚠️ User ${userId} already has socket ${existingSocketId}. Disconnecting old socket.`);
-            //         // Disconnect the old socket
-            //         const oldSocket = this.io.sockets.sockets.get(existingSocketId);
-            //         if (oldSocket) {
-            //             oldSocket.leave(roomId); // Ensure it leaves the room first
-            //             oldSocket.disconnect(true);
-            //         }
-            //         this.userSocketMap.delete(userId);
-            //     } else {
-            //         console.log(`ℹ️ Re-join from same socket ${socket.id} for user ${userId}`);
-            //     }
-            // }
-
-            // Update map with new socket
+            socket.data.roomId = roomId;
             this.userSocketMap.set(userId, socket.id);
 
-            // 2. Check Room Size
-            const room = this.io.sockets.adapter.rooms.get(roomId);
-            const currentSize = room ? room.size : 0;
-            let slotsFreed = 0;
+            // 1. Database Operations for Persistence
+            try {
+                // Ensure meeting exists (or find by code if we use code as ID, but schema says code is unique, ID is uuid)
+                // For simplicity in this migration, we assume roomId passed from client IS the meeting.code (judging by client code)
+                // We need to resolve Meeting ID from Code.
 
-            // Cleanup: actively look for ghosts in the room
-            if (room) {
-                for (const clientId of room) {
-                    const clientSocket = this.io.sockets.sockets.get(clientId);
-                    // Check if this socket belongs to the same user and is NOT the current socket
-                    const socketUser = clientSocket?.data?.userId;
+                let meeting = await prisma.meeting.findUnique({ where: { code: roomId } });
 
-                    if (clientSocket && socketUser === userId && clientId !== socket.id) {
-                        console.log(`👻 Found ghost socket ${clientId} in room for user ${userId}. Removing.`);
-                        clientSocket.leave(roomId);
-                        clientSocket.disconnect(true);
-                        slotsFreed++;
-                    }
+                if (!meeting) {
+                    // Auto-create meeting if it doesn't exist (for ad-hoc joins)
+                    // In a real app, user might Create first, but here we support ad-hoc for simplicity
+                    meeting = await prisma.meeting.create({
+                        data: {
+                            code: roomId,
+                            creatorId: userId,
+                        }
+                    });
                 }
+
+                // Add/Update Participant
+                // We upsert to handle re-joins
+                await prisma.meetingParticipant.upsert({
+                    where: {
+                        meetingId_userId: {
+                            meetingId: meeting.id,
+                            userId: userId
+                        }
+                    },
+                    update: {
+                        joinedAt: new Date(),
+                        leftAt: null
+                    },
+                    create: {
+                        meetingId: meeting.id,
+                        userId: userId
+                    }
+                });
+
+                // Fetch Chat History
+                const messages = await prisma.message.findMany({
+                    where: { meetingId: meeting.id },
+                    include: { sender: true },
+                    orderBy: { createdAt: 'asc' },
+                    take: 100 // Limit history
+                });
+
+                // Send history to user
+                socket.emit('chat-history', messages.map(m => ({
+                    id: m.id,
+                    senderName: m.sender.name || m.sender.email || "Unknown",
+                    senderId: m.senderId,
+                    message: m.content,
+                    timestamp: m.createdAt.toISOString()
+                })));
+
+            } catch (error) {
+                console.error("Error in join-room DB ops:", error);
+                // Continue connection anyway, critical path is video
             }
 
-            if (currentSize - slotsFreed >= 2) {
-                console.warn(`⚠️ Room ${roomId} is full (${currentSize - slotsFreed}/2). Rejecting ${socket.id}`);
+            // 2. Room logic
+            const room = this.io.sockets.adapter.rooms.get(roomId);
+            const currentSize = room ? room.size : 0;
+
+            if (currentSize >= 4) {
+                console.warn(`⚠️ Room ${roomId} is full (${currentSize}/4). Rejecting ${socket.id}`);
                 socket.emit('room-full');
                 return;
             }
 
-            console.log(`✅ ${socket.id} joining room ${roomId} (${currentSize - slotsFreed + 1}/2)`);
+            console.log(`✅ ${socket.id} joining room ${roomId} (${currentSize + 1}/4)`);
             socket.join(roomId);
 
             if (callback) callback({ status: 'joined' });
 
-            // Notify existing peer
-            socket.to(roomId).emit('user-joined', socket.id); // Send socket ID or User ID? 
-            // Existing code sent socket.id. Keeping it for compatibility.
+            // Notify existing peers - Get all other socket IDs in the room
+            const otherSockets = await this.io.in(roomId).fetchSockets();
+            const existingUsers = otherSockets
+                .filter(s => s.id !== socket.id)
+                .map(s => ({ socketId: s.id, userId: s.data.userId }));
+
+            // Tell the new user about existing users (so they can initiate offers)
+            socket.emit('existing-users', existingUsers);
+
+            // Tell existing users about the new user
+            socket.to(roomId).emit('user-joined', { socketId: socket.id, userId });
         });
 
         // Leave a meeting room
-        socket.on('leave-room', (roomId: string) => {
+        socket.on('leave-room', async ({ roomId, userId }: { roomId: string, userId: string }) => {
             console.log(`👋 ${socket.id} leaving room ${roomId}`);
             socket.leave(roomId);
-            socket.to(roomId).emit('user-left', socket.id);
+
+            // DB Update
+            try {
+                const meeting = await prisma.meeting.findUnique({ where: { code: roomId } });
+                if (meeting) {
+                    await prisma.meetingParticipant.updateMany({
+                        where: { meetingId: meeting.id, userId: userId },
+                        data: { leftAt: new Date() }
+                    });
+                }
+            } catch (err) { console.error(err); }
+
+            socket.to(roomId).emit('user-left', { socketId: socket.id, userId });
         });
     }
 
     private handleSignalingEvents(socket: Socket) {
-        socket.on('offer', ({ offer, roomId }: { offer: any, roomId: string }) => {
-            console.log(`📡 Relaying OFFER from ${socket.id} to room ${roomId}`);
-            socket.to(roomId).emit('offer', { offer, senderId: socket.id });
-        });
+        // Targeted Signaling for Mesh Topology
 
-        socket.on('answer', ({ answer, roomId }: { answer: any, roomId: string }) => {
-            console.log(`📡 Relaying ANSWER from ${socket.id} to room ${roomId}`);
-            socket.to(roomId).emit('answer', { answer, senderId: socket.id });
-        });
-
-        socket.on('ice-candidate', ({ candidate, roomId }: { candidate: any, roomId: string }) => {
-            socket.to(roomId).emit('ice-candidate', { candidate, senderId: socket.id });
-        });
-
-        // Chat message relay
-        socket.on('send-message', ({ roomId, message, senderName }: { roomId: string, message: string, senderName: string }) => {
-            console.log(`💬 Relaying message from ${socket.id} (${senderName}) to room ${roomId}`);
-            socket.to(roomId).emit('receive-message', {
-                message,
-                senderName,
+        socket.on('offer', ({ offer, targetSocketId }: { offer: any, roomId: string, targetSocketId: string }) => {
+            console.log(`📡 Relaying OFFER from ${socket.id} to ${targetSocketId}`);
+            socket.to(targetSocketId).emit('offer', {
+                offer,
                 senderId: socket.id,
-                timestamp: new Date().toISOString()
+                senderUserId: socket.data.userId
             });
         });
 
-        // Media toggle relay
-        socket.on('toggle-media', ({ roomId, kind, status }: { roomId: string, kind: 'audio' | 'video', status: boolean }) => {
+        socket.on('answer', ({ answer, targetSocketId }: { answer: any, roomId: string, targetSocketId: string }) => {
+            console.log(`📡 Relaying ANSWER from ${socket.id} to ${targetSocketId}`);
+            socket.to(targetSocketId).emit('answer', {
+                answer,
+                senderId: socket.id
+            });
+        });
+
+        socket.on('ice-candidate', ({ candidate, roomId, targetSocketId }: { candidate: any, roomId: string, targetSocketId: string }) => {
+            // ICE candidates might come before we know per-socket, but usually in mesh we know target
+            // If targetSocketId is missing, it implies broadcast (legacy) but we should enforce target
+            if (targetSocketId) {
+                socket.to(targetSocketId).emit('ice-candidate', {
+                    candidate,
+                    senderId: socket.id
+                });
+            } else {
+                console.warn(`⚠️ Legacy broadcast ICE candidate from ${socket.id}`);
+                socket.to(roomId).emit('ice-candidate', { candidate, senderId: socket.id });
+            }
+        });
+
+        // Chat message relay + Persistence
+        socket.on('send-message', async ({ roomId, message, senderName }: { roomId: string, message: string, senderName: string }) => {
+            const userId = socket.data.userId;
+            console.log(`💬 Relaying message from ${socket.id} (${senderName}) to room ${roomId}`);
+
+            // Persist
+            try {
+                const meeting = await prisma.meeting.findUnique({ where: { code: roomId } });
+                if (meeting && userId) {
+                    await prisma.message.create({
+                        data: {
+                            content: message,
+                            senderId: userId,
+                            meetingId: meeting.id
+                        }
+                    });
+                }
+            } catch (err) {
+                console.error("Failed to persist message:", err);
+            }
+
+            // Broadcast
+            const msgData = {
+                message,
+                senderName,
+                senderId: userId, // Send userId for UI identification
+                socketId: socket.id,
+                timestamp: new Date().toISOString()
+            };
+
+            // Emit to everyone in room including sender (to confirm receipt/consistency if needed, but client usually optimistically adds)
+            // Client implementation dedupes? Or we just emit to others.
+            socket.to(roomId).emit('receive-message', msgData);
+        });
+
+        // Media toggle relay - Broadcast is fine for status updates
+        socket.on('toggle-media', ({ roomId, kind, status, userImage }: { roomId: string, kind: 'audio' | 'video', status: boolean, userImage?: string }) => {
             console.log(`Media toggle from ${socket.id}: ${kind} is now ${status ? 'active' : 'inactive'}`);
             socket.to(roomId).emit('media-toggled', {
                 senderId: socket.id,
                 kind,
-                status
+                status,
+                userImage
             });
         });
     }
