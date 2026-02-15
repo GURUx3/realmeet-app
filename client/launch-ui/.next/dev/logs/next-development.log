@@ -1,87 +1,187 @@
-[00:00:05.612] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-[00:00:05.968] Server  LOG      ✓ Ready in 3.1s
-[00:01:24.021] Server  LOG      ○ Compiling /dashboard ...
-[00:01:27.525] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:01:38.659] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:01:38.659] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:01:38.659] Browser LOG     [useUserSync] Got session token, calling API...
-[00:01:38.659] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:01:38.659] Browser LOG     [useUserSync] Got session token, calling API...
-[00:01:38.659] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:01:40.672] Browser ERROR   React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element. asChild aschild
-[00:01:42.235] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:01:42.235] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
-[00:01:44.002] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:01:44.003] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
-[00:01:47.123] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:01:47.874] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
-[00:01:47.874] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
-[00:01:47.874] Browser LOG     [useUserSync] Got session token, calling API...
-[00:01:47.874] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:01:47.874] Browser LOG     [useUserSync] Got session token, calling API...
-[00:01:47.874] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:01:49.750] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:01:49.750] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
-[00:01:49.750] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:01:49.750] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
-[00:01:52.804] Browser ERROR   React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element. asChild aschild
-[00:02:05.003] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:02:05.003] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:02:05.003] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:02:05.003] Browser LOG     [useUserSync] Got session token, calling API...
-[00:02:05.003] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:02:05.003] Browser LOG     [useUserSync] Got session token, calling API...
-[00:02:05.003] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:02:06.704] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:02:06.704] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
-[00:02:06.704] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:02:06.704] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
-[00:02:10.001] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:02:10.001] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
-[00:02:10.001] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
-[00:02:10.001] Browser LOG     [useUserSync] Got session token, calling API...
-[00:02:10.001] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:02:10.001] Browser LOG     [useUserSync] Got session token, calling API...
-[00:02:10.001] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:02:11.999] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:02:11.999] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
-[00:02:11.999] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:02:11.999] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
-[00:02:15.597] Browser ERROR   Auto-play failed: {}
-[00:02:20.936] Browser ERROR   Auto-play failed: {}
-[00:02:20.997] Browser ERROR   Auto-play failed: {}
-[00:02:53.198] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:02:53.544] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:02:53.967] Browser LOG     [useUserSync] Starting user sync for userId: user_39X7jzDuADRjoxhuDsX7NCjc48E
-[00:02:53.967] Browser LOG     [useUserSync] Starting user sync for userId: user_39X7jzDuADRjoxhuDsX7NCjc48E
-[00:02:53.967] Browser LOG     [useUserSync] Got session token, calling API...
-[00:02:53.967] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:02:53.967] Browser LOG     [useUserSync] Got session token, calling API...
-[00:02:53.967] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:02:56.193] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:02:56.193] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-11T17:25:08.017Z","email":"zenhere21@gmail.com","id":"user_39X7jzDuADRjoxhuDsX7NCjc48E","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVg3anlHOVVUWFpHRVZKa3lzSFQ5amRubEQifQ","name":"Zen","updatedAt":"2026-02-11T17:25:08.017Z"}
-[00:02:56.193] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:02:56.193] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-11T17:25:08.017Z","email":"zenhere21@gmail.com","id":"user_39X7jzDuADRjoxhuDsX7NCjc48E","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVg3anlHOVVUWFpHRVZKa3lzSFQ5amRubEQifQ","name":"Zen","updatedAt":"2026-02-11T17:25:08.017Z"}
-[00:02:58.099] Browser ERROR   Auto-play failed: {}
-[00:02:59.089] Browser ERROR   Auto-play failed: {}
-[00:02:59.089] Browser ERROR   Auto-play failed: {}
-[00:02:59.997] Browser ERROR   Auto-play failed: {}
-[00:03:00.000] Browser ERROR   Auto-play failed: {}
-[00:03:39.828] Browser LOG     [useUserSync] Starting user sync for userId: user_39X7jzDuADRjoxhuDsX7NCjc48E
-[00:03:39.828] Browser LOG     [useUserSync] Starting user sync for userId: user_39X7jzDuADRjoxhuDsX7NCjc48E
-[00:03:39.828] Browser LOG     [useUserSync] Got session token, calling API...
-[00:03:39.828] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:03:39.828] Browser LOG     [useUserSync] Got session token, calling API...
-[00:03:39.828] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:03:41.981] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:03:41.981] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-11T17:25:08.017Z","email":"zenhere21@gmail.com","id":"user_39X7jzDuADRjoxhuDsX7NCjc48E","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVg3anlHOVVUWFpHRVZKa3lzSFQ5amRubEQifQ","name":"Zen","updatedAt":"2026-02-11T17:25:08.017Z"}
-[00:03:46.174] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:03:46.175] Browser LOG     [2;38;2;124;124;124m%s[0m [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:03:46.175] Browser LOG     [useUserSync] Got session token, calling API...
-[00:03:46.175] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:03:46.175] Browser LOG     [useUserSync] Got session token, calling API...
-[00:03:46.175] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:03:48.107] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:03:48.107] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
-[00:03:48.223] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:03:48.223] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:00:02.892] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:03.167] Server  LOG      ✓ Ready in 2.6s
+[00:00:12.963] Server  LOG      ○ Compiling /dashboard ...
+[00:00:19.638] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:20.167] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:00:20.919] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:00:20.919] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:00:20.919] Browser LOG     [useUserSync] Got session token, calling API...
+[00:00:20.919] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:00:20.919] Browser LOG     [useUserSync] Got session token, calling API...
+[00:00:20.919] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:00:21.107] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:00:21.107] Browser LOG     [useUserSync] Starting user sync for userId: user_39ReD0OHFvfy28Dj5n0V73KG8u9
+[00:00:21.107] Browser LOG     [useUserSync] Starting user sync for userId: user_39ReD0OHFvfy28Dj5n0V73KG8u9
+[00:00:21.107] Browser LOG     [useUserSync] Got session token, calling API...
+[00:00:21.107] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:00:21.107] Browser LOG     [useUserSync] Got session token, calling API...
+[00:00:21.107] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:00:23.972] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:00:23.972] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","headline":null,"id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:00:25.670] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:00:25.670] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","headline":null,"id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:00:26.105] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:00:26.105] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:53:11.418Z","email":"gh0921090220042005@gmail.com","headline":null,"id":"user_39ReD0OHFvfy28Dj5n0V73KG8u9","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJlRDFnZjQ1bFh3UnBpRDRrbHhxTTZoNUYifQ","name":"Guru","updatedAt":"2026-02-09T18:53:11.418Z"}
+[00:00:26.105] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:00:26.105] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:53:11.418Z","email":"gh0921090220042005@gmail.com","headline":null,"id":"user_39ReD0OHFvfy28Dj5n0V73KG8u9","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJlRDFnZjQ1bFh3UnBpRDRrbHhxTTZoNUYifQ","name":"Guru","updatedAt":"2026-02-09T18:53:11.418Z"}
+[00:00:31.968] Browser ERROR   Auto-play failed: {}
+[00:00:44.104] Browser WARN    W0215 15:06:19.961000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:00:44.104] Browser LOG     I0215 15:06:20.101000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:00:44.104] Browser WARN    W0215 15:06:20.102000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:00:44.104] Browser LOG     Graph successfully started running.
+[00:00:44.104] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:00:44.104] Browser WARN    W0215 15:06:25.570000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:00:44.104] Browser LOG     I0215 15:06:25.903000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:00:44.104] Browser WARN    W0215 15:06:25.905000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:00:44.104] Browser LOG     Graph successfully started running.
+[00:00:44.104] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:00:46.065] Browser WARN    W0215 15:06:19.959000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:00:46.065] Browser LOG     I0215 15:06:20.101000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:00:46.065] Browser WARN    W0215 15:06:20.102000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:00:46.065] Browser LOG     Graph successfully started running.
+[00:00:46.065] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:00:46.065] Browser WARN    W0215 15:06:25.666000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:00:46.065] Browser LOG     I0215 15:06:25.956000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:00:46.065] Browser WARN    W0215 15:06:25.981000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:00:46.065] Browser LOG     Graph successfully started running.
+[00:00:46.065] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:01:08.346] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:08.477] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:01:08.855] Browser LOG     [useUserSync] Starting user sync for userId: user_39ReD0OHFvfy28Dj5n0V73KG8u9
+[00:01:08.855] Browser LOG     [useUserSync] Got session token, calling API...
+[00:01:08.855] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:01:14.681] Browser WARN    W0215 15:06:54.721000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:01:14.681] Browser LOG     I0215 15:06:54.986000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:01:14.681] Browser WARN    W0215 15:06:54.986000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:01:14.681] Browser LOG     Graph successfully started running.
+[00:01:14.681] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:01:14.681] Browser WARN    W0215 15:06:56.859000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:01:14.681] Browser LOG     I0215 15:06:56.934000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:01:14.681] Browser WARN    W0215 15:06:56.935000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:01:14.681] Browser LOG     Graph successfully started running.
+[00:01:14.681] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:01:14.919] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:01:14.919] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:53:11.418Z","email":"gh0921090220042005@gmail.com","headline":null,"id":"user_39ReD0OHFvfy28Dj5n0V73KG8u9","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJlRDFnZjQ1bFh3UnBpRDRrbHhxTTZoNUYifQ","name":"Guru","updatedAt":"2026-02-09T18:53:11.418Z"}
+[00:01:15.111] Browser WARN    W0215 15:06:54.706000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:01:15.111] Browser LOG     I0215 15:06:54.986000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:01:15.111] Browser WARN    W0215 15:06:54.986000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:01:15.111] Browser LOG     Graph successfully started running.
+[00:01:15.111] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:01:15.111] Browser WARN    W0215 15:06:56.832000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:01:15.111] Browser LOG     I0215 15:06:56.916000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:01:15.111] Browser WARN    W0215 15:06:56.917000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:01:15.111] Browser LOG     Graph successfully started running.
+[00:01:15.111] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:08:32.541] Server  LOG      ✓ Compiled in 200ms
+[00:08:45.628] Server  LOG      ✓ Compiled in 85ms
+[00:08:56.564] Server  LOG      ✓ Compiled in 153ms
+[00:09:42.222] Browser LOG     [useUserSync] Starting user sync for userId: user_39ReD0OHFvfy28Dj5n0V73KG8u9
+[00:09:42.222] Browser LOG     [useUserSync] Starting user sync for userId: user_39ReD0OHFvfy28Dj5n0V73KG8u9
+[00:09:42.222] Browser LOG     [useUserSync] Got session token, calling API...
+[00:09:42.222] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:09:42.222] Browser LOG     [useUserSync] Got session token, calling API...
+[00:09:42.222] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:09:44.783] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:09:44.783] Browser LOG     [2;38;2;124;124;124m%s[0m [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:09:44.965] Browser LOG     [useUserSync] Got session token, calling API...
+[00:09:44.965] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:09:44.965] Browser LOG     [useUserSync] Got session token, calling API...
+[00:09:44.965] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:09:47.116] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:09:47.116] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:53:11.418Z","email":"gh0921090220042005@gmail.com","headline":null,"id":"user_39ReD0OHFvfy28Dj5n0V73KG8u9","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJlRDFnZjQ1bFh3UnBpRDRrbHhxTTZoNUYifQ","name":"Guru","updatedAt":"2026-02-09T18:53:11.418Z"}
+[00:09:47.696] Browser ERROR   Auto-play failed: {}
+[00:09:48.116] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:09:48.116] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:53:11.418Z","email":"gh0921090220042005@gmail.com","headline":null,"id":"user_39ReD0OHFvfy28Dj5n0V73KG8u9","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJlRDFnZjQ1bFh3UnBpRDRrbHhxTTZoNUYifQ","name":"Guru","updatedAt":"2026-02-09T18:53:11.418Z"}
+[00:09:49.514] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:09:49.514] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","headline":null,"id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:09:50.321] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:09:50.321] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","headline":null,"id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:09:54.689] Browser ERROR   Auto-play failed: {}
+[00:10:00.398] Browser WARN    W0215 15:15:40.191000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:10:00.398] Browser LOG     I0215 15:15:40.555000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:10:00.398] Browser WARN    W0215 15:15:40.555000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:10:00.398] Browser LOG     Graph successfully started running.
+[00:10:00.398] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:10:00.398] Browser WARN    W0215 15:15:42.608000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:10:00.398] Browser LOG     I0215 15:15:42.677000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:10:00.398] Browser WARN    W0215 15:15:42.677000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:10:00.398] Browser LOG     Graph successfully started running.
+[00:10:00.398] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:10:01.108] Browser WARN    W0215 15:15:40.217000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:10:01.109] Browser LOG     I0215 15:15:40.554000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:10:01.109] Browser WARN    W0215 15:15:40.555000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:10:01.109] Browser LOG     Graph successfully started running.
+[00:10:01.109] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:10:01.109] Browser WARN    W0215 15:15:42.587000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:10:01.109] Browser LOG     I0215 15:15:42.660000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:10:01.109] Browser WARN    W0215 15:15:42.661000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:10:01.109] Browser LOG     Graph successfully started running.
+[00:10:01.109] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:11:51.413] Server  LOG      ✓ Compiled in 256ms
+[00:11:52.114] Browser WARN    W0215 15:17:35.686000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:11:52.114] Browser LOG     I0215 15:17:35.764000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:11:52.114] Browser WARN    W0215 15:17:35.765000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:11:52.114] Browser LOG     Graph successfully started running.
+[00:11:52.114] Browser ERROR   unhandledRejection: TypeError: Cannot read properties of undefined (reading 'current')
+[00:11:52.115] Browser WARN    W0215 15:17:35.720000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:11:52.115] Browser LOG     I0215 15:17:35.792000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:11:52.115] Browser WARN    W0215 15:17:35.792000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:11:52.115] Browser LOG     Graph successfully started running.
+[00:11:52.115] Browser ERROR   unhandledRejection: TypeError: Cannot read properties of undefined (reading 'current')
+[00:11:53.579] Server  LOG      ✓ Compiled in 210ms
+[00:11:56.116] Browser WARN    W0215 15:17:37.810000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:11:56.116] Browser LOG     I0215 15:17:37.882000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:11:56.116] Browser WARN    W0215 15:17:37.882000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:11:56.116] Browser LOG     Graph successfully started running.
+[00:11:56.116] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:11:56.116] Browser WARN    W0215 15:17:37.921000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:11:56.116] Browser LOG     I0215 15:17:38.323000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:11:56.116] Browser WARN    W0215 15:17:38.324000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:11:56.116] Browser LOG     Graph successfully started running.
+[00:11:56.116] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:15:04.373] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:15:05.524] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:15:05.524] Browser LOG     [useUserSync] Got session token, calling API...
+[00:15:05.524] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:15:08.337] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:15:08.337] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","headline":null,"id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:15:14.133] Browser WARN    W0215 15:20:54.253000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:15:14.133] Browser LOG     I0215 15:20:54.331000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:15:14.133] Browser WARN    W0215 15:20:54.332000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:15:14.133] Browser LOG     Graph successfully started running.
+[00:15:14.133] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:15:14.133] Browser WARN    W0215 15:20:56.313000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:15:14.133] Browser LOG     I0215 15:20:56.493000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:15:14.133] Browser WARN    W0215 15:20:56.494000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:15:14.133] Browser LOG     Graph successfully started running.
+[00:15:14.133] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:15:15.104] Browser WARN    W0215 15:20:54.290000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:15:15.104] Browser LOG     I0215 15:20:54.693000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:15:15.104] Browser WARN    W0215 15:20:54.708000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:15:15.104] Browser LOG     Graph successfully started running.
+[00:15:15.104] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:15:15.104] Browser WARN    W0215 15:20:56.458000 1880752 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+[00:15:15.104] Browser LOG     I0215 15:20:56.724000 1880752 gl_context.cc:374] GL version: 3.0 (OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))), renderer: WebKit WebGL
+[00:15:15.104] Browser WARN    W0215 15:20:56.752000 1880752 gl_context.cc:1060] OpenGL error checking is disabled
+[00:15:15.104] Browser LOG     Graph successfully started running.
+[00:15:15.104] Browser ERROR   INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[00:15:30.524] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:15:30.524] Browser LOG     [2;38;2;124;124;124m%s[0m [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:15:30.524] Browser LOG     [useUserSync] Got session token, calling API...
+[00:15:30.524] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:15:30.524] Browser LOG     [useUserSync] Got session token, calling API...
+[00:15:30.524] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:15:33.108] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:15:33.108] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","headline":null,"id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:15:34.069] Browser LOG     [useUserSync] Starting user sync for userId: user_39ReD0OHFvfy28Dj5n0V73KG8u9
+[00:15:34.069] Browser LOG     [useUserSync] Starting user sync for userId: user_39ReD0OHFvfy28Dj5n0V73KG8u9
+[00:15:34.069] Browser LOG     [useUserSync] Got session token, calling API...
+[00:15:34.069] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:15:34.069] Browser LOG     [useUserSync] Got session token, calling API...
+[00:15:34.069] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:15:36.113] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:15:36.113] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","headline":null,"id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:15:37.111] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:15:37.111] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:53:11.418Z","email":"gh0921090220042005@gmail.com","headline":null,"id":"user_39ReD0OHFvfy28Dj5n0V73KG8u9","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJlRDFnZjQ1bFh3UnBpRDRrbHhxTTZoNUYifQ","name":"Guru","updatedAt":"2026-02-09T18:53:11.418Z"}
+[00:15:39.106] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:15:39.106] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:53:11.418Z","email":"gh0921090220042005@gmail.com","headline":null,"id":"user_39ReD0OHFvfy28Dj5n0V73KG8u9","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJlRDFnZjQ1bFh3UnBpRDRrbHhxTTZoNUYifQ","name":"Guru","updatedAt":"2026-02-09T18:53:11.418Z"}

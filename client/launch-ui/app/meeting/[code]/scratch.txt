@@ -1,0 +1,9 @@
+// Helper component to handle individual peer rendering and Ref for face tracking
+import { useRef, useEffect } from "react";
+import { cn } from "@/lib/utils";
+import { VideoPlayer } from "./VideoPlayer"; // Moving VideoPlayer export or re-defining? 
+// VideoPlayer is defined in page.tsx bottom. 
+// We should extract RemotePeer to a separate file or define it in page.tsx.
+// Since I can't easily extract without multiple file edits, I will define it in page.tsx at the bottom 
+// and update the renderRemoteVideo to use it.
+// Wait, I am editing page.tsx. I can just add this component to the bottom of page.tsx.

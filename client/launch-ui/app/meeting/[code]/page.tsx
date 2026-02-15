@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import MeetingSidebar from "./MeetingSidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+import { ARNameTag } from "@/components/meeting/ARNameTag";
+
 // WebRTC Configuration
 const RTC_CONFIG = {
     iceServers: [
@@ -21,6 +23,10 @@ interface PeerData {
     socketId: string;
     userId: string;
     stream?: MediaStream;
+    name?: string;
+    role?: string;
+    activity?: string;
+    imageUrl?: string;
 }
 
 interface ChatMessage {
@@ -56,7 +62,7 @@ export default function MeetingPage() {
     const [hasCopied, setHasCopied] = useState(false);
 
     // Track remote media states (muted/video off) per socketId
-    const [remoteMediaStates, setRemoteMediaStates] = useState<Record<string, { isVideoOff: boolean, isAudioOff: boolean, userImage?: string }>>({});
+    const [remoteMediaStates, setRemoteMediaStates] = useState<Record<string, { isVideoOff: boolean, isAudioOff: boolean, userImage?: string, name?: string, role?: string, activity?: string }>>({});
 
     // Refs
     // socketId -> RTCPeerConnection
@@ -140,18 +146,52 @@ export default function MeetingPage() {
         });
 
         // 1. Existing participants (Mesh initialization)
-        socketInstance.on("existing-users", (existingUsers: Array<{ socketId: string, userId: string }>) => {
+        socketInstance.on("existing-users", (existingUsers: Array<PeerData>) => {
             existingUsers.forEach(async (peer) => {
                 if (!peerConnections.current.has(peer.socketId)) {
+                    // Update peers map initially with info (no stream yet)
+                    setPeers(prev => {
+                        const newMap = new Map(prev);
+                        newMap.set(peer.socketId, peer);
+                        return newMap;
+                    });
+                    // Pre-populate media state with static info
+                    setRemoteMediaStates(prev => ({
+                        ...prev,
+                        [peer.socketId]: {
+                            isVideoOff: false, // Default, will update
+                            isAudioOff: false,
+                            userImage: peer.imageUrl,
+                            name: peer.name,
+                            role: peer.role,
+                            activity: peer.activity
+                        }
+                    }));
                     await initiateConnection(peer.socketId, peer.userId, currentStream);
                 }
             });
         });
 
         // 2. New user joined
-        socketInstance.on("user-joined", ({ socketId, userId }: { socketId: string, userId: string }) => {
-            // We just prepare to receive an offer.
-            // We can add to UI placeholder if we want, but stream comes later.
+        socketInstance.on("user-joined", ({ socketId, userId, name, role, activity, imageUrl }: PeerData) => {
+            // Add initial info
+            setPeers(prev => {
+                const newMap = new Map(prev);
+                newMap.set(socketId, { socketId, userId, name, role, activity, imageUrl });
+                return newMap;
+            });
+            setRemoteMediaStates(prev => ({
+                ...prev,
+                [socketId]: {
+                    isVideoOff: false,
+                    isAudioOff: false,
+                    userImage: imageUrl,
+                    name: name,
+                    role: role,
+                    activity: activity
+                }
+            }));
+
             // Send our media state
             if (isMutedRef.current) {
                 socketInstance.emit('toggle-media', { roomId: meetingCode, kind: 'audio', status: true });
@@ -418,36 +458,19 @@ export default function MeetingPage() {
         const mediaState = remoteMediaStates[peer.socketId];
         const isVideoOff = mediaState?.isVideoOff;
 
-        return (
-            <div key={peer.socketId} className={cn(
-                "relative bg-zinc-900 overflow-hidden shadow-2xl transition-all",
-                peerCount === 1 ? "w-full h-full" : "w-full h-full",
-                // Only round corners if not single view full screen? Let's keep slight rounding for aesthetic but minimal.
-                "rounded-lg border border-white/5"
-            )}>
-                {isVideoOff ? (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-800">
-                        <Avatar className="h-24 w-24 border-4 border-zinc-900 mb-4">
-                            <AvatarImage src={mediaState?.userImage || ""} className="object-cover" />
-                            <AvatarFallback className="bg-zinc-700 text-zinc-400"><User className="h-10 w-10" /></AvatarFallback>
-                        </Avatar>
-                        <p className="text-zinc-400 font-medium">Camera Off</p>
-                    </div>
-                ) : (
-                    <VideoPlayer stream={peer.stream} />
-                )}
+        // Use ref callback to get the video element from the VideoPlayer if possible,
+        // or wrap VideoPlayer to forward ref.
+        // For simplicity, we can try to pass a ref to VideoPlayer, but since it maps multiple peers,
+        // we can't easily use a single ref.
+        // Better approach: Make a wrapper component for RemotePeer that handles its own ref and tracking.
 
-                <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2">
-                    <span className="px-2 py-1 rounded bg-black/60 backdrop-blur-md text-xs font-medium text-white shadow-sm border border-white/5">
-                        Guest
-                    </span>
-                    {mediaState?.isAudioOff && (
-                        <div className="p-1 rounded-full bg-red-500/80 backdrop-blur-sm text-white">
-                            <MicOff className="h-3 w-3" />
-                        </div>
-                    )}
-                </div>
-            </div>
+        return (
+            <RemotePeer
+                key={peer.socketId}
+                peer={peer}
+                mediaState={mediaState}
+                peerCount={peerCount}
+            />
         );
     };
 
@@ -617,23 +640,26 @@ function VideoPlayer({
     stream,
     muted = false,
     mirror = false,
-    className
+    className,
+    videoRef
 }: {
     stream?: MediaStream | null,
     muted?: boolean,
     mirror?: boolean,
-    className?: string
+    className?: string,
+    videoRef?: React.RefObject<HTMLVideoElement | null>
 }) {
-    const videoRef = useRef<HTMLVideoElement>(null);
+    const internalRef = useRef<HTMLVideoElement>(null);
+    const refToUse = videoRef || internalRef;
 
     useEffect(() => {
-        if (videoRef.current && stream) {
-            videoRef.current.srcObject = stream;
-            videoRef.current.play().catch(e => console.error("Auto-play failed:", e));
-        } else if (videoRef.current) {
-            videoRef.current.srcObject = null;
+        if (refToUse.current && stream) {
+            refToUse.current.srcObject = stream;
+            refToUse.current.play().catch(e => console.error("Auto-play failed:", e));
+        } else if (refToUse.current) {
+            refToUse.current.srcObject = null;
         }
-    }, [stream]);
+    }, [stream, refToUse]);
 
     if (!stream) return (
         <div className="flex h-full w-full items-center justify-center bg-zinc-900 border border-white/5 rounded-lg">
@@ -643,7 +669,7 @@ function VideoPlayer({
 
     return (
         <video
-            ref={videoRef}
+            ref={refToUse}
             autoPlay
             playsInline
             muted={muted}
@@ -653,5 +679,52 @@ function VideoPlayer({
                 className
             )}
         />
+    );
+}
+
+function RemotePeer({ peer, mediaState, peerCount }: { peer: PeerData, mediaState: any, peerCount: number }) {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const isVideoOff = mediaState?.isVideoOff;
+
+    return (
+        <div className={cn(
+            "relative bg-zinc-900 overflow-hidden shadow-2xl transition-all",
+            peerCount === 1 ? "w-full h-full" : "w-full h-full",
+            "rounded-lg border border-white/5"
+        )}>
+            {isVideoOff ? (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-800">
+                    <Avatar className="h-24 w-24 border-4 border-zinc-900 mb-4">
+                        <AvatarImage src={mediaState?.userImage || ""} className="object-cover" />
+                        <AvatarFallback className="bg-zinc-700 text-zinc-400"><User className="h-10 w-10" /></AvatarFallback>
+                    </Avatar>
+                    <p className="text-zinc-400 font-medium">Camera Off</p>
+                </div>
+            ) : (
+                <VideoPlayer stream={peer.stream} videoRef={videoRef} />
+            )}
+
+            {/* AR Name Tag - Only show if video is ON and we have a name */}
+            {!isVideoOff && mediaState?.name && (
+                <ARNameTag
+                    name={mediaState.name}
+                    role={mediaState.role || "Developer"}
+                    activity={mediaState.activity || "Working"}
+                    videoRef={videoRef}
+                    className="pointer-events-none"
+                />
+            )}
+
+            <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2">
+                <span className="px-2 py-1 rounded bg-black/60 backdrop-blur-md text-xs font-medium text-white shadow-sm border border-white/5">
+                    {mediaState?.name || "Guest"}
+                </span>
+                {mediaState?.isAudioOff && (
+                    <div className="p-1 rounded-full bg-red-500/80 backdrop-blur-sm text-white">
+                        <MicOff className="h-3 w-3" />
+                    </div>
+                )}
+            </div>
+        </div>
     );
 }
