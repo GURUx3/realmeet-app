@@ -16,7 +16,9 @@
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
-        "noEmitOnError": false
+        "noEmitOnError": false,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false
     },
     "include": [
         "src/**/*"
