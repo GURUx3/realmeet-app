@@ -111,6 +111,29 @@ export class SocketService {
                     }
                 });
 
+                // Fetch full user details for name/role
+                const userDetails = await prisma.user.findUnique({
+                    where: { id: userId },
+                    select: { name: true, imageUrl: true, headline: true }
+                });
+
+                // --- Mock Data Injection for "Production Grade" Feel ---
+                const MOCK_ROLES = ["Senior Developer", "Product Designer", "Tech Lead", "Full Stack Engineer", "DevOps Engineer", "Solutions Architect"];
+                const MOCK_ACTIVITIES = ["Refactoring API", "Designing UI", "Fixing WebRTC", "Deploying to Prod", "Code Review", "Optimizing DB", "Writing Tests"];
+
+                const randomRole = MOCK_ROLES[Math.floor(Math.random() * MOCK_ROLES.length)];
+                const randomActivity = MOCK_ACTIVITIES[Math.floor(Math.random() * MOCK_ACTIVITIES.length)];
+
+                // Use DB headline if available, otherwise mock role
+                const finalRole = userDetails?.headline || (meeting.creatorId === userId ? "Team Lead" : randomRole);
+                const finalActivity = randomActivity; // Always mock activity for now as we don't track it
+
+                // Store in socket data
+                socket.data.name = userDetails?.name || "Anonymous";
+                socket.data.role = finalRole;
+                socket.data.activity = finalActivity;
+                socket.data.imageUrl = userDetails?.imageUrl;
+
                 // Fetch Chat History
                 const messages = await prisma.message.findMany({
                     where: { meetingId: meeting.id },
@@ -152,13 +175,27 @@ export class SocketService {
             const otherSockets = await this.io.in(roomId).fetchSockets();
             const existingUsers = otherSockets
                 .filter(s => s.id !== socket.id)
-                .map(s => ({ socketId: s.id, userId: s.data.userId }));
+                .map(s => ({
+                    socketId: s.id,
+                    userId: s.data.userId,
+                    name: s.data.name,
+                    role: s.data.role,
+                    activity: s.data.activity,
+                    imageUrl: s.data.imageUrl
+                }));
 
             // Tell the new user about existing users (so they can initiate offers)
             socket.emit('existing-users', existingUsers);
 
             // Tell existing users about the new user
-            socket.to(roomId).emit('user-joined', { socketId: socket.id, userId });
+            socket.to(roomId).emit('user-joined', {
+                socketId: socket.id,
+                userId,
+                name: socket.data.name,
+                role: socket.data.role,
+                activity: socket.data.activity,
+                imageUrl: socket.data.imageUrl
+            });
         });
 
         // Leave a meeting room
