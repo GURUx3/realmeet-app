@@ -11,6 +11,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 
 import { ARNameTag } from "@/components/meeting/ARNameTag";
+import { RemotePeer } from "@/components/meeting/RemotePeer";
+import { VideoPlayer } from "@/components/meeting/VideoPlayer";
 
 // WebRTC Configuration
 const RTC_CONFIG = {
@@ -732,100 +734,6 @@ export default function MeetingPage() {
             <style jsx global>{`
                 .mirror-mode { transform: scaleX(-1); }
             `}</style>
-        </div>
-    );
-}
-
-// Helper component for playing streams
-function VideoPlayer({
-    stream,
-    muted = false,
-    mirror = false,
-    className,
-    videoRef
-}: {
-    stream?: MediaStream | null,
-    muted?: boolean,
-    mirror?: boolean,
-    className?: string,
-    videoRef?: React.RefObject<HTMLVideoElement | null>
-}) {
-    const internalRef = useRef<HTMLVideoElement>(null);
-    const refToUse = videoRef || internalRef;
-
-    useEffect(() => {
-        if (refToUse.current && stream) {
-            refToUse.current.srcObject = stream;
-            refToUse.current.play().catch(e => console.error("Auto-play failed:", e));
-        } else if (refToUse.current) {
-            refToUse.current.srcObject = null;
-        }
-    }, [stream, refToUse]);
-
-    if (!stream) return (
-        <div className="flex h-full w-full items-center justify-center bg-zinc-900 border border-white/5 rounded-lg">
-            <Loader2 className="h-8 w-8 text-white/20 animate-spin" />
-        </div>
-    );
-
-    return (
-        <video
-            ref={refToUse}
-            autoPlay
-            playsInline
-            muted={muted}
-            className={cn(
-                "h-full w-full object-cover animate-in fade-in",
-                mirror && "transform scale-x-[-1]",
-                className
-            )}
-        />
-    );
-}
-
-function RemotePeer({ peer, mediaState, peerCount }: { peer: PeerData, mediaState: any, peerCount: number }) {
-    const videoRef = useRef<HTMLVideoElement>(null);
-    const isVideoOff = mediaState?.isVideoOff;
-
-    return (
-        <div className={cn(
-            "relative bg-zinc-900 overflow-hidden shadow-2xl transition-all",
-            peerCount === 1 ? "w-full h-full" : "w-full h-full",
-            "rounded-lg border border-white/5"
-        )}>
-            {isVideoOff ? (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-800">
-                    <Avatar className="h-24 w-24 border-4 border-zinc-900 mb-4">
-                        <AvatarImage src={mediaState?.userImage || ""} className="object-cover" />
-                        <AvatarFallback className="bg-zinc-700 text-zinc-400"><User className="h-10 w-10" /></AvatarFallback>
-                    </Avatar>
-                    <p className="text-zinc-400 font-medium">Camera Off</p>
-                </div>
-            ) : (
-                <VideoPlayer stream={peer.stream} videoRef={videoRef} />
-            )}
-
-            {/* AR Name Tag - Only show if video is ON and we have a name */}
-            {!isVideoOff && mediaState?.name && (
-                <ARNameTag
-                    name={mediaState.name}
-                    role={mediaState.role || "Developer"}
-                    activity={mediaState.activity || "Working"}
-                    videoRef={videoRef}
-                    className="pointer-events-none"
-                />
-            )}
-
-            <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2">
-                <span className="px-2 py-1 rounded bg-black/60 backdrop-blur-md text-xs font-medium text-white shadow-sm border border-white/5">
-                    {mediaState?.name || "Guest"}
-                </span>
-                {mediaState?.isAudioOff && (
-                    <div className="p-1 rounded-full bg-red-500/80 backdrop-blur-sm text-white">
-                        <MicOff className="h-3 w-3" />
-                    </div>
-                )}
-            </div>
         </div>
     );
 }
