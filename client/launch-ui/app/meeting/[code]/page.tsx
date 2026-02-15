@@ -324,29 +324,28 @@ export default function MeetingPage() {
             }
         };
 
-    }
-};
-
-pc.onicecandidate = (event) => {
-    if (event.candidate && socketRef.current) {
-        socketRef.current.emit("ice-candidate", {
-            candidate: event.candidate,
-            roomId: meetingCode,
-            targetSocketId: targetSocketId
-        });
-    }
-};
-
-pc.onconnectionstatechange = () => {
-    // Optional: handle different states
-    if (pc.connectionState === 'failed' || pc.connectionState === 'disconnected') {
-        // handleUserLeft(targetSocketId); // Let explicit leave handle this primarily
-    }
-};
-
-peerConnections.current.set(targetSocketId, pc);
-return pc;
     };
+
+    pc.onicecandidate = (event) => {
+        if (event.candidate && socketRef.current) {
+            socketRef.current.emit("ice-candidate", {
+                candidate: event.candidate,
+                roomId: meetingCode,
+                targetSocketId: targetSocketId
+            });
+        }
+    };
+
+    pc.onconnectionstatechange = () => {
+        // Optional: handle different states
+        if (pc.connectionState === 'failed' || pc.connectionState === 'disconnected') {
+            // handleUserLeft(targetSocketId); // Let explicit leave handle this primarily
+        }
+    };
+
+    peerConnections.current.set(targetSocketId, pc);
+    return pc;
+};
 
 const initiateConnection = async (targetSocketId: string, targetUserId: string, stream: MediaStream, iceServers: RTCIceServer[]) => {
     const pc = createPeerConnection(targetSocketId, targetUserId, stream, iceServers);
