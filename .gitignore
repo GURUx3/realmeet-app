@@ -1,0 +1,4 @@
+client/launch-ui/.next/
+node_modules/
+*.log
+.env

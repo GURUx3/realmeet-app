@@ -2,15 +2,15 @@ import { Server as HttpServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import { env } from '../config/env';
 import { prisma } from '../database/client';
+import { transcriptService } from './transcript.service';
 
 /**
  * Socket.io Signaling Service
  * 
- * Handles real-time WebRTC signaling:
- * - Room management (join/leave) with User ID tracking
- * - Ghost connection cleanup
- * - SDP Offer/Answer relay
- * - ICE Candidate relay
+ * Handles real-time WebRTC signaling and Speech-to-Text:
+ * - Room management (join/leave)
+ * - WebRTC Signaling (Offer/Answer/ICE)
+ * - Real-time Transcript accumulation & Saving
  */
 export class SocketService {
     private io: Server;
@@ -37,6 +37,7 @@ export class SocketService {
 
             this.handleRoomEvents(socket);
             this.handleSignalingEvents(socket);
+            this.handleTranscriptEvents(socket);
 
             socket.on('disconnect', async () => {
                 console.log(`❌ Client disconnected: ${socket.id}`);
@@ -59,6 +60,15 @@ export class SocketService {
                         console.error("Error updating participant leftAt:", err);
                     }
                     socket.to(roomId).emit('user-left', { socketId: socket.id, userId });
+
+                    // Check if room is empty, if so, save transcript
+                    const room = this.io.sockets.adapter.rooms.get(roomId);
+                    if (!room || room.size === 0) {
+                        if (transcriptService.hasData(roomId)) {
+                            console.log(`📝 Room ${roomId} is empty. Saving transcript...`);
+                            transcriptService.saveTranscript(roomId);
+                        }
+                    }
                 }
             });
         });
@@ -259,6 +269,35 @@ export class SocketService {
                 status,
                 userImage
             });
+        });
+    }
+
+    private handleTranscriptEvents(socket: Socket) {
+        // Receive a chunk of text
+        socket.on('transcript-chunk', (data: { roomId: string, text: string, userId: string, userName: string, timestamp: number }) => {
+            const { roomId, text, userId, userName, timestamp } = data;
+
+            // Validate
+            if (!roomId || !text || !userId) return;
+
+            // Add to buffer
+            transcriptService.addChunk(roomId, userId, userName, text, timestamp);
+
+            // Optionally broadcast to others for real-time captions (Not requested but good for future)
+            // socket.to(roomId).emit('live-caption', { userId, userName, text });
+
+            console.log(`📝 Transcript chunk from ${userName} in ${roomId}: "${text.substring(0, 30)}..."`);
+        });
+
+        // Explicit end meeting command (force save)
+        socket.on('end-meeting', ({ roomId }: { roomId: string }) => {
+            console.log(`🛑 End meeting requested for ${roomId}`);
+            const filePath = transcriptService.saveTranscript(roomId);
+
+            if (filePath) {
+                // Notify everyone the transcript is saved
+                this.io.to(roomId).emit('transcript-saved', { filePath });
+            }
         });
     }
 }

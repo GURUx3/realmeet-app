@@ -4,10 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { io, Socket } from "socket.io-client";
 import { useParams, useRouter } from "next/navigation";
-import { Video, VideoOff, Mic, MicOff, PhoneOff, Wifi, MoreHorizontal, Check, Copy, Loader2, User } from "lucide-react";
+import { Video, VideoOff, Mic, MicOff, PhoneOff, Wifi, MoreHorizontal, Check, Copy, Loader2, User, Captions } from "lucide-react";
 import { cn } from "@/lib/utils";
 import MeetingSidebar from "./MeetingSidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 
 // WebRTC Configuration
 const RTC_CONFIG = {
@@ -70,6 +71,36 @@ export default function MeetingPage() {
     const isMutedRef = useRef(false);
     const isVideoOffRef = useRef(false);
 
+    // --- Speech to Text ---
+    const [lastTranscript, setLastTranscript] = useState<string>("");
+
+    const { startListening, stopListening, isListening: isTranscribing, hasSupport: hasSttSupport } = useSpeechRecognition({
+        onResult: (text) => {
+            if (socketRef.current && user && !isMuted) {
+                setLastTranscript(text); // UI Feedback
+                socketRef.current.emit('transcript-chunk', {
+                    roomId: meetingCode,
+                    text: text,
+                    userId: user.id,
+                    userName: user.fullName || user.firstName || "Unknown",
+                    timestamp: Date.now()
+                });
+            }
+        },
+        onError: (err) => console.log("STT Error (ignorable):", err)
+    });
+
+
+
+    // ... (rest of logic) ...
+
+    // --- In the JSX (inside Controls Bar or nearby) ---
+    // Add this specifically to visualize that STT is working
+    /* 
+       Add this snippet right above the controls bar or in a corner 
+    */
+
+
     // --- [LOGIC SECTION] ---
     useEffect(() => {
         if (!isLoaded || !user || !meetingCode || initialized.current) return;
@@ -90,6 +121,15 @@ export default function MeetingPage() {
 
         return () => cleanup();
     }, [isLoaded, user, meetingCode]);
+
+    // Start STT when connected
+    useEffect(() => {
+        if (isConnected && hasSttSupport && !isMuted) {
+            startListening();
+        } else {
+            stopListening();
+        }
+    }, [isConnected, hasSttSupport, isMuted, startListening, stopListening]);
 
     // Force re-render when peers map changes (React doesn't detect Map mutations)
     const [_, setTick] = useState(0);
@@ -194,6 +234,15 @@ export default function MeetingPage() {
                     ...(userImage ? { userImage } : {})
                 }
             }));
+        });
+
+        socketInstance.on("transcript-saved", ({ filePath }) => {
+            console.log("📄 Transcript saved at:", filePath);
+            // Use a native alert or toast here. For now, native alert to be "in your face" as requested
+            // But doing it nicely via a state would be better.
+            // Let's use a simple window confirm/alert or a custom toast state.
+            // Since we might be leaving, alert is safer to ensure read.
+            alert(`Meeting ended. Transcript saved successfully!\nLocation: ${filePath}`);
         });
     };
 
@@ -392,7 +441,30 @@ export default function MeetingPage() {
         }
     };
 
-    const leaveMeeting = () => {
+    const leaveMeeting = async () => {
+        if (socketRef.current && socketRef.current.connected) {
+            console.log("Ending meeting, requesting save...");
+
+            // Create a promise to wait for ack or timeout
+            const savePromise = new Promise<void>((resolve) => {
+                const timeout = setTimeout(() => {
+                    console.log("Save request timed out, leaving anyway.");
+                    resolve();
+                }, 2000); // Wait 2s max
+
+                socketRef.current?.emit('end-meeting', { roomId: meetingCode }, (response: any) => {
+                    clearTimeout(timeout);
+                    console.log("Server acknowledged save:", response);
+                    if (response.success) {
+                        alert(`Transcript Saved!\n${response.filePath}`);
+                    }
+                    resolve();
+                });
+            });
+
+            await savePromise;
+        }
+
         cleanup();
         router.push("/dashboard");
     };
@@ -489,7 +561,15 @@ export default function MeetingPage() {
                 </div>
 
                 {/* Status */}
-                <div className="pointer-events-auto">
+                <div className="pointer-events-auto flex gap-2">
+                    {/* Transcription Status */}
+                    {isTranscribing && (
+                        <div className="hidden sm:flex items-center gap-2 rounded-full bg-blue-500/10 backdrop-blur-md px-3 py-1.5 border border-blue-500/20 shadow-lg">
+                            <Captions className="h-3 w-3 text-blue-400" />
+                            <span className="text-[10px] font-bold uppercase text-blue-400 tracking-wider">REC</span>
+                        </div>
+                    )}
+
                     {peerCount > 0 ? (
                         <div className="flex items-center gap-2 rounded-full bg-emerald-500/10 backdrop-blur-md px-3 py-1.5 border border-emerald-500/20 shadow-lg">
                             <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />
@@ -579,6 +659,17 @@ export default function MeetingPage() {
 
             {/* REMOVED: Ghost Grid Overlay block was here */}
 
+
+            {/* Live Transcript Preview */}
+            {lastTranscript && (
+                <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 max-w-lg w-full px-4 pointer-events-none">
+                    <div className="bg-black/60 backdrop-blur-md text-white px-6 py-3 rounded-2xl text-center shadow-2xl border border-white/10 animate-in slide-in-from-bottom-4 fade-in duration-300">
+                        <p className="text-sm font-medium leading-relaxed font-mono opacity-90">
+                            "{lastTranscript}"
+                        </p>
+                    </div>
+                </div>
+            )}
 
             {/* Controls Bar */}
             <div className={cn(
