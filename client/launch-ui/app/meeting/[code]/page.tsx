@@ -152,10 +152,14 @@ export default function MeetingPage() {
         return () => cleanup();
     }, [isLoaded, user, meetingCode]);
 
-    // ... (rest)
+    // Force re-render when peers map changes (React doesn't detect Map mutations)
+    const [_, setTick] = useState(0);
+    const updatePeers = () => setTick(t => t + 1);
 
     const connectSocket = (currentStream: MediaStream, iceServers: RTCIceServer[]) => {
+        // ... socket init ...
         if (socketRef.current?.connected) return;
+
         if (socketRef.current) {
             socketRef.current.removeAllListeners();
             socketRef.current.disconnect();
@@ -320,23 +324,23 @@ export default function MeetingPage() {
             }
         };
 
-        pc.onicecandidate = (event) => {
-            if (event.candidate && socketRef.current) {
-                socketRef.current.emit("ice-candidate", {
-                    candidate: event.candidate,
-                    roomId: meetingCode,
-                    targetSocketId: targetSocketId
-                });
-            }
-        };
+    }
+};
 
-        pc.onconnectionstatechange = () => {
-            // Optional: handle different states
-            if (pc.connectionState === 'failed' || pc.connectionState === 'disconnected') {
-                // handleUserLeft(targetSocketId); // Let explicit leave handle this primarily
-            }
-        };
+pc.onicecandidate = (event) => {
+    if (event.candidate && socketRef.current) {
+        socketRef.current.emit("ice-candidate", {
+            candidate: event.candidate,
+            roomId: meetingCode,
+            targetSocketId: targetSocketId
+        });
+    }
+};
 
+pc.onconnectionstatechange = () => {
+    // Optional: handle different states
+    if (pc.connectionState === 'failed' || pc.connectionState === 'disconnected') {
+        // handleUserLeft(targetSocketId); // Let explicit leave handle this primarily
     }
 };
 
