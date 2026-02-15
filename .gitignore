@@ -1,0 +1,5 @@
+# Next.js build output
+client/launch-ui/.next/
+client/launch-ui/out/
+client/launch-ui/.turbo/
+client/launch-ui/.vercel/
