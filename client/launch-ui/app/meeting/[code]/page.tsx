@@ -55,7 +55,7 @@ export default function MeetingPage() {
     const [error, setError] = useState<string | null>(null); // Critical errors
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [sidebarTab, setSidebarTab] = useState<'chat' | 'files'>('chat');
+    const [sidebarTab, setSidebarTab] = useState<'chat' | 'files' | 'agent'>('chat');
     const [unreadCount, setUnreadCount] = useState(0);
     const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
     const [chatInput, setChatInput] = useState('');
@@ -530,7 +530,11 @@ export default function MeetingPage() {
             </div>
 
             {/* Main Content Area - Dynamic Grid */}
-            <div className={cn("absolute inset-0 z-10", getGridClass())}>
+            <div className={cn(
+                "absolute inset-0 z-10 transition-all duration-300 ease-in-out",
+                isSidebarOpen ? "mr-80" : "mr-0",
+                getGridClass()
+            )}>
                 {peerCount === 0 ? (
                     // Waiting State
                     <div className="relative flex flex-col items-center justify-center">
@@ -574,7 +578,10 @@ export default function MeetingPage() {
 
             {/* Self Video - PiP (Only visible if NOT in grid, i.e., peerCount < 3) */}
             {peerCount < 3 && (
-                <div className="absolute bottom-6 right-6 z-30 h-40 w-28 sm:h-56 sm:w-40 rounded-2xl bg-zinc-900 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden transition-all hover:scale-105 hover:border-orange-500/30 group">
+                <div className={cn(
+                    "absolute bottom-6 z-30 h-40 w-28 sm:h-56 sm:w-40 rounded-2xl bg-zinc-900 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-300 ease-in-out group hover:scale-105 hover:border-orange-500/30",
+                    isSidebarOpen ? "right-88" : "right-6"
+                )}>
                     <VideoPlayer
                         stream={localStream}
                         muted={true}
@@ -597,7 +604,10 @@ export default function MeetingPage() {
 
 
             {/* Controls Bar */}
-            <div className="absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 p-2 rounded-2xl bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50">
+            <div className={cn(
+                "absolute bottom-8 z-30 flex items-center gap-2 p-2 rounded-2xl bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 transition-all duration-300 ease-in-out",
+                isSidebarOpen ? "left-[calc(50%-10rem)] -translate-x-1/2" : "left-1/2 -translate-x-1/2"
+            )}>
                 <button onClick={toggleMute} className={cn("flex h-12 w-12 items-center justify-center rounded-xl transition", isMuted ? "bg-red-500/10 text-red-500" : "bg-white/5 text-zinc-200 hover:text-white")}>
                     {isMuted ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
                 </button>
