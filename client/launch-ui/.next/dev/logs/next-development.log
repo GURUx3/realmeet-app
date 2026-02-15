@@ -1,7 +1,0 @@
-[00:00:03.380] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-[00:00:03.826] Server  LOG      ✓ Ready in 3.1s
-[00:00:08.328] Server  LOG      ○ Compiling /meeting/[code] ...
-[00:00:38.897] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:00:38.897] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:00:38.897] Browser LOG     [useUserSync] Got session token, calling API...
-[00:00:38.897] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"https://realmeet-app-rtc.onrender.com/api/user/sync"}
