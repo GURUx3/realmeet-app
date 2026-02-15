@@ -1,11 +1,12 @@
-import { MessageSquare, Paperclip, X, Send } from "lucide-react";
+import { MessageSquare, Paperclip, X, Send, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import AIAgentPanel from "./AIAgentPanel";
 
 interface SidebarProps {
     isOpen: boolean;
     onClose: () => void;
-    activeTab: 'chat' | 'files';
-    setActiveTab: (tab: 'chat' | 'files') => void;
+    activeTab: 'chat' | 'files' | 'agent';
+    setActiveTab: (tab: 'chat' | 'files' | 'agent') => void;
     chatMessages: Array<{ sender: string, message: string, timestamp: Date, id: string }>;
     chatInput: string;
     setChatInput: (input: string) => void;
@@ -38,51 +39,68 @@ export default function MeetingSidebar({
             isOpen ? "translate-x-0" : "translate-x-full",
             "w-80 bg-black/60 backdrop-blur-xl border-l border-white/10"
         )}>
-            {/* Sidebar Header */}
-            <div className="flex items-center justify-between p-4 border-b border-white/10 shrink-0">
-                <div className="flex gap-2">
+            {/* Sidebar Header & Tabs */}
+            <div className="flex flex-col gap-4 p-4 border-b border-white/10 shrink-0 bg-white/5 backdrop-blur-3xl">
+                <div className="flex items-center justify-between">
+                    <h2 className="text-lg font-semibold text-white tracking-tight">Meeting Details</h2>
+                    <button
+                        onClick={onClose}
+                        className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+                    >
+                        <X className="h-4 w-4 text-white/70" />
+                    </button>
+                </div>
+
+                <div className="flex p-1 bg-black/40 rounded-xl border border-white/5">
                     <button
                         onClick={() => setActiveTab('chat')}
                         className={cn(
-                            "relative px-4 py-2 rounded-lg text-sm font-medium transition-all",
+                            "flex-1 relative flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-medium transition-all duration-300",
                             activeTab === 'chat'
-                                ? "bg-white/20 text-white"
-                                : "text-white/60 hover:text-white hover:bg-white/10"
+                                ? "bg-zinc-800 text-white shadow-lg shadow-black/20"
+                                : "text-zinc-400 hover:text-zinc-200 hover:bg-white/5"
                         )}
                     >
-                        <MessageSquare className="h-4 w-4 inline mr-2" />
+                        <MessageSquare className="h-3.5 w-3.5" />
                         Chat
                         {unreadCount > 0 && activeTab !== 'chat' && (
-                            <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                            <span className="absolute top-1.5 right-2 flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
                             </span>
                         )}
                     </button>
                     <button
                         onClick={() => setActiveTab('files')}
                         className={cn(
-                            "px-4 py-2 rounded-lg text-sm font-medium transition-all",
+                            "flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-medium transition-all duration-300",
                             activeTab === 'files'
-                                ? "bg-white/20 text-white"
-                                : "text-white/60 hover:text-white hover:bg-white/10"
+                                ? "bg-zinc-800 text-white shadow-lg shadow-black/20"
+                                : "text-zinc-400 hover:text-zinc-200 hover:bg-white/5"
                         )}
                     >
-                        <Paperclip className="h-4 w-4 inline mr-2" />
+                        <Paperclip className="h-3.5 w-3.5" />
                         Files
                     </button>
+                    <button
+                        onClick={() => setActiveTab('agent')}
+                        className={cn(
+                            "flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-medium transition-all duration-300",
+                            activeTab === 'agent'
+                                ? "bg-indigo-600/90 text-white shadow-lg shadow-indigo-900/40"
+                                : "text-zinc-400 hover:text-indigo-300 hover:bg-indigo-500/10"
+                        )}
+                    >
+                        <Sparkles className="h-3.5 w-3.5" />
+                        AI Agent
+
+                    </button>
                 </div>
-                <button
-                    onClick={onClose}
-                    className="p-2 rounded-lg hover:bg-white/10 transition-colors"
-                >
-                    <X className="h-4 w-4 text-white/70" />
-                </button>
             </div>
 
             {/* Sidebar Content */}
             <div className="flex-1 flex flex-col min-h-0">
-                {activeTab === 'chat' ? (
+                {activeTab === 'chat' && (
                     <>
                         {/* Chat Messages */}
                         <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
@@ -143,7 +161,9 @@ export default function MeetingSidebar({
                             </div>
                         </div>
                     </>
-                ) : (
+                )}
+
+                {activeTab === 'files' && (
                     /* File Sharing Tab */
                     <div className="flex-1 p-4 overflow-y-auto">
                         <div className="flex flex-col items-center justify-center h-full text-zinc-500 space-y-4">
@@ -161,6 +181,10 @@ export default function MeetingSidebar({
                             </button>
                         </div>
                     </div>
+                )}
+
+                {activeTab === 'agent' && (
+                    <AIAgentPanel />
                 )}
             </div>
         </div>

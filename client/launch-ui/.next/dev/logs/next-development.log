@@ -1,87 +1,107 @@
-[00:00:05.612] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-[00:00:05.968] Server  LOG      ✓ Ready in 3.1s
-[00:01:24.021] Server  LOG      ○ Compiling /dashboard ...
-[00:01:27.525] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:01:38.659] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:01:38.659] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:01:38.659] Browser LOG     [useUserSync] Got session token, calling API...
-[00:01:38.659] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:01:38.659] Browser LOG     [useUserSync] Got session token, calling API...
-[00:01:38.659] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:01:40.672] Browser ERROR   React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element. asChild aschild
-[00:01:42.235] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:01:42.235] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
-[00:01:44.002] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:01:44.003] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
-[00:01:47.123] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:01:47.874] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
-[00:01:47.874] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
-[00:01:47.874] Browser LOG     [useUserSync] Got session token, calling API...
-[00:01:47.874] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:01:47.874] Browser LOG     [useUserSync] Got session token, calling API...
-[00:01:47.874] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:01:49.750] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:01:49.750] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
-[00:01:49.750] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:01:49.750] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
-[00:01:52.804] Browser ERROR   React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element. asChild aschild
-[00:02:05.003] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:02:05.003] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:02:05.003] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:02:05.003] Browser LOG     [useUserSync] Got session token, calling API...
-[00:02:05.003] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:02:05.003] Browser LOG     [useUserSync] Got session token, calling API...
-[00:02:05.003] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:02:06.704] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:02:06.704] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
-[00:02:06.704] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:02:06.704] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
-[00:02:10.001] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:02:10.001] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
-[00:02:10.001] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
-[00:02:10.001] Browser LOG     [useUserSync] Got session token, calling API...
-[00:02:10.001] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:02:10.001] Browser LOG     [useUserSync] Got session token, calling API...
-[00:02:10.001] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:02:11.999] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:02:11.999] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
-[00:02:11.999] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:02:11.999] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
-[00:02:15.597] Browser ERROR   Auto-play failed: {}
-[00:02:20.936] Browser ERROR   Auto-play failed: {}
-[00:02:20.997] Browser ERROR   Auto-play failed: {}
-[00:02:53.198] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:02:53.544] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
-[00:02:53.967] Browser LOG     [useUserSync] Starting user sync for userId: user_39X7jzDuADRjoxhuDsX7NCjc48E
-[00:02:53.967] Browser LOG     [useUserSync] Starting user sync for userId: user_39X7jzDuADRjoxhuDsX7NCjc48E
-[00:02:53.967] Browser LOG     [useUserSync] Got session token, calling API...
-[00:02:53.967] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:02:53.967] Browser LOG     [useUserSync] Got session token, calling API...
-[00:02:53.967] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:02:56.193] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:02:56.193] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-11T17:25:08.017Z","email":"zenhere21@gmail.com","id":"user_39X7jzDuADRjoxhuDsX7NCjc48E","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVg3anlHOVVUWFpHRVZKa3lzSFQ5amRubEQifQ","name":"Zen","updatedAt":"2026-02-11T17:25:08.017Z"}
-[00:02:56.193] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:02:56.193] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-11T17:25:08.017Z","email":"zenhere21@gmail.com","id":"user_39X7jzDuADRjoxhuDsX7NCjc48E","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVg3anlHOVVUWFpHRVZKa3lzSFQ5amRubEQifQ","name":"Zen","updatedAt":"2026-02-11T17:25:08.017Z"}
-[00:02:58.099] Browser ERROR   Auto-play failed: {}
-[00:02:59.089] Browser ERROR   Auto-play failed: {}
-[00:02:59.089] Browser ERROR   Auto-play failed: {}
-[00:02:59.997] Browser ERROR   Auto-play failed: {}
-[00:03:00.000] Browser ERROR   Auto-play failed: {}
-[00:03:39.828] Browser LOG     [useUserSync] Starting user sync for userId: user_39X7jzDuADRjoxhuDsX7NCjc48E
-[00:03:39.828] Browser LOG     [useUserSync] Starting user sync for userId: user_39X7jzDuADRjoxhuDsX7NCjc48E
-[00:03:39.828] Browser LOG     [useUserSync] Got session token, calling API...
-[00:03:39.828] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:03:39.828] Browser LOG     [useUserSync] Got session token, calling API...
-[00:03:39.828] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:03:41.981] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:03:41.981] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-11T17:25:08.017Z","email":"zenhere21@gmail.com","id":"user_39X7jzDuADRjoxhuDsX7NCjc48E","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVg3anlHOVVUWFpHRVZKa3lzSFQ5amRubEQifQ","name":"Zen","updatedAt":"2026-02-11T17:25:08.017Z"}
-[00:03:46.174] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:03:46.175] Browser LOG     [2;38;2;124;124;124m%s[0m [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
-[00:03:46.175] Browser LOG     [useUserSync] Got session token, calling API...
-[00:03:46.175] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:03:46.175] Browser LOG     [useUserSync] Got session token, calling API...
-[00:03:46.175] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
-[00:03:48.107] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:03:48.107] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
-[00:03:48.223] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
-[00:03:48.223] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:00:02.910] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:03.168] Server  LOG      ✓ Ready in 2.6s
+[00:00:24.743] Server  LOG      ○ Compiling /dashboard ...
+[00:00:29.193] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:00:29.193] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:00:29.193] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:00:29.193] Browser LOG     [useUserSync] Got session token, calling API...
+[00:00:29.193] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:00:29.193] Browser LOG     [useUserSync] Got session token, calling API...
+[00:00:29.193] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:00:31.573] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:00:31.573] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:00:33.757] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:00:33.757] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:00:48.573] Browser ERROR   Auto-play failed: {}
+[00:01:18.011] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:01:18.520] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
+[00:01:18.520] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
+[00:01:18.520] Browser LOG     [useUserSync] Got session token, calling API...
+[00:01:18.520] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:01:18.520] Browser LOG     [useUserSync] Got session token, calling API...
+[00:01:18.520] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:01:20.788] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:01:20.788] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
+[00:01:21.325] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:01:21.325] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
+[00:01:24.186] Browser ERROR   Auto-play failed: {}
+[00:01:24.228] Browser ERROR   Auto-play failed: {}
+[00:02:24.427] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:02:25.213] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
+[00:02:25.213] Browser LOG     [useUserSync] Got session token, calling API...
+[00:02:25.213] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:02:26.636] Browser ERROR   Auto-play failed: {}
+[00:02:27.184] Browser ERROR   Auto-play failed: {}
+[00:02:27.307] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:02:27.307] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
+[00:02:44.543] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:02:44.981] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
+[00:02:44.981] Browser LOG     [useUserSync] Got session token, calling API...
+[00:02:44.981] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:02:46.255] Browser ERROR   Auto-play failed: {}
+[00:02:47.186] Browser ERROR   Auto-play failed: {}
+[00:02:48.198] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:02:48.198] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
+[00:02:59.660] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:03:01.188] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:03:01.188] Browser LOG     [useUserSync] Got session token, calling API...
+[00:03:01.188] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:03:02.179] Browser ERROR   Auto-play failed: {}
+[00:03:02.184] Browser ERROR   Auto-play failed: {}
+[00:03:03.732] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:03:03.732] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:03:14.099] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:03:14.543] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:03:14.543] Browser LOG     [useUserSync] Got session token, calling API...
+[00:03:14.543] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:03:15.517] Browser ERROR   Auto-play failed: {}
+[00:03:16.185] Browser ERROR   Auto-play failed: {}
+[00:03:16.417] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:03:16.417] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:03:22.483] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:03:22.884] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:03:22.884] Browser LOG     [useUserSync] Got session token, calling API...
+[00:03:22.884] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:03:24.139] Browser ERROR   Auto-play failed: {}
+[00:03:24.184] Browser ERROR   Auto-play failed: {}
+[00:03:24.827] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:03:24.827] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:12:09.121] Server  LOG      ✓ Compiled in 9.2s
+[00:12:23.296] Server  LOG      ✓ Compiled in 1361ms
+[00:12:32.865] Server  LOG      ✓ Compiled in 8.9s
+[00:12:39.025] Server  LOG      ✓ Compiled in 320ms
+[00:12:40.860] Server  LOG      ✓ Compiled in 122ms
+[00:15:16.405] Server  LOG      ✓ Compiled in 2.3s
+[00:16:55.397] Server  LOG      ✓ Compiled in 503ms
+[00:19:44.242] Server  LOG      ✓ Compiled in 387ms
+[00:19:49.177] Server  LOG      ✓ Compiled in 236ms
+[00:19:50.583] Server  LOG      ✓ Compiled in 185ms
+[00:20:05.744] Server  LOG      ✓ Compiled in 176ms
+[00:38:31.298] Browser WARN    Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview
+[00:38:31.631] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
+[00:38:31.631] Browser LOG     [useUserSync] Got session token, calling API...
+[00:38:31.631] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:38:33.916] Browser ERROR   Auto-play failed: {}
+[00:38:34.183] Browser ERROR   Auto-play failed: {}
+[00:38:36.727] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:38:36.727] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
+[00:39:02.719] Browser LOG     [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:39:02.719] Browser LOG     [2;38;2;124;124;124m%s[0m [useUserSync] Starting user sync for userId: user_39RE32qijYebEfOFemz70ETRDqX
+[00:39:02.719] Browser LOG     [useUserSync] Got session token, calling API...
+[00:39:02.719] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:39:02.719] Browser LOG     [useUserSync] Got session token, calling API...
+[00:39:02.719] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:39:06.191] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:39:06.191] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:39:06.191] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:39:06.191] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T19:28:13.961Z","email":"guruhari86572@gmail.com","id":"user_39RE32qijYebEfOFemz70ETRDqX","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18zOVJFMnlqMkJsMFVFc0NYVXJtcmZWSk1kNnIifQ","name":"GURU","updatedAt":"2026-02-09T19:28:13.961Z"}
+[00:39:06.440] Browser LOG     [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
+[00:39:06.440] Browser LOG     [2;38;2;124;124;124m%s[0m [useUserSync] Starting user sync for userId: user_39RGsvA1GGz3AePKUEweYulgsoA
+[00:39:06.440] Browser LOG     [useUserSync] Got session token, calling API...
+[00:39:06.440] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:39:06.440] Browser LOG     [useUserSync] Got session token, calling API...
+[00:39:06.440] Browser LOG     [API] Request: {"hasToken":true,"method":"POST","url":"http://localhost:3001/api/user/sync"}
+[00:39:08.198] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:39:08.198] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
+[00:39:08.304] Browser LOG     [API] Success response: {"success":true,"url":"http://localhost:3001/api/user/sync"}
+[00:39:08.304] Browser LOG     [useUserSync] ✅ User synced successfully: {"createdAt":"2026-02-09T18:48:40.174Z","email":"guru09092004@gmail.com","id":"user_39RGsvA1GGz3AePKUEweYulgsoA","imageUrl":"https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18zOVJENzVRa0pudGlNaXN5ZWpXaWZSMHp1OXYiLCJyaWQiOiJ1c2VyXzM5UkdzdkExR0d6M0FlUEtVRXdlWXVsZ3NvQSIsImluaXRpYWxzIjoiR0cifQ","name":"Guru Ghaa","updatedAt":"2026-02-09T18:48:40.174Z"}
