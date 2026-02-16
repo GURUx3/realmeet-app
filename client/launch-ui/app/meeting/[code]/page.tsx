@@ -14,7 +14,7 @@ import { TranscriptOverlay } from "@/components/meeting/TranscriptOverlay";
 
 import { ARNameTag } from "@/components/meeting/ARNameTag";
 import { RemotePeer } from "@/components/meeting/RemotePeer";
-import { VideoPlayer } from "@/components/meeting/VideoPlayer";
+
 
 // WebRTC Configuration
 const RTC_CONFIG = {
@@ -747,8 +747,3 @@ export default function MeetingPage() {
         </div>
     );
 }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 8cfde9d (optimize: isolate video components to reduce latency)
