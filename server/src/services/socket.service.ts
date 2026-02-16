@@ -3,6 +3,7 @@ import { Server, Socket } from 'socket.io';
 import { env } from '../config/env';
 import { prisma } from '../database/client';
 import { transcriptService } from './transcript.service';
+import { analysisService } from './analysis.service';
 
 /**
  * Socket.io Signaling Service
@@ -327,13 +328,30 @@ export class SocketService {
         });
 
         // Explicit end meeting command (force save)
-        socket.on('end-meeting', ({ roomId }: { roomId: string }) => {
+        socket.on('end-meeting', async ({ roomId }: { roomId: string }) => {
             console.log(`🛑 End meeting requested for ${roomId}`);
             const filePath = transcriptService.saveTranscript(roomId);
 
             if (filePath) {
                 // Notify everyone the transcript is saved
                 this.io.to(roomId).emit('transcript-saved', { filePath });
+
+                // Trigger AI Analysis asynchronously
+                console.log(`🧠 Starting AI Analysis for ${roomId}...`);
+                try {
+                    const analysis = await analysisService.analyzeTranscript(filePath);
+                    const analysisPath = analysisService.saveAnalysis(filePath, analysis);
+
+                    console.log(`✅ Analysis complete: ${analysisPath}`);
+
+                    // Notify clients that analysis is ready
+                    this.io.to(roomId).emit('analysis-complete', {
+                        analysis,
+                        path: analysisPath
+                    });
+                } catch (err) {
+                    console.error("Analysis failed:", err);
+                }
             }
         });
     }

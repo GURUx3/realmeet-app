@@ -1,0 +1,14 @@
+MEETING TRANSCRIPT - ID: analysis-test-room-1771233174786
+Generated: 16/2/2026, 2:42:59 pm
+----------------------------------------
+
+
+[2:42:57 pm] Test Analyst:
+  Hello everyone, welcome to the design review.
+  I think we should focus on the latency issues today.
+  Agreed, the video lag is a major bug we found.
+  Let's create an action item to fix the React rendering.
+  Okay, meeting adjourned.
+
+----------------------------------------
+End of Transcript
