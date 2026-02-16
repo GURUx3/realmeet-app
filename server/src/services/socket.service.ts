@@ -22,7 +22,7 @@ export class SocketService {
     constructor(httpServer: HttpServer) {
         this.io = new Server(httpServer, {
             cors: {
-                origin: env.cors.clientUrl,
+                origin: [env.cors.clientUrl, "http://localhost:3000", "https://realmeet-app.vercel.app"],
                 methods: ['GET', 'POST'],
                 credentials: true,
             },

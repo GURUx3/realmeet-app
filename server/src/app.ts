@@ -13,7 +13,7 @@ export function createApp(): Application {
     // Middleware
     app.use(
         cors({
-            origin: env.cors.clientUrl,
+            origin: [env.cors.clientUrl, "http://localhost:3000", "https://realmeet-app.vercel.app"],
             credentials: true,
         })
     );
