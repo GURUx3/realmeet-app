@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import MeetingSidebar from "./MeetingSidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
+import { VideoPlayer } from "@/components/meeting/VideoPlayer";
+import { TranscriptOverlay } from "@/components/meeting/TranscriptOverlay";
 
 import { ARNameTag } from "@/components/meeting/ARNameTag";
 import { RemotePeer } from "@/components/meeting/RemotePeer";
@@ -702,15 +704,7 @@ export default function MeetingPage() {
 
 
             {/* Live Transcript Preview */}
-            {lastTranscript && (
-                <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 max-w-lg w-full px-4 pointer-events-none">
-                    <div className="bg-black/60 backdrop-blur-md text-white px-6 py-3 rounded-2xl text-center shadow-2xl border border-white/10 animate-in slide-in-from-bottom-4 fade-in duration-300">
-                        <p className="text-sm font-medium leading-relaxed font-mono opacity-90">
-                            "{lastTranscript}"
-                        </p>
-                    </div>
-                </div>
-            )}
+            <TranscriptOverlay text={lastTranscript} />
 
             {/* Controls Bar */}
             <div className={cn(
@@ -753,3 +747,8 @@ export default function MeetingPage() {
         </div>
     );
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 8cfde9d (optimize: isolate video components to reduce latency)
