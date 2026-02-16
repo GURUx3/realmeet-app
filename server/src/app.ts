@@ -1,4 +1,5 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
+import path from 'path';
 import cors from 'cors';
 import { env } from './config/env';
 import routes from './routes';
@@ -30,6 +31,9 @@ export function createApp(): Application {
 
     // API routes
     app.use('/api', routes);
+
+    // Serve Transcripts (Static) - Security warning: In production, add auth middleware here!
+    app.use('/transcripts', express.static(path.join(process.cwd(), 'transcripts')));
 
     // Root endpoint
     app.get('/', (req: Request, res: Response) => {

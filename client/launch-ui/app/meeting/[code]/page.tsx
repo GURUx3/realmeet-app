@@ -14,6 +14,7 @@ import { TranscriptOverlay } from "@/components/meeting/TranscriptOverlay";
 
 import { ARNameTag } from "@/components/meeting/ARNameTag";
 import { RemotePeer } from "@/components/meeting/RemotePeer";
+import { MeetingSummary } from "@/components/meeting/MeetingSummary";
 
 
 // WebRTC Configuration
@@ -51,6 +52,8 @@ export default function MeetingPage() {
 
     // State
     const [isConnected, setIsConnected] = useState(false);
+    const [meetingSummary, setMeetingSummary] = useState<any>(null);
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
 
     // Multi-user State
     const [peers, setPeers] = useState<Map<string, PeerData>>(new Map());
@@ -295,12 +298,18 @@ export default function MeetingPage() {
             }));
         });
 
-        socketInstance.on("transcript-saved", ({ filePath }) => {
-            console.log("📄 Transcript saved at:", filePath);
-            // Use a native alert or toast here. For now, native alert to be "in your face" as requested
-            // But doing it nicely via a state would be better.
-            // Since we might be leaving, alert is safer to ensure read.
-            alert(`Meeting ended. Transcript saved successfully!\nLocation: ${filePath}`);
+        socketInstance.on("transcript-saved", ({ fileUrls }: any) => { // Updated to receive fileUrls
+            console.log("📄 Transcript saved. Waiting for analysis...");
+            // We don't alert anymore, we wait for the analysis-complete event
+        });
+
+        socketInstance.on("analysis-complete", (data: any) => {
+            console.log("🧠 Analysis complete:", data);
+            setMeetingSummary({
+                analysis: data.analysis,
+                fileUrls: data.fileUrls
+            });
+            setIsAnalyzing(false);
         });
     };
 
@@ -503,26 +512,18 @@ export default function MeetingPage() {
 
     const leaveMeeting = async () => {
         if (socketRef.current && socketRef.current.connected) {
-            console.log("Ending meeting, requesting save...");
+            // Confirm with user if they want to end meeting for everyone (host) or just leave
+            // For this feature, we assume "End Meeting" context to generate full transcript
+            if (confirm("End meeting and generate AI Analysis?")) {
+                setIsAnalyzing(true);
+                socketRef.current.emit('end-meeting', { roomId: meetingCode });
+                return; // Wait for analysis-complete event
+            }
 
-            // Create a promise to wait for ack or timeout
-            const savePromise = new Promise<void>((resolve) => {
-                const timeout = setTimeout(() => {
-                    console.log("Save request timed out, leaving anyway.");
-                    resolve();
-                }, 2000); // Wait 2s max
-
-                socketRef.current?.emit('end-meeting', { roomId: meetingCode }, (response: any) => {
-                    clearTimeout(timeout);
-                    console.log("Server acknowledged save:", response);
-                    if (response.success) {
-                        alert(`Transcript Saved!\n${response.filePath}`);
-                    }
-                    resolve();
-                });
-            });
-
-            await savePromise;
+            // If they cancel, they might just want to leave? 
+            // For now, let's treat cancel as "Stay". 
+            // To just leave we'd need another button or more complex modal.
+            // As per request "meeting ends... user can download", implying "End" flow.
         }
 
         cleanup();
@@ -585,6 +586,15 @@ export default function MeetingPage() {
 
     return (
         <div className="relative h-screen w-full bg-[#030303] overflow-hidden font-sans">
+            {/* Meeting Summary Overlay */}
+            {(meetingSummary || isAnalyzing) && (
+                <MeetingSummary
+                    analysis={meetingSummary?.analysis}
+                    fileUrls={meetingSummary?.fileUrls}
+                    isLoading={isAnalyzing}
+                />
+            )}
+
             {/* Textures */}
             <div className="absolute inset-0 pointer-events-none opacity-20 z-0">
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>

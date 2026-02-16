@@ -1,5 +1,6 @@
 import { Server as HttpServer } from 'http';
 import { Server, Socket } from 'socket.io';
+import path from 'path';
 import { env } from '../config/env';
 import { prisma } from '../database/client';
 import { transcriptService } from './transcript.service';
@@ -330,28 +331,46 @@ export class SocketService {
         // Explicit end meeting command (force save)
         socket.on('end-meeting', async ({ roomId }: { roomId: string }) => {
             console.log(`🛑 End meeting requested for ${roomId}`);
-            const filePath = transcriptService.saveTranscript(roomId);
+            const result = transcriptService.saveTranscript(roomId);
 
-            if (filePath) {
+            if (result) {
+                const { combined, individual, json } = result;
+
+                // Helper to convert fs path to url
+                const toUrl = (p: string) => `/transcripts/${path.basename(p)}`;
+
+                const fileUrls = {
+                    combined: toUrl(combined),
+                    json: toUrl(json),
+                    individual: individual.map(i => ({
+                        userId: i.userId,
+                        userName: i.userName,
+                        url: toUrl(i.path)
+                    }))
+                };
+
                 // Notify everyone the transcript is saved
-                this.io.to(roomId).emit('transcript-saved', { filePath });
+                this.io.to(roomId).emit('transcript-saved', { fileUrls });
 
                 // Trigger AI Analysis asynchronously
                 console.log(`🧠 Starting AI Analysis for ${roomId}...`);
                 try {
-                    const analysis = await analysisService.analyzeTranscript(filePath);
-                    const analysisPath = analysisService.saveAnalysis(filePath, analysis);
+                    const analysis = await analysisService.analyzeTranscript(combined);
+                    const analysisPath = analysisService.saveAnalysis(combined, analysis);
 
                     console.log(`✅ Analysis complete: ${analysisPath}`);
 
                     // Notify clients that analysis is ready
                     this.io.to(roomId).emit('analysis-complete', {
                         analysis,
-                        path: analysisPath
+                        summaryUrl: toUrl(analysisPath),
+                        fileUrls // Send again with analysis just in case
                     });
                 } catch (err) {
                     console.error("Analysis failed:", err);
                 }
+            } else {
+                socket.emit('error', { message: "No transcript data found." });
             }
         });
     }

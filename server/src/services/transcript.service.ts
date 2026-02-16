@@ -57,54 +57,72 @@ export class TranscriptService {
     /**
      * Save buffer to file and clear it
      */
-    public saveTranscript(roomId: string): string | null {
+    public saveTranscript(roomId: string): { combined: string, individual: { userId: string, userName: string, path: string }[], json: string } | null {
         const buffer = this.buffers.get(roomId);
         if (!buffer || buffer.length === 0) {
             return null;
         }
 
-        // Sort by timestamp just in case
+        // Sort by timestamp
         buffer.sort((a, b) => a.timestamp - b.timestamp);
 
-        // Format content
-        let fileContent = `MEETING TRANSCRIPT - ID: ${roomId}\n`;
-        fileContent += `Generated: ${new Date().toLocaleString()}\n`;
-        fileContent += `----------------------------------------\n\n`;
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const fileBase = `meeting_${timestamp}_${roomId}`;
+
+        // 1. JSON Dump (Raw Data)
+        const jsonPath = path.join(this.OUTPUT_DIR, `${fileBase}_full.json`);
+        fs.writeFileSync(jsonPath, JSON.stringify(buffer, null, 2), 'utf-8');
+
+        // 2. Combined Chronological Text (for AI & Humans)
+        let combinedContent = `MEETING TRANSCRIPT - ID: ${roomId}\n`;
+        combinedContent += `Generated: ${new Date().toLocaleString()}\n`;
+        combinedContent += `----------------------------------------\n\n`;
 
         let lastSpeaker = '';
-
         buffer.forEach(chunk => {
             const timeStr = new Date(chunk.timestamp).toLocaleTimeString();
-
-            // If speaker changed, add a new header line
             if (chunk.userName !== lastSpeaker) {
-                fileContent += `\n[${timeStr}] ${chunk.userName}:\n`;
+                combinedContent += `\n[${timeStr}] ${chunk.userName}:\n`;
                 lastSpeaker = chunk.userName;
             }
+            combinedContent += `  ${chunk.text}\n`;
+        });
+        combinedContent += `\n----------------------------------------\n`;
+        const combinedPath = path.join(this.OUTPUT_DIR, `${fileBase}_combined.txt`);
+        fs.writeFileSync(combinedPath, combinedContent, 'utf-8');
 
-            fileContent += `  ${chunk.text}\n`;
+        // 3. Per-User Transcripts
+        const users = new Set(buffer.map(c => c.userId));
+        const individualFiles: { userId: string, userName: string, path: string }[] = [];
+
+        users.forEach(userId => {
+            const userChunks = buffer.filter(c => c.userId === userId);
+            if (userChunks.length === 0) return;
+
+            const userName = userChunks[0].userName;
+            let userContent = `TRANSCRIPT: ${userName} (${roomId})\n`;
+            userContent += `Date: ${new Date().toLocaleString()}\n`;
+            userContent += `----------------------------------------\n\n`;
+
+            userChunks.forEach(chunk => {
+                const timeStr = new Date(chunk.timestamp).toLocaleTimeString();
+                userContent += `[${timeStr}] ${chunk.text}\n`;
+            });
+
+            const userPath = path.join(this.OUTPUT_DIR, `${fileBase}_${userName.replace(/[^a-z0-9]/gi, '_')}.txt`);
+            fs.writeFileSync(userPath, userContent, 'utf-8');
+            individualFiles.push({ userId, userName, path: userPath });
         });
 
-        fileContent += `\n----------------------------------------\n`;
-        fileContent += `End of Transcript\n`;
+        console.log(`✅ Transcripts saved for ${roomId}`);
+        // Clear buffer
+        this.buffers.delete(roomId);
 
-        // Generate filename
-        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-        const filename = `meeting_${timestamp}_${roomId}.txt`;
-        const filePath = path.join(this.OUTPUT_DIR, filename);
-
-        try {
-            fs.writeFileSync(filePath, fileContent, 'utf-8');
-            console.log(`✅ Transcript saved to: ${filePath}`);
-
-            // Clear buffer after save
-            this.buffers.delete(roomId);
-
-            return filePath;
-        } catch (error) {
-            console.error(`❌ Failed to save transcript for ${roomId}:`, error);
-            return null;
-        }
+        return {
+            combined: combinedPath,
+            individual: individualFiles,
+            json: jsonPath
+        };
     }
 
     /**
