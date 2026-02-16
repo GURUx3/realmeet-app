@@ -23,3 +23,7 @@ yarn-error.log*
 # OS files
 .DS_Store
 Thumbs.db
+
+# Test scripts
+test-*.ts
+client/launch-ui/test-*.ts
