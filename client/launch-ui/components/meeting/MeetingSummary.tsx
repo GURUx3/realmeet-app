@@ -70,7 +70,7 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
         );
     }
 
-    if (!analysis || !fileUrls) return null;
+    if (!fileUrls) return null;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#050505] overflow-y-auto p-4 md:p-8">
@@ -100,7 +100,7 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="text-zinc-300 leading-relaxed">
-                                {analysis.summary}
+                                {analysis ? analysis.summary : "No AI summary available."}
                             </CardContent>
                         </Card>
 
@@ -112,12 +112,12 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
                                 </CardHeader>
                                 <CardContent>
                                     <ul className="space-y-3">
-                                        {analysis.actionItems.map((item, i) => (
+                                        {analysis?.actionItems?.length ? analysis.actionItems.map((item, i) => (
                                             <li key={i} className="flex gap-3 items-start text-sm text-zinc-300">
                                                 <div className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
                                                 <span>{item}</span>
                                             </li>
-                                        ))}
+                                        )) : <li className="text-zinc-500 italic">No action items detected.</li>}
                                     </ul>
                                 </CardContent>
                             </Card>
@@ -129,11 +129,11 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
                                         <CardTitle className="text-lg text-white">Key Topics</CardTitle>
                                     </CardHeader>
                                     <CardContent className="flex flex-wrap gap-2">
-                                        {analysis.keyTopics.map((topic, i) => (
+                                        {analysis?.keyTopics?.length ? analysis.keyTopics.map((topic, i) => (
                                             <Badge key={i} variant="secondary" className="bg-white/10 text-zinc-200 hover:bg-white/20">
                                                 {topic}
                                             </Badge>
-                                        ))}
+                                        )) : <span className="text-zinc-500 italic">No topics found.</span>}
                                     </CardContent>
                                 </Card>
 
@@ -142,9 +142,15 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
                                         <CardTitle className="text-lg text-white">Sentiment</CardTitle>
                                     </CardHeader>
                                     <CardContent>
-                                        <div className={`inline-flex items-center px-3 py-1 rounded-full border text-sm font-medium ${sentimentColor[analysis.sentiment] || sentimentColor.Neutral}`}>
-                                            {analysis.sentiment}
-                                        </div>
+                                        {analysis ? (
+                                            <div className={`inline-flex items-center px-3 py-1 rounded-full border text-sm font-medium ${sentimentColor[analysis.sentiment] || sentimentColor.Neutral}`}>
+                                                {analysis.sentiment}
+                                            </div>
+                                        ) : (
+                                            <div className={`inline-flex items-center px-3 py-1 rounded-full border text-sm font-medium ${sentimentColor.Neutral}`}>
+                                                Neutral
+                                            </div>
+                                        )}
                                     </CardContent>
                                 </Card>
                             </div>

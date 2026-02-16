@@ -311,6 +311,26 @@ export default function MeetingPage() {
             });
             setIsAnalyzing(false);
         });
+
+        socketInstance.on("analysis-error", (data: any) => {
+            console.error("Analysis Error:", data);
+            alert("Analysis failed: " + data.message);
+            // Fallback: Show summary with just downloads, no AI insights
+            setMeetingSummary({
+                analysis: null,
+                fileUrls: data.fileUrls
+            });
+            setIsAnalyzing(false);
+        });
+
+        socketInstance.on("error", (err: any) => {
+            console.error("Socket Error:", err);
+            // Only stop analyzing if it's related to meeting end (usually "No transcript data")
+            if (isAnalyzing) {
+                alert("Error: " + (err.message || "Unknown socket error"));
+                setIsAnalyzing(false);
+            }
+        });
     };
 
     // --- WebRTC Core ---

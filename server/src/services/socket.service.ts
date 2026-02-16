@@ -366,8 +366,12 @@ export class SocketService {
                         summaryUrl: toUrl(analysisPath),
                         fileUrls // Send again with analysis just in case
                     });
-                } catch (err) {
+                } catch (err: any) {
                     console.error("Analysis failed:", err);
+                    this.io.to(roomId).emit('analysis-error', {
+                        message: "AI Analysis failed, but transcript is saved.",
+                        fileUrls // Still send the files!
+                    });
                 }
             } else {
                 socket.emit('error', { message: "No transcript data found." });
