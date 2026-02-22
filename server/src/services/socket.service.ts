@@ -322,10 +322,17 @@ export class SocketService {
             if (!roomId || !text || !userId) return;
 
             // Add to buffer
-            transcriptService.addChunk(roomId, userId, userName, text, timestamp);
+            transcriptService.addChunk(roomId, userId, userName, text, timestamp, (data as any).isFinal);
 
             // Broadcast to others for real-time captions in the sidebar
-            socket.to(roomId).emit('live-transcript', { userId, userName, text, timestamp, avatar: (data as any).avatar });
+            socket.to(roomId).emit('live-transcript', {
+                userId,
+                userName,
+                text,
+                timestamp,
+                avatar: (data as any).avatar,
+                isFinal: (data as any).isFinal
+            });
 
             // 10000x: Live Strategic Detection (Throttled to 30s)
             const now = Date.now();

@@ -15,6 +15,7 @@ interface SidebarProps {
     transcriptLines: Array<{ userId: string, userName: string, text: string, timestamp: number, avatar?: string }>;
     isAnalyzing: boolean;
     analysisResult: any | null;
+    aiStream?: MediaStream | null;
 }
 
 export default function MeetingSidebar({
@@ -30,6 +31,7 @@ export default function MeetingSidebar({
     transcriptLines = [],
     isAnalyzing = false,
     analysisResult = null,
+    aiStream = null,
 }: SidebarProps) {
 
     const handleSendMessage = () => {

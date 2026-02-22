@@ -55,7 +55,7 @@ export default function MeetingPage() {
     const [meetingSummary, setMeetingSummary] = useState<any>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [liveTranscriptLines, setLiveTranscriptLines] = useState<any[]>([]);
-
+    const [aiStream, setAiStream] = useState<MediaStream | null>(null);
     // Multi-user State
     const [peers, setPeers] = useState<Map<string, PeerData>>(new Map());
     const [localStream, setLocalStream] = useState<MediaStream | null>(null);
@@ -78,7 +78,8 @@ export default function MeetingPage() {
     // socketId -> RTCPeerConnection
     const peerConnections = useRef<Map<string, RTCPeerConnection>>(new Map());
     const localVideoRef = useRef<HTMLVideoElement>(null);
-    const socketRef = useRef<Socket | null>(null);
+    const socketRef = useRef<any>(null);
+    const lastInterimTime = useRef<number>(0);
     const initialized = useRef(false);
     // socketId -> Array of candidates
     const iceCandidatesQueues = useRef<Map<string, RTCIceCandidate[]>>(new Map());
@@ -91,8 +92,13 @@ export default function MeetingPage() {
 
     const { startListening, stopListening, isListening: isTranscribing, hasSupport: hasSttSupport } = useSpeechRecognition({
         onResult: (text, isFinal) => {
-            if (socketRef.current && user && !isMuted && isFinal) {
+            if (socketRef.current && user && !isMuted) {
                 setLastTranscript(text); // UI Feedback
+
+                // Throttling interim chunks to once every 500ms
+                const now = Date.now();
+                if (!isFinal && now - lastInterimTime.current < 500) return;
+                if (!isFinal) lastInterimTime.current = now;
 
                 const chunk = {
                     roomId: meetingCode,
@@ -101,12 +107,19 @@ export default function MeetingPage() {
                     userName: user.fullName || user.firstName || "You",
                     timestamp: Date.now(),
                     avatar: user.imageUrl,
-                    isFinal: true
+                    isFinal: isFinal
                 };
 
-                console.log("🚀 Sending final transcript chunk:", text);
+                console.log(`🚀 Sending ${isFinal ? 'FINAL' : 'INTERIM'} chunk:`, text);
                 socketRef.current.emit('transcript-chunk', chunk);
-                setLiveTranscriptLines(prev => [...prev.slice(-99), chunk]);
+                setLiveTranscriptLines(prev => {
+                    // Replace last if it was interim from self
+                    const last = prev[prev.length - 1];
+                    if (last && last.userId === user.id && !last.isFinal) {
+                        return [...prev.slice(0, -1), chunk];
+                    }
+                    return [...prev.slice(-99), chunk];
+                });
             }
         },
         onError: (err) => console.log("STT Error (ignorable):", err)
@@ -147,6 +160,12 @@ export default function MeetingPage() {
                 // 2. Get Media
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
                 setLocalStream(stream);
+
+                // 10000x Enhancement: Shadow Audio Track for AI
+                // We clone the track to ensure the AI has its own independent logic path
+                const shadowStream = new MediaStream(stream.getAudioTracks().map(t => t.clone()));
+                setAiStream(shadowStream);
+
                 if (localVideoRef.current) {
                     localVideoRef.current.srcObject = stream;
                 }
@@ -819,6 +838,7 @@ export default function MeetingPage() {
                 transcriptLines={liveTranscriptLines}
                 isAnalyzing={isAnalyzing}
                 analysisResult={meetingSummary?.analysis}
+                aiStream={aiStream}
             />
 
             <style jsx global>{`

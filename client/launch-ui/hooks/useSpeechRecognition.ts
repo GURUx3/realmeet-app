@@ -46,7 +46,7 @@ export function useSpeechRecognition({ onResult, onError }: UseSpeechRecognition
                             onResult(transcript.trim(), true);
                         } else {
                             interimTranscript += transcript;
-                            // Optionally send interim? For now we focus on final for accumulation
+                            onResult(interimTranscript.trim(), false); // Send interim results
                         }
                     }
                 };

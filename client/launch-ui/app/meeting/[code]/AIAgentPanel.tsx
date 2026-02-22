@@ -29,15 +29,71 @@ interface TranscriptLine {
 }
 
 interface AIAgentPanelProps {
-    transcriptLines?: TranscriptLine[];
+    transcriptLines?: (TranscriptLine & { isFinal?: boolean })[];
     isAnalyzing?: boolean;
     analysisResult?: AnalysisResult | null;
+    aiStream?: MediaStream | null; // Added Shadow Audio Stream
 }
+
+const NeuralWaveform = ({ stream }: { stream: MediaStream | null }) => {
+    const [magnitudes, setMagnitudes] = useState<number[]>(new Array(12).fill(10));
+    const audioContextRef = useRef<AudioContext | null>(null);
+    const analyzerRef = useRef<AnalyserNode | null>(null);
+    const animationRef = useRef<number>(0);
+
+    useEffect(() => {
+        if (!stream) return;
+
+        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+        analyzerRef.current = audioContextRef.current.createAnalyser();
+        const source = audioContextRef.current.createMediaStreamSource(stream);
+        source.connect(analyzerRef.current);
+        analyzerRef.current.fftSize = 64;
+
+        const bufferLength = analyzerRef.current.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        const animate = () => {
+            if (!analyzerRef.current) return;
+            analyzerRef.current.getByteFrequencyData(dataArray);
+
+            // Map frequencies to 12 bars
+            const newMags = [];
+            for (let i = 0; i < 12; i++) {
+                const val = dataArray[i * 2] || 0;
+                newMags.push(Math.max(10, (val / 255) * 40));
+            }
+            setMagnitudes(newMags);
+            animationRef.current = requestAnimationFrame(animate);
+        };
+
+        animate();
+
+        return () => {
+            cancelAnimationFrame(animationRef.current);
+            audioContextRef.current?.close();
+        };
+    }, [stream]);
+
+    return (
+        <div className="flex items-center gap-1 h-12 px-4 bg-white/5 rounded-2xl border border-white/5 backdrop-blur-md">
+            {magnitudes.map((mag, i) => (
+                <div
+                    key={i}
+                    className="w-1.5 bg-indigo-500/80 rounded-full transition-all duration-75"
+                    style={{ height: `${mag}%` }}
+                />
+            ))}
+            <span className="text-[10px] font-black text-indigo-400 ml-3 uppercase tracking-widest animate-pulse">Neural Path</span>
+        </div>
+    );
+};
 
 export default function AIAgentPanel({
     transcriptLines = [],
     isAnalyzing = false,
-    analysisResult = null
+    analysisResult = null,
+    aiStream = null
 }: AIAgentPanelProps) {
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -80,6 +136,10 @@ export default function AIAgentPanel({
                             </span>
                         </div>
                     </div>
+                </div>
+
+                <div className="flex-1 px-4">
+                    <NeuralWaveform stream={aiStream} />
                 </div>
 
                 <div className="flex gap-2 relative z-10">

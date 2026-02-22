@@ -5,17 +5,16 @@ interface TranscriptChunk {
     userId: string;
     userName: string;
     text: string;
-    timestamp: number; // Client-side timestamp
-    receivedAt: number; // Server-side timestamp
+    timestamp: number;
+    receivedAt: number;
+    isFinal: boolean; // Added isFinal flag
 }
 
 export class TranscriptService {
-    // In-memory buffer: Map<roomId, TranscriptChunk[]>
     private buffers: Map<string, TranscriptChunk[]> = new Map();
     private readonly OUTPUT_DIR = path.join(process.cwd(), 'transcripts');
 
     constructor() {
-        // Ensure output directory exists
         if (!fs.existsSync(this.OUTPUT_DIR)) {
             fs.mkdirSync(this.OUTPUT_DIR, { recursive: true });
         }
@@ -24,18 +23,38 @@ export class TranscriptService {
     /**
      * Add a speech chunk to the buffer
      */
-    public addChunk(roomId: string, userId: string, userName: string, text: string, timestamp: number) {
+    public addChunk(roomId: string, userId: string, userName: string, text: string, timestamp: number, isFinal: boolean = true) {
         if (!this.buffers.has(roomId)) {
             this.buffers.set(roomId, []);
         }
 
         const buffer = this.buffers.get(roomId)!;
 
-        // Simple deduplication: checks if the last message from the same user is identical
-        // This helps when the client sends "partial" vs "final" and we might get overlap if logic isn't perfect
-        const lastChunk = buffer[buffer.length - 1];
-        if (lastChunk && lastChunk.userId === userId && lastChunk.text === text) {
-            return; // Duplicate ignored
+        // 10000x Enhancement: Handle Interim vs Final deduplication
+        // If the last chunk from this user was NOT final, and this one IS or is a newer interim,
+        // we should consolidate/replace to avoid duplicates in the final saved transcript.
+        const lastIdx = buffer.map(c => c.userId).lastIndexOf(userId);
+
+        if (lastIdx !== -1) {
+            const lastChunk = buffer[lastIdx];
+
+            // If the last one was interim, replace it with this newer one
+            if (!lastChunk.isFinal) {
+                buffer[lastIdx] = {
+                    userId,
+                    userName,
+                    text,
+                    timestamp,
+                    receivedAt: Date.now(),
+                    isFinal
+                };
+                return;
+            }
+
+            // If it's a final duplicate of a final, ignore
+            if (lastChunk.isFinal && isFinal && lastChunk.text === text) {
+                return;
+            }
         }
 
         buffer.push({
@@ -43,7 +62,8 @@ export class TranscriptService {
             userName,
             text,
             timestamp,
-            receivedAt: Date.now()
+            receivedAt: Date.now(),
+            isFinal
         });
     }
 
