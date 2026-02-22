@@ -616,6 +616,23 @@ export default function MeetingPage() {
         router.push("/dashboard");
     };
 
+    const handleInjectMock = (text: string) => {
+        if (socketRef.current && user) {
+            const chunk = {
+                roomId: meetingCode,
+                text,
+                userId: user.id,
+                userName: user.fullName || user.firstName || "You",
+                timestamp: Date.now(),
+                avatar: user.imageUrl,
+                isFinal: true
+            };
+            console.log("🧪 Injecting MOCK transcript:", text);
+            socketRef.current.emit('transcript-chunk', chunk);
+            setLiveTranscriptLines(prev => [...prev.slice(-99), chunk]);
+        }
+    };
+
     const copyToClipboard = () => {
         navigator.clipboard.writeText(meetingCode);
         setHasCopied(true);
@@ -839,6 +856,7 @@ export default function MeetingPage() {
                 isAnalyzing={isAnalyzing}
                 analysisResult={meetingSummary?.analysis}
                 aiStream={aiStream}
+                onInjectMock={handleInjectMock}
             />
 
             <style jsx global>{`

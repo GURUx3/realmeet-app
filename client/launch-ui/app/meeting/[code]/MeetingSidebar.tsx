@@ -12,10 +12,11 @@ interface SidebarProps {
     setChatInput: (input: string) => void;
     onSendMessage: (message: string) => void;
     unreadCount: number;
-    transcriptLines: Array<{ userId: string, userName: string, text: string, timestamp: number, avatar?: string }>;
+    transcriptLines: Array<{ userId: string, userName: string, text: string, timestamp: number, avatar?: string, isFinal?: boolean }>;
     isAnalyzing: boolean;
     analysisResult: any | null;
     aiStream?: MediaStream | null;
+    onInjectMock?: (text: string) => void;
 }
 
 export default function MeetingSidebar({
@@ -32,6 +33,7 @@ export default function MeetingSidebar({
     isAnalyzing = false,
     analysisResult = null,
     aiStream = null,
+    onInjectMock,
 }: SidebarProps) {
 
     const handleSendMessage = () => {

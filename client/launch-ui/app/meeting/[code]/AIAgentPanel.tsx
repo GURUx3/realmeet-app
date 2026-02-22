@@ -143,6 +143,14 @@ export default function AIAgentPanel({
                 </div>
 
                 <div className="flex gap-2 relative z-10">
+                    <button
+                        onClick={() => onInjectMock?.("Team, let's schedule a follow-up meeting at 8am tomorrow to finalize the budget.")}
+                        className="h-9 px-3 rounded-xl flex items-center justify-center gap-2 bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500/40 transition-all duration-300 border border-indigo-500/30 font-bold text-[10px] uppercase tracking-wider"
+                        title="Simulate Strategic Injection"
+                    >
+                        <Zap className="h-3 w-3" />
+                        Inject Mock
+                    </button>
                     <button className="h-9 w-9 rounded-xl flex items-center justify-center hover:bg-white/10 text-zinc-400 hover:text-white transition-all duration-300 border border-transparent hover:border-white/10" title="System Stats">
                         <TrendingUp className="h-4 w-4" />
                     </button>
