@@ -1,6 +1,7 @@
 import { Server as HttpServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import path from 'path';
+import fs from 'fs';
 import { env } from '../config/env';
 import { prisma } from '../database/client';
 import { transcriptService } from './transcript.service';
@@ -373,6 +374,11 @@ export class SocketService {
 
             if (result) {
                 const { combined, individual, json } = result;
+
+                // 10000x: Emit immediate preview content for the "Neural Intelligence" screen
+                const contentText = fs.readFileSync(combined, 'utf-8');
+                const cleanContent = contentText.split('----------------------------------------').pop()?.trim() || "Consolidating strategic intelligence...";
+                this.io.to(roomId).emit('starting-analysis', { content: cleanContent });
 
                 // Helper to convert fs path to url
                 const toUrl = (p: string) => `/transcripts/${path.basename(p)}`;
