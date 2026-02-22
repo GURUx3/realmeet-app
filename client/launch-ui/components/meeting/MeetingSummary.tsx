@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Download, FileText, LayoutDashboard, Loader2, Sparkles, User, Check, Copy, UserCheck, Calendar as CalendarIcon, Clock } from "lucide-react";
+import { Download, FileText, LayoutDashboard, Loader2, Sparkles, User, Check, Copy, UserCheck, Calendar as CalendarIcon, Clock, Bot, TrendingUp, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -100,18 +100,58 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
         setTimeout(() => setHasCopiedTasks(false), 2000);
     };
 
+    const [countdown, setCountdown] = useState(10);
+
+    useEffect(() => {
+        if (isLoading) {
+            const timer = setInterval(() => {
+                setCountdown(prev => Math.max(0, prev - 1));
+            }, 1000);
+            return () => clearInterval(timer);
+        } else {
+            setCountdown(10);
+        }
+    }, [isLoading]);
+
     if (isLoading) {
         return (
-            <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/95 backdrop-blur-xl text-white">
-                <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-orange-500/10 border border-orange-500/20 shadow-[0_0_40px_rgba(249,115,22,0.2)] mb-8">
-                    <Loader2 className="h-10 w-10 text-orange-500 animate-spin" />
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#050505]/95 backdrop-blur-2xl">
+                <div className="max-w-md w-full p-8 text-center space-y-8 animate-in fade-in zoom-in duration-500">
+                    <div className="relative mx-auto w-32 h-32">
+                        <div className="absolute inset-0 rounded-full border-2 border-indigo-500/20 border-t-indigo-500 animate-spin" />
+                        <div className="absolute inset-4 rounded-full border border-indigo-500/10 animate-[pulse_2s_infinite]" />
+                        <div className="absolute inset-0 flex items-center justify-center font-mono text-3xl font-black text-indigo-400">
+                            {countdown}
+                        </div>
+                    </div>
+
+                    <div className="space-y-3">
+                        <h2 className="text-2xl font-black text-white uppercase tracking-widest italic flex items-center justify-center gap-3">
+                            <Bot className="h-6 w-6 text-indigo-400" />
+                            Neural Intelligence
+                        </h2>
+                        <p className="text-zinc-400 text-sm font-medium leading-relaxed">
+                            Finalizing strategic insights, extracting actionable roadmap elements, and securing meeting artifacts...
+                        </p>
+                    </div>
+
+                    <div className="flex justify-center gap-2">
+                        {[...Array(3)].map((_, i) => (
+                            <div key={i} className="h-1.5 w-12 rounded-full bg-zinc-800 overflow-hidden">
+                                <div className="h-full bg-indigo-500 animate-[loading_2s_ease-in-out_infinite]" style={{ animationDelay: `${i * 0.3}s` }} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                <h2 className="text-2xl font-bold bg-linear-to-r from-white to-white/60 bg-clip-text text-transparent">Analyzing Meeting...</h2>
-                <p className="text-zinc-500 mt-2">Generating AI insights and transcripts</p>
+                <style jsx>{`
+                    @keyframes loading {
+                        0% { transform: translateX(-100%); }
+                        100% { transform: translateX(100%); }
+                    }
+                `}</style>
             </div>
         );
     }
-
     if (!fileUrls) return null;
 
     return (

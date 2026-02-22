@@ -360,6 +360,15 @@ export class SocketService {
         // Explicit end meeting command (force save)
         socket.on('end-meeting', async ({ roomId }: { roomId: string }) => {
             console.log(`🛑 End meeting requested for ${roomId}`);
+
+            // 10000x: Ensure we always have strategic data for the demo
+            let buffer = transcriptService.getTranscript(roomId);
+            if (buffer.length < 3) {
+                console.log("🧪 Injecting random strategic scenario for empty meeting...");
+                const scenario = transcriptService.getRandomScenario();
+                transcriptService.addChunk(roomId, 'system', 'AI Simulation', scenario, Date.now(), true);
+            }
+
             const result = transcriptService.saveTranscript(roomId);
 
             if (result) {

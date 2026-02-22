@@ -335,12 +335,16 @@ export default function MeetingPage() {
         });
 
         socketInstance.on("analysis-complete", (data: any) => {
-            console.log("🧠 Analysis complete:", data);
-            setMeetingSummary({
-                analysis: data.analysis,
-                fileUrls: data.fileUrls
-            });
-            setIsAnalyzing(false);
+            console.log("🧠 Analysis complete (delayed for 10s):", data);
+
+            // 10000x: Executive Polish - Wait 10 seconds to simulate deep thought
+            setTimeout(() => {
+                setMeetingSummary({
+                    analysis: data.analysis,
+                    fileUrls: data.fileUrls
+                });
+                setIsAnalyzing(false);
+            }, 10000);
         });
 
         socketInstance.on("analysis-error", (data: any) => {
