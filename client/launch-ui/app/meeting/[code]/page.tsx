@@ -52,8 +52,9 @@ export default function MeetingPage() {
 
     // State
     const [isConnected, setIsConnected] = useState(false);
-    const [meetingSummary, setMeetingSummary] = useState<any>(null);
+    const [meetingSummary, setMeetingSummary] = useState<{ analysis: any, fileUrls: any } | null>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
+    const [analysisContent, setAnalysisContent] = useState<string>("");
     const [liveTranscriptLines, setLiveTranscriptLines] = useState<any[]>([]);
     const [aiStream, setAiStream] = useState<MediaStream | null>(null);
     // Multi-user State
@@ -334,17 +335,21 @@ export default function MeetingPage() {
             // We don't alert anymore, we wait for the analysis-complete event
         });
 
-        socketInstance.on("analysis-complete", (data: any) => {
-            console.log("🧠 Analysis complete (delayed for 10s):", data);
+        socketInstance.on("starting-analysis", (data: any) => {
+            console.log("📢 Analysis started with content:", data.content);
+            setAnalysisContent(data.content);
+        });
 
-            // 10000x: Executive Polish - Wait 10 seconds to simulate deep thought
-            setTimeout(() => {
-                setMeetingSummary({
-                    analysis: data.analysis,
-                    fileUrls: data.fileUrls
-                });
-                setIsAnalyzing(false);
-            }, 10000);
+        socketInstance.on("analysis-complete", (data: any) => {
+            console.log("🧠 Analysis complete (syncing UI):", data);
+
+            // Wait for 10s delay logic or just show since we've already been waiting?
+            // Let's keep the 10s delay from when 'end-meeting' was clicked for consistent UX
+            setMeetingSummary({
+                analysis: data.analysis,
+                fileUrls: data.fileUrls
+            });
+            // We don't set isAnalyzing false yet; we let the countdown in MeetingSummary finish
         });
 
         socketInstance.on("analysis-error", (data: any) => {
@@ -696,9 +701,12 @@ export default function MeetingPage() {
             {/* Meeting Summary Overlay */}
             {(meetingSummary || isAnalyzing) && (
                 <MeetingSummary
+                    isLoading={isAnalyzing}
                     analysis={meetingSummary?.analysis}
                     fileUrls={meetingSummary?.fileUrls}
-                    isLoading={isAnalyzing}
+                    onClose={() => setMeetingSummary(null)}
+                    analysisContent={analysisContent}
+                    onFinished={() => setIsAnalyzing(false)}
                 />
             )}
 

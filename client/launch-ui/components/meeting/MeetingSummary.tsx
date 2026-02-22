@@ -37,13 +37,24 @@ interface MeetingSummaryProps {
     analysis: AnalysisResult | null;
     fileUrls: FileUrls | null;
     isLoading: boolean;
+    onClose: () => void;
+    analysisContent?: string;
+    onFinished?: () => void;
 }
 
-export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummaryProps) {
+export function MeetingSummary({
+    analysis,
+    fileUrls,
+    isLoading,
+    onClose,
+    analysisContent,
+    onFinished
+}: MeetingSummaryProps) {
     const router = useRouter();
     const hasDownloaded = useRef(false);
     const [completedTasks, setCompletedTasks] = useState<Set<number>>(new Set());
     const [hasCopiedTasks, setHasCopiedTasks] = useState(false);
+    const [countdown, setCountdown] = useState(10);
 
     const sentimentColor = {
         Positive: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
@@ -100,23 +111,30 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
         setTimeout(() => setHasCopiedTasks(false), 2000);
     };
 
-    const [countdown, setCountdown] = useState(10);
-
     useEffect(() => {
         if (isLoading) {
             const timer = setInterval(() => {
-                setCountdown(prev => Math.max(0, prev - 1));
+                setCountdown(prev => {
+                    if (prev <= 1) {
+                        clearInterval(timer);
+                        if (analysis) {
+                            onFinished?.();
+                        }
+                        return 0;
+                    }
+                    return prev - 1;
+                });
             }, 1000);
             return () => clearInterval(timer);
         } else {
             setCountdown(10);
         }
-    }, [isLoading]);
+    }, [isLoading, analysis, onFinished]);
 
     if (isLoading) {
         return (
-            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#050505]/95 backdrop-blur-2xl">
-                <div className="max-w-md w-full p-8 text-center space-y-8 animate-in fade-in zoom-in duration-500">
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#050505]/95 backdrop-blur-2xl px-6">
+                <div className="max-w-2xl w-full text-center space-y-10 animate-in fade-in zoom-in duration-700">
                     <div className="relative mx-auto w-32 h-32">
                         <div className="absolute inset-0 rounded-full border-2 border-indigo-500/20 border-t-indigo-500 animate-spin" />
                         <div className="absolute inset-4 rounded-full border border-indigo-500/10 animate-[pulse_2s_infinite]" />
@@ -125,19 +143,29 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
                         </div>
                     </div>
 
-                    <div className="space-y-3">
-                        <h2 className="text-2xl font-black text-white uppercase tracking-widest italic flex items-center justify-center gap-3">
-                            <Bot className="h-6 w-6 text-indigo-400" />
+                    <div className="space-y-4">
+                        <h2 className="text-3xl font-black text-white uppercase tracking-[0.2em] italic flex items-center justify-center gap-4">
+                            <Bot className="h-8 w-8 text-indigo-400" />
                             Neural Intelligence
                         </h2>
-                        <p className="text-zinc-400 text-sm font-medium leading-relaxed">
-                            Finalizing strategic insights, extracting actionable roadmap elements, and securing meeting artifacts...
+                        <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md relative overflow-hidden group">
+                            <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500" />
+                            <h4 className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mb-3 text-left flex items-center gap-2">
+                                <Sparkles className="h-3 w-3" />
+                                Processing Strategic Data
+                            </h4>
+                            <p className="text-zinc-300 text-sm font-medium leading-relaxed italic text-left select-none animate-pulse">
+                                {analysisContent || "Decrypting meeting metadata and identifying actionable strategic vectors..."}
+                            </p>
+                        </div>
+                        <p className="text-zinc-500 text-[11px] font-bold uppercase tracking-[0.3em]">
+                            {analysis ? "Final Alignment Complete" : "Synthesizing Outcome Data..."}
                         </p>
                     </div>
 
-                    <div className="flex justify-center gap-2">
+                    <div className="flex justify-center gap-3">
                         {[...Array(3)].map((_, i) => (
-                            <div key={i} className="h-1.5 w-12 rounded-full bg-zinc-800 overflow-hidden">
+                            <div key={i} className="h-1.5 w-16 rounded-full bg-zinc-900 overflow-hidden border border-white/5">
                                 <div className="h-full bg-indigo-500 animate-[loading_2s_ease-in-out_infinite]" style={{ animationDelay: `${i * 0.3}s` }} />
                             </div>
                         ))}
