@@ -399,7 +399,7 @@ export class SocketService {
                 // Trigger AI Analysis asynchronously
                 console.log(`🧠 Starting AI Analysis for ${roomId}...`);
                 try {
-                    const analysis = await analysisService.analyzeTranscript(combined);
+                    const analysis = await analysisService.analyzeTranscript(contentText);
                     const analysisPath = analysisService.saveAnalysis(combined, analysis);
 
                     console.log(`✅ Analysis complete: ${analysisPath}`);
