@@ -172,8 +172,8 @@ export class SocketService {
             const room = this.io.sockets.adapter.rooms.get(roomId);
             const currentSize = room ? room.size : 0;
 
-            if (currentSize >= 4) {
-                console.warn(`⚠️ Room ${roomId} is full (${currentSize}/4). Rejecting ${socket.id}`);
+            if (currentSize >= 5) {
+                console.warn(`⚠️ Room ${roomId} is full (${currentSize}/5). Rejecting ${socket.id}`);
                 socket.emit('room-full');
                 return;
             }
@@ -322,8 +322,8 @@ export class SocketService {
             // Add to buffer
             transcriptService.addChunk(roomId, userId, userName, text, timestamp);
 
-            // Optionally broadcast to others for real-time captions (Not requested but good for future)
-            // socket.to(roomId).emit('live-caption', { userId, userName, text });
+            // Broadcast to others for real-time captions in the sidebar
+            socket.to(roomId).emit('live-transcript', { userId, userName, text, timestamp });
 
             console.log(`📝 Transcript chunk from ${userName} in ${roomId}: "${text.substring(0, 30)}..."`);
         });

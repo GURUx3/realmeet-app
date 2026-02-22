@@ -54,6 +54,7 @@ export default function MeetingPage() {
     const [isConnected, setIsConnected] = useState(false);
     const [meetingSummary, setMeetingSummary] = useState<any>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
+    const [liveTranscriptLines, setLiveTranscriptLines] = useState<any[]>([]);
 
     // Multi-user State
     const [peers, setPeers] = useState<Map<string, PeerData>>(new Map());
@@ -92,13 +93,17 @@ export default function MeetingPage() {
         onResult: (text) => {
             if (socketRef.current && user && !isMuted) {
                 setLastTranscript(text); // UI Feedback
-                socketRef.current.emit('transcript-chunk', {
+
+                const chunk = {
                     roomId: meetingCode,
                     text: text,
                     userId: user.id,
-                    userName: user.fullName || user.firstName || "Unknown",
-                    timestamp: Date.now()
-                });
+                    userName: user.fullName || user.firstName || "You",
+                    timestamp: Date.now(),
+                    avatar: user.imageUrl
+                };
+                socketRef.current.emit('transcript-chunk', chunk);
+                setLiveTranscriptLines(prev => [...prev.slice(-99), chunk]);
             }
         },
         onError: (err) => console.log("STT Error (ignorable):", err)
@@ -192,7 +197,7 @@ export default function MeetingPage() {
         });
 
         socketInstance.on("room-full", () => {
-            setError("Room is full (Max 4 participants). Redirecting...");
+            setError("Room is full (Max 5 participants). Redirecting...");
             setTimeout(() => router.push("/dashboard"), 3000);
         });
 
@@ -298,6 +303,10 @@ export default function MeetingPage() {
             }));
         });
 
+        socketInstance.on("live-transcript", (data: { userId: string, userName: string, text: string, timestamp: number }) => {
+            setLiveTranscriptLines(prev => [...prev.slice(-49), data]);
+        });
+
         socketInstance.on("transcript-saved", ({ fileUrls }: any) => { // Updated to receive fileUrls
             console.log("📄 Transcript saved. Waiting for analysis...");
             // We don't alert anymore, we wait for the analysis-complete event
@@ -321,6 +330,11 @@ export default function MeetingPage() {
                 fileUrls: data.fileUrls
             });
             setIsAnalyzing(false);
+        });
+
+        socketInstance.on("live-transcript", (data: any) => {
+            console.log("🎙️ Live transcript received:", data);
+            setLiveTranscriptLines(prev => [...prev, data]);
         });
 
         socketInstance.on("error", (err: any) => {
@@ -348,7 +362,17 @@ export default function MeetingPage() {
             if (event.streams && event.streams[0]) {
                 setPeers(prev => {
                     const newMap = new Map(prev);
-                    newMap.set(targetSocketId, { socketId: targetSocketId, userId: targetUserId, stream: event.streams[0] });
+                    const existing = newMap.get(targetSocketId);
+                    newMap.set(targetSocketId, {
+                        socketId: targetSocketId,
+                        userId: targetUserId,
+                        stream: event.streams[0],
+                        // Preserve metadata
+                        name: existing?.name,
+                        role: existing?.role,
+                        activity: existing?.activity,
+                        imageUrl: existing?.imageUrl
+                    });
                     return newMap;
                 });
                 updatePeers();
@@ -421,7 +445,21 @@ export default function MeetingPage() {
     const handleReceiveAnswer = async (answer: RTCSessionDescriptionInit, senderId: string) => {
         const pc = peerConnections.current.get(senderId);
         if (pc && pc.signalingState !== "stable") {
-            await pc.setRemoteDescription(new RTCSessionDescription(answer));
+            try {
+                await pc.setRemoteDescription(new RTCSessionDescription(answer));
+
+                // Process queued candidates NOW that remote description is set
+                const queue = iceCandidatesQueues.current.get(senderId) || [];
+                if (queue.length > 0) {
+                    console.log(`Processing ${queue.length} queued ICE candidates for ${senderId}`);
+                    for (const candidate of queue) {
+                        await pc.addIceCandidate(candidate).catch(e => console.error("Error adding queued ICE:", e));
+                    }
+                    iceCandidatesQueues.current.delete(senderId);
+                }
+            } catch (err) {
+                console.error("Error setting remote description (answer):", err);
+            }
         }
     };
 
@@ -647,7 +685,7 @@ export default function MeetingPage() {
                         <div className="flex items-center gap-2 rounded-full bg-emerald-500/10 backdrop-blur-md px-3 py-1.5 border border-emerald-500/20 shadow-lg">
                             <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />
                             <span className="text-[10px] font-bold uppercase text-emerald-400 tracking-wider inline-block">
-                                {peerCount + 1} Active Limit 4
+                                {peerCount + 1} Active Limit 5
                             </span>
                         </div>
                     ) : (
@@ -769,6 +807,9 @@ export default function MeetingPage() {
                 setChatInput={setChatInput}
                 onSendMessage={sendMessage}
                 unreadCount={unreadCount}
+                transcriptLines={liveTranscriptLines}
+                isAnalyzing={isAnalyzing}
+                analysisResult={meetingSummary?.analysis}
             />
 
             <style jsx global>{`

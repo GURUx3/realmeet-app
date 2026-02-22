@@ -1,15 +1,24 @@
-import { useEffect, useRef } from "react";
-import { Download, FileText, LayoutDashboard, Loader2, Sparkles, User } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Download, FileText, LayoutDashboard, Loader2, Sparkles, User, Check, Copy, UserCheck, Calendar as CalendarIcon, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+
+interface ActionItem {
+    task: string;
+    assignee?: string;
+    priority: 'High' | 'Medium' | 'Low';
+    dueDate?: string;
+}
 
 interface AnalysisResult {
     summary: string;
-    actionItems: string[];
+    actionItems: ActionItem[];
+    keyDecisions: string[];
     keyTopics: string[];
     sentiment: 'Positive' | 'Neutral' | 'Negative';
 }
@@ -29,14 +38,23 @@ interface MeetingSummaryProps {
     fileUrls: FileUrls | null;
     isLoading: boolean;
 }
+
 export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummaryProps) {
     const router = useRouter();
     const hasDownloaded = useRef(false);
+    const [completedTasks, setCompletedTasks] = useState<Set<number>>(new Set());
+    const [hasCopiedTasks, setHasCopiedTasks] = useState(false);
 
     const sentimentColor = {
         Positive: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
         Neutral: "bg-blue-500/10 text-blue-500 border-blue-500/20",
         Negative: "bg-red-500/10 text-red-500 border-red-500/20",
+    };
+
+    const priorityColor = {
+        High: "text-red-400 bg-red-400/10 border-red-400/20",
+        Medium: "text-amber-400 bg-amber-400/10 border-amber-400/20",
+        Low: "text-blue-400 bg-blue-400/10 border-blue-400/20",
     };
 
     // Construct full URL including API base if needed, or relative
@@ -51,12 +69,36 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
             hasDownloaded.current = true;
             const link = document.createElement('a');
             link.href = getDownloadLink(fileUrls.combined);
-            link.download = 'meeting-transcript.txt'; // Browser might ignore this for cross-origin but good to have
+            link.download = 'meeting-transcript.txt';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
     }, [isLoading, fileUrls]);
+
+    const toggleTask = (idx: number) => {
+        const newSet = new Set(completedTasks);
+        if (newSet.has(idx)) newSet.delete(idx);
+        else newSet.add(idx);
+        setCompletedTasks(newSet);
+    };
+
+    const copyTasksAsMarkdown = () => {
+        if (!analysis?.actionItems) return;
+
+        const markdown = analysis.actionItems.map(item => {
+            const priority = `[Priority: ${item.priority}]`;
+            const assignee = item.assignee ? ` @${item.assignee}` : '';
+            const dueDate = item.dueDate ? ` (Due: ${item.dueDate})` : '';
+            return `- [ ] **${item.task}** ${priority}${assignee}${dueDate}`;
+        }).join('\n');
+
+        const header = `# Meeting Action Items\n**Meeting Date:** ${new Date().toLocaleDateString()}\n\n`;
+        navigator.clipboard.writeText(header + markdown);
+
+        setHasCopiedTasks(true);
+        setTimeout(() => setHasCopiedTasks(false), 2000);
+    };
 
     if (isLoading) {
         return (
@@ -74,7 +116,7 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#050505] overflow-y-auto p-4 md:p-8">
-            <div className="w-full max-w-5xl space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <div className="w-full max-w-5xl space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700 pb-12">
 
                 {/* Header */}
                 <div className="text-center space-y-2">
@@ -83,7 +125,7 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
                         <span>AI Analysis Complete</span>
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight">Meeting Summary</h1>
-                    <p className="text-zinc-400 text-lg">Here's what happened in your session</p>
+                    <p className="text-zinc-400 text-lg">Here&apos;s what happened in your session</p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -104,64 +146,111 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
                             </CardContent>
                         </Card>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Action Items */}
+                        {/* Action Items */}
+                        <Card className="bg-zinc-900/50 border-white/10 backdrop-blur-md">
+                            <CardHeader className="flex flex-row items-center justify-between">
+                                <CardTitle className="text-lg text-white flex items-center gap-2">
+                                    <Check className="h-5 w-5 text-emerald-500" />
+                                    Actionable Tasks
+                                </CardTitle>
+                                {analysis?.actionItems && analysis.actionItems.length > 0 && (
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={copyTasksAsMarkdown}
+                                        className="text-[10px] uppercase font-bold tracking-widest text-zinc-400 hover:text-white hover:bg-white/5"
+                                    >
+                                        {hasCopiedTasks ? <Check className="h-3 w-3 mr-2" /> : <Copy className="h-3 w-3 mr-2" />}
+                                        {hasCopiedTasks ? "Copied" : "Copy All Tasks"}
+                                    </Button>
+                                )}
+                            </CardHeader>
+                            <CardContent>
+                                <div className="space-y-3">
+                                    {analysis?.actionItems?.length ? analysis.actionItems.map((item, i) => (
+                                        <div
+                                            key={i}
+                                            onClick={() => toggleTask(i)}
+                                            className={cn(
+                                                "flex items-start gap-4 p-4 rounded-xl border border-white/5 bg-black/40 cursor-pointer transition-all hover:border-white/10 group",
+                                                completedTasks.has(i) && "opacity-50 grayscale"
+                                            )}
+                                        >
+                                            <div className={cn(
+                                                "mt-1 h-5 w-5 rounded-md border flex items-center justify-center transition-colors shrink-0",
+                                                completedTasks.has(i) ? "bg-emerald-500 border-emerald-500" : "border-zinc-700 bg-zinc-900 group-hover:border-zinc-500"
+                                            )}>
+                                                {completedTasks.has(i) && <Check className="h-3 w-3 text-white" />}
+                                            </div>
+                                            <div className="flex-1 space-y-2">
+                                                <div className="flex items-center gap-2">
+                                                    <Badge variant="outline" className={cn("text-[9px] uppercase tracking-tighter h-5", priorityColor[item.priority] || priorityColor.Medium)}>
+                                                        {item.priority}
+                                                    </Badge>
+                                                    {item.dueDate && (
+                                                        <span className="text-[10px] text-zinc-500 flex items-center gap-1">
+                                                            <Clock className="h-3 w-3" />
+                                                            {item.dueDate}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <p className={cn("text-sm transition-all", completedTasks.has(i) ? "text-zinc-500 line-through" : "text-white font-medium")}>
+                                                    {item.task}
+                                                </p>
+                                                {item.assignee && (
+                                                    <div className="flex items-center gap-1.5 text-[10px] text-zinc-400">
+                                                        <UserCheck className="h-3 w-3" />
+                                                        <span>Assigned to: <span className="text-indigo-400 font-medium">{item.assignee}</span></span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )) : <div className="text-zinc-500 italic text-center py-8">No action items detected.</div>}
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                    </div>
+
+                    {/* Right Col: Metadata & Downloads */}
+                    <div className="space-y-6">
+                        {/* Topics & Sentiment */}
+                        <div className="grid grid-cols-1 gap-6">
                             <Card className="bg-zinc-900/50 border-white/10 backdrop-blur-md">
                                 <CardHeader>
-                                    <CardTitle className="text-lg text-white">Action Items</CardTitle>
+                                    <CardTitle className="text-lg text-white">Key Topics</CardTitle>
                                 </CardHeader>
-                                <CardContent>
-                                    <ul className="space-y-3">
-                                        {analysis?.actionItems?.length ? analysis.actionItems.map((item, i) => (
-                                            <li key={i} className="flex gap-3 items-start text-sm text-zinc-300">
-                                                <div className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
-                                                <span>{item}</span>
-                                            </li>
-                                        )) : <li className="text-zinc-500 italic">No action items detected.</li>}
-                                    </ul>
+                                <CardContent className="flex flex-wrap gap-2">
+                                    {analysis?.keyTopics?.length ? analysis.keyTopics.map((topic, i) => (
+                                        <Badge key={i} variant="secondary" className="bg-white/10 text-zinc-200 hover:bg-white/20">
+                                            {topic}
+                                        </Badge>
+                                    )) : <span className="text-zinc-500 italic">No topics found.</span>}
                                 </CardContent>
                             </Card>
 
-                            {/* Topics & Sentiment */}
-                            <div className="space-y-6">
-                                <Card className="bg-zinc-900/50 border-white/10 backdrop-blur-md">
-                                    <CardHeader>
-                                        <CardTitle className="text-lg text-white">Key Topics</CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="flex flex-wrap gap-2">
-                                        {analysis?.keyTopics?.length ? analysis.keyTopics.map((topic, i) => (
-                                            <Badge key={i} variant="secondary" className="bg-white/10 text-zinc-200 hover:bg-white/20">
-                                                {topic}
-                                            </Badge>
-                                        )) : <span className="text-zinc-500 italic">No topics found.</span>}
-                                    </CardContent>
-                                </Card>
-
-                                <Card className="bg-zinc-900/50 border-white/10 backdrop-blur-md">
-                                    <CardHeader>
-                                        <CardTitle className="text-lg text-white">Sentiment</CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        {analysis ? (
-                                            <div className={`inline-flex items-center px-3 py-1 rounded-full border text-sm font-medium ${sentimentColor[analysis.sentiment] || sentimentColor.Neutral}`}>
-                                                {analysis.sentiment}
-                                            </div>
-                                        ) : (
-                                            <div className={`inline-flex items-center px-3 py-1 rounded-full border text-sm font-medium ${sentimentColor.Neutral}`}>
-                                                Neutral
-                                            </div>
-                                        )}
-                                    </CardContent>
-                                </Card>
-                            </div>
+                            <Card className="bg-zinc-900/50 border-white/10 backdrop-blur-md">
+                                <CardHeader>
+                                    <CardTitle className="text-lg text-white">Sentiment</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    {analysis ? (
+                                        <div className={`inline-flex items-center px-4 py-1.5 rounded-full border text-sm font-bold uppercase tracking-wider ${sentimentColor[analysis.sentiment] || sentimentColor.Neutral}`}>
+                                            {analysis.sentiment}
+                                        </div>
+                                    ) : (
+                                        <div className={`inline-flex items-center px-3 py-1 rounded-full border text-sm font-medium ${sentimentColor.Neutral}`}>
+                                            Neutral
+                                        </div>
+                                    )}
+                                </CardContent>
+                            </Card>
                         </div>
-                    </div>
 
-                    {/* Right Col: Downloads & Actions */}
-                    <div className="space-y-6">
-                        <Card className="bg-zinc-900/80 border-white/10 h-full">
+                        {/* Downloads */}
+                        <Card className="bg-zinc-900/80 border-white/10">
                             <CardHeader>
-                                <CardTitle className="text-white">Transcripts</CardTitle>
+                                <CardTitle className="text-white text-lg">Transcripts</CardTitle>
                                 <CardDescription className="text-zinc-500">Download recording data</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
@@ -169,7 +258,7 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
                                     className="w-full bg-white text-black hover:bg-zinc-200 justify-between h-12"
                                     onClick={() => window.open(getDownloadLink(fileUrls.combined), '_blank')}
                                 >
-                                    <span className="flex items-center gap-2">
+                                    <span className="flex items-center gap-2 font-bold">
                                         <FileText className="h-4 w-4" />
                                         Combined Transcript
                                     </span>
@@ -179,17 +268,17 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
                                 <Separator className="bg-white/10" />
 
                                 <div className="space-y-2">
-                                    <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-2">Individual Streams</p>
-                                    <ScrollArea className="h-[200px] w-full pr-4">
+                                    <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2 px-1">Individual Streams</p>
+                                    <ScrollArea className="h-[120px] w-full pr-4">
                                         <div className="space-y-2">
                                             {fileUrls.individual.map((file, i) => (
                                                 <Button
                                                     key={i}
                                                     variant="outline"
-                                                    className="w-full justify-between items-center border-white/10 text-zinc-300 hover:bg-white/5 hover:text-white"
+                                                    className="w-full justify-between items-center border-white/10 text-zinc-300 hover:bg-white/5 hover:text-white h-10"
                                                     onClick={() => window.open(getDownloadLink(file.url), '_blank')}
                                                 >
-                                                    <span className="flex items-center gap-2 truncate">
+                                                    <span className="flex items-center gap-2 truncate text-xs">
                                                         <User className="h-3 w-3" />
                                                         <span className="truncate max-w-[120px]">{file.userName}</span>
                                                     </span>
@@ -204,7 +293,7 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
 
                         <Button
                             variant="destructive"
-                            className="w-full h-14 text-lg font-medium shadow-lg shadow-red-900/20"
+                            className="w-full h-14 text-lg font-bold shadow-lg shadow-red-900/20 rounded-xl"
                             onClick={() => router.push('/dashboard')}
                         >
                             <LayoutDashboard className="mr-2 h-5 w-5" />

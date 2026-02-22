@@ -12,6 +12,9 @@ interface SidebarProps {
     setChatInput: (input: string) => void;
     onSendMessage: (message: string) => void;
     unreadCount: number;
+    transcriptLines: Array<{ userId: string, userName: string, text: string, timestamp: number, avatar?: string }>;
+    isAnalyzing: boolean;
+    analysisResult: any | null;
 }
 
 export default function MeetingSidebar({
@@ -23,7 +26,10 @@ export default function MeetingSidebar({
     chatInput,
     setChatInput,
     onSendMessage,
-    unreadCount
+    unreadCount,
+    transcriptLines = [],
+    isAnalyzing = false,
+    analysisResult = null,
 }: SidebarProps) {
 
     const handleSendMessage = () => {
@@ -184,7 +190,11 @@ export default function MeetingSidebar({
                 )}
 
                 {activeTab === 'agent' && (
-                    <AIAgentPanel />
+                    <AIAgentPanel
+                        transcriptLines={transcriptLines}
+                        isAnalyzing={isAnalyzing}
+                        analysisResult={analysisResult}
+                    />
                 )}
             </div>
         </div>

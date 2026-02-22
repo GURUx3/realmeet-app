@@ -16,6 +16,9 @@ interface EnvironmentConfig {
     cors: {
         clientUrl: string;
     };
+    ai: {
+        geminiApiKey?: string;
+    };
 }
 
 function validateEnv(): EnvironmentConfig {
@@ -43,6 +46,9 @@ function validateEnv(): EnvironmentConfig {
         },
         cors: {
             clientUrl: process.env.CLIENT_URL || 'http://localhost:3000',
+        },
+        ai: {
+            geminiApiKey: process.env.GEMINI_API_KEY,
         },
     };
 }
