@@ -32,7 +32,8 @@ interface AIAgentPanelProps {
     transcriptLines?: (TranscriptLine & { isFinal?: boolean })[];
     isAnalyzing?: boolean;
     analysisResult?: AnalysisResult | null;
-    aiStream?: MediaStream | null; // Added Shadow Audio Stream
+    aiStream?: MediaStream | null;
+    onInjectMock?: (text: string) => void;
 }
 
 const NeuralWaveform = ({ stream }: { stream: MediaStream | null }) => {
@@ -93,7 +94,8 @@ export default function AIAgentPanel({
     transcriptLines = [],
     isAnalyzing = false,
     analysisResult = null,
-    aiStream = null
+    aiStream = null,
+    onInjectMock
 }: AIAgentPanelProps) {
     const scrollRef = useRef<HTMLDivElement>(null);
 
