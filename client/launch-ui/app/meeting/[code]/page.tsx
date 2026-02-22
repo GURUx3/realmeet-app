@@ -90,8 +90,8 @@ export default function MeetingPage() {
     const [lastTranscript, setLastTranscript] = useState<string>("");
 
     const { startListening, stopListening, isListening: isTranscribing, hasSupport: hasSttSupport } = useSpeechRecognition({
-        onResult: (text) => {
-            if (socketRef.current && user && !isMuted) {
+        onResult: (text, isFinal) => {
+            if (socketRef.current && user && !isMuted && isFinal) {
                 setLastTranscript(text); // UI Feedback
 
                 const chunk = {
@@ -100,8 +100,11 @@ export default function MeetingPage() {
                     userId: user.id,
                     userName: user.fullName || user.firstName || "You",
                     timestamp: Date.now(),
-                    avatar: user.imageUrl
+                    avatar: user.imageUrl,
+                    isFinal: true
                 };
+
+                console.log("🚀 Sending final transcript chunk:", text);
                 socketRef.current.emit('transcript-chunk', chunk);
                 setLiveTranscriptLines(prev => [...prev.slice(-99), chunk]);
             }
@@ -334,7 +337,13 @@ export default function MeetingPage() {
 
         socketInstance.on("live-transcript", (data: any) => {
             console.log("🎙️ Live transcript received:", data);
-            setLiveTranscriptLines(prev => [...prev, data]);
+            setLiveTranscriptLines(prev => [...prev.slice(-99), data]);
+        });
+
+        socketInstance.on("live-action-item", (data: any) => {
+            console.log("✨ Live AI Insight detected:", data);
+            // Optionally show a toast or a small highlight in the sidebar
+            // For now, we'll just log it; the AIAgentPanel could be updated to show these "live" too
         });
 
         socketInstance.on("error", (err: any) => {

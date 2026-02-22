@@ -23,44 +23,87 @@ export class AnalysisService {
      * Analyzes a raw transcript file and generates insights.
      * Uses Google Gemini Pro via REST API.
      */
-    public async analyzeTranscript(transcriptPath: string): Promise<AnalysisResult> {
-        const apiKey = env.ai.geminiApiKey;
-        console.log(`🧠 AI Analysis started for: ${transcriptPath}`);
+    public async detectLiveInteractions(content: string): Promise<{ tasks: string[], topics: string[] }> {
+        const apiKey = env.geminiApiKey;
+        if (!apiKey) return { tasks: [], topics: [] };
+
+        const prompt = `
+            Analyze the following short snippet of a live meeting transcript. 
+            Identify if any specific ACTION ITEMS or KEY TOPICS have just been mentioned.
+            
+            SNIPPET:
+            """
+            ${content}
+            """
+            
+            JSON OUTPUT:
+            {
+              "tasks": ["short actionable task if any, else empty array"],
+              "topics": ["1-2 keywords if any, else empty array"]
+            }
+        `;
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: { response_mime_type: "application/json" }
+                })
+            });
+
+            if (!response.ok) return { tasks: [], topics: [] };
+            const data = await response.json();
+            const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (!text) return { tasks: [], topics: [] };
+
+            return JSON.parse(text);
+        } catch (e) {
+            return { tasks: [], topics: [] };
+        }
+    }
+
+    public async analyzeTranscript(content: string): Promise<AnalysisResult> {
+        const apiKey = env.geminiApiKey;
 
         if (!apiKey) {
-            console.warn("⚠️ No GEMINI_API_KEY found, falling back to mock analysis.");
-            return this.getMockAnalysis(transcriptPath);
+            console.warn("⚠️ GEMINI_API_KEY not found. Using high-quality executive mock data.");
+            return this.getMockAnalysis();
         }
 
         try {
-            const content = fs.readFileSync(transcriptPath, 'utf-8');
-
             const prompt = `
-                You are a senior project manager and tech lead. Analyze the following meeting transcript and extract key details into a structured JSON format.
-                
-                TRANSCRIPT:
-                """
-                ${content}
-                """
-                
-                OUTPUT FORMAT (JSON):
-                {
-                  "summary": "2-3 sentence executive summary of the meeting",
-                  "actionItems": [
-                    {
-                      "task": "Clean and specific task description",
-                      "assignee": "Name of person assigned if mentioned, otherwise null",
-                      "priority": "High" | "Medium" | "Low",
-                      "dueDate": "Specific date if mentioned, otherwise null"
-                    }
-                  ],
-                  "keyDecisions": ["List of key decisions made during the call"],
-                  "keyTopics": ["List of top 3-5 keywords or topics"],
-                  "sentiment": "Positive" | "Neutral" | "Negative"
-                }
-                
-                Ensure the JSON is valid and the action items are truly actionable.
-            `;
+            You are a world-class Executive Strategy Consultant and Chief of Staff. 
+            Analyze the following meeting transcript and produce a high-stakes, professional executive report.
+            
+            TRANSCRIPT:
+            """
+            ${content}
+            """
+            
+            CRITICAL REQUIREMENTS:
+            1. SUMMARY: Provide a concise, 2-3 sentence executive overview focusing on outcomes and strategic direction.
+            2. ACTION ITEMS: Extract high-impact tasks. For each:
+               - "task": Professional, clear actionable description.
+               - "assignee": Specific person (e.g., "Guru", "Zem") or "The Team" if clear, otherwise null.
+               - "priority": "High" | "Medium" | "Low" based on impact.
+               - "dueDate": Exact date (e.g., "Feb 25") if mentioned, otherwise null.
+            3. KEY DECISIONS: List all major strategic or technical decisions finalized during this talk.
+            4. KEY TOPICS: List top 5 strategic keywords.
+            5. SENTIMENT: "Positive" | "Neutral" | "Negative" based on team alignment.
+
+            OUTPUT FORMAT (JSON):
+            {
+              "summary": "...",
+              "actionItems": [{ "task": "...", "assignee": "...", "priority": "...", "dueDate": "..." }],
+              "keyDecisions": ["..."],
+              "keyTopics": ["..."],
+              "sentiment": "..."
+            }
+            
+            Ensure the JSON is strictly valid. Focus on clarity and professional tone.
+        `;
 
             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
                 method: 'POST',

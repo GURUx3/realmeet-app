@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { Bot, User, Check, Calendar, Loader2, Sparkles, Wand2, Download, Trash2, Mic, Clock, UserCheck } from 'lucide-react';
+import { Bot, User, Check, Calendar, Loader2, Sparkles, Wand2, Download, Trash2, Mic, Clock, UserCheck, TrendingUp, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -48,85 +48,109 @@ export default function AIAgentPanel({
     }, [transcriptLines, isAnalyzing, analysisResult]);
 
     const priorityColor = {
-        High: "text-red-400 bg-red-400/10 border-red-400/20",
-        Medium: "text-amber-400 bg-amber-400/10 border-amber-400/20",
+        High: "text-rose-400 bg-rose-400/10 border-rose-400/20",
+        Medium: "text-orange-400 bg-orange-400/10 border-orange-400/20",
         Low: "text-blue-400 bg-blue-400/10 border-blue-400/20",
     };
 
     return (
-        <div className="flex flex-col h-full bg-linear-to-b from-black/40 to-black/60 relative overflow-hidden">
+        <div className="flex flex-col h-full bg-[#030303] text-zinc-100 relative overflow-hidden font-sans">
             {/* Background decoration */}
-            <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[50%] bg-indigo-500/5 blur-[100px] pointer-events-none rounded-full" />
+            <div className="absolute top-[-20%] left-[-20%] w-[140%] h-[50%] bg-indigo-600/10 blur-[120px] pointer-events-none rounded-full" />
+            <div className="absolute bottom-[-20%] right-[-20%] w-[100%] h-[40%] bg-purple-600/5 blur-[120px] pointer-events-none rounded-full" />
 
 
-            {/* Agent Header - Floating Style */}
-            <div className="mx-4 mt-4 p-4 rounded-xl border border-white/5 bg-white/5 backdrop-blur-md shrink-0 flex items-center justify-between shadow-xl relative overflow-hidden group">
-                <div className="absolute inset-0 bg-linear-to-r from-indigo-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            {/* Agent Header - Premium Executive Style */}
+            <div className="mx-4 mt-6 p-4 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-2xl shrink-0 flex items-center justify-between shadow-2xl relative overflow-hidden group">
+                <div className="absolute inset-0 bg-linear-to-r from-indigo-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
 
-                <div className="flex items-center gap-3 relative z-10">
-                    <div className="h-10 w-10 rounded-xl bg-linear-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 ring-1 ring-white/20">
-                        <Bot className="h-5 w-5 text-white" />
+                <div className="flex items-center gap-4 relative z-10">
+                    <div className="h-12 w-12 rounded-2xl bg-linear-to-br from-indigo-600 to-violet-700 flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.3)] ring-1 ring-white/20">
+                        <Zap className="h-6 w-6 text-white animate-pulse" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-white tracking-wide">AI Assistant</h3>
-                        <div className="flex items-center gap-1.5">
+                        <h3 className="text-sm font-bold text-white tracking-widest uppercase italic">Executive Assistant</h3>
+                        <div className="flex items-center gap-1.5 mt-0.5">
                             <span className="relative flex h-2 w-2">
-                                <span className={cn("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", isAnalyzing ? "bg-emerald-400" : "bg-emerald-500/30")}></span>
-                                <span className={cn("relative inline-flex rounded-full h-2 w-2", isAnalyzing ? "bg-emerald-500" : "bg-emerald-500/50")}></span>
+                                <span className={cn("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", isAnalyzing ? "bg-indigo-400" : "bg-emerald-500/30")}></span>
+                                <span className={cn("relative inline-flex rounded-full h-2 w-2", isAnalyzing ? "bg-indigo-500" : "bg-emerald-500/50")}></span>
                             </span>
-                            <span className={cn("text-[10px] font-medium tracking-wider uppercase", isAnalyzing ? "text-emerald-400 animate-pulse" : "text-zinc-500")}>
-                                {isAnalyzing ? 'Analyzing Call...' : 'Active Listening'}
+                            <span className={cn("text-[9px] font-bold tracking-[0.2em] uppercase", isAnalyzing ? "text-indigo-400 animate-pulse" : "text-zinc-500")}>
+                                {isAnalyzing ? 'Processing Intelligence' : 'Listening Active'}
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <div className="flex gap-1 relative z-10">
-                    <button className="p-2 rounded-lg hover:bg-white/10 text-zinc-400 hover:text-white transition-colors" title="Save Summary">
+                <div className="flex gap-2 relative z-10">
+                    <button className="h-9 w-9 rounded-xl flex items-center justify-center hover:bg-white/10 text-zinc-400 hover:text-white transition-all duration-300 border border-transparent hover:border-white/10" title="System Stats">
+                        <TrendingUp className="h-4 w-4" />
+                    </button>
+                    <button className="h-9 w-9 rounded-xl flex items-center justify-center hover:bg-white/10 text-zinc-400 hover:text-white transition-all duration-300 border border-transparent hover:border-white/10" title="Log Export">
                         <Download className="h-4 w-4" />
                     </button>
                 </div>
             </div>
 
             {/* Content Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-6 scroll-smooth" ref={scrollRef}>
+            <div className="flex-1 overflow-y-auto p-4 space-y-8 mt-2 scroll-smooth no-scrollbar" ref={scrollRef}>
 
-                {/* Analysis Results (if call ended) */}
+                {/* Executive Summary (if call ended) */}
                 {analysisResult && (
-                    <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-700">
-                        <div className="p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
-                            <h4 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2 flex items-center gap-2">
-                                <Sparkles className="h-3 w-3" />
-                                Executive Summary
+                    <div className="space-y-6 animate-in fade-in zoom-in-95 duration-1000 slide-in-from-top-4">
+                        <div className="p-5 rounded-2xl bg-linear-to-br from-indigo-500/10 via-black/40 to-black/60 border border-indigo-500/20 shadow-xl relative group">
+                            <div className="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-40 transition-opacity">
+                                <Sparkles className="h-12 w-12 text-indigo-400/50" />
+                            </div>
+                            <h4 className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.3em] mb-3 flex items-center gap-2">
+                                <Wand2 className="h-3 w-3" />
+                                Executive Synopsis
                             </h4>
-                            <p className="text-sm text-zinc-300 leading-relaxed">{analysisResult.summary}</p>
+                            <p className="text-sm text-zinc-100 leading-relaxed font-medium italic select-none">
+                                &quot;{analysisResult.summary}&quot;
+                            </p>
+
+                            {/* Key Decisions Badge List */}
+                            {analysisResult.keyDecisions.length > 0 && (
+                                <div className="mt-4 flex flex-wrap gap-2">
+                                    {analysisResult.keyDecisions.map((decision, idx) => (
+                                        <div key={idx} className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/5 border border-white/5 text-[9px] text-zinc-400 font-bold uppercase tracking-wider">
+                                            <Check className="h-2.5 w-2.5 text-emerald-500" />
+                                            {decision}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         {analysisResult.actionItems.length > 0 && (
-                            <div className="space-y-2">
-                                <h4 className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest px-1">Action Items</h4>
+                            <div className="space-y-3">
+                                <div className="flex items-center justify-between px-1">
+                                    <h4 className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.3em]">Project Roadmap</h4>
+                                    <span className="text-[9px] text-zinc-600 font-bold">{analysisResult.actionItems.length} OBJECTIVES</span>
+                                </div>
                                 {analysisResult.actionItems.map((item, idx) => (
-                                    <div key={idx} className="relative overflow-hidden bg-zinc-900/80 border border-white/5 rounded-xl p-4 flex items-start gap-4 group hover:border-white/10 transition-colors">
-                                        <div className="bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/10 shrink-0">
+                                    <div key={idx} className="relative overflow-hidden bg-black/40 border border-white/5 rounded-2xl p-4 flex items-start gap-5 group hover:border-emerald-500/30 transition-all duration-500 hover:translate-x-1 shadow-lg shadow-black/50">
+                                        <div className="bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/10 shrink-0 group-hover:bg-emerald-500/20 transition-colors">
                                             <Calendar className="h-5 w-5 text-emerald-500" />
                                         </div>
-                                        <div className="space-y-1.5 flex-1">
-                                            <div className="flex items-center gap-2">
-                                                <Badge variant="outline" className={cn("text-[9px] uppercase tracking-tighter h-5", priorityColor[item.priority] || priorityColor.Medium)}>
-                                                    {item.priority}
+                                        <div className="space-y-2 flex-1 pt-0.5">
+                                            <div className="flex items-center gap-3">
+                                                <Badge variant="outline" className={cn("text-[8px] font-black px-2 py-0 h-4 border-0 rounded-sm", priorityColor[item.priority] || priorityColor.Medium)}>
+                                                    {item.priority} IMPACT
                                                 </Badge>
                                                 {item.dueDate && (
-                                                    <span className="text-[10px] text-zinc-500 flex items-center gap-1">
-                                                        <Clock className="h-3 w-3" />
-                                                        {item.dueDate}
+                                                    <span className="text-[9px] text-zinc-500 font-bold flex items-center gap-1 uppercase tracking-tighter">
+                                                        <Clock className="h-2.5 w-2.5" />
+                                                        DEADLINE: {item.dueDate}
                                                     </span>
                                                 )}
                                             </div>
-                                            <p className="text-sm text-white font-semibold leading-tight">{item.task}</p>
+                                            <p className="text-sm text-white font-bold tracking-tight">{item.task}</p>
                                             {item.assignee && (
-                                                <div className="flex items-center gap-1.5 text-[10px] text-zinc-400">
-                                                    <UserCheck className="h-3 w-3" />
-                                                    <span>Assigned to: <span className="text-indigo-400 font-medium">{item.assignee}</span></span>
+                                                <div className="flex items-center gap-2 pt-1 border-t border-white/5 mt-2">
+                                                    <UserCheck className="h-3 w-3 text-indigo-400/70" />
+                                                    <span className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest">OWNER / <span className="text-indigo-400">{item.assignee}</span></span>
                                                 </div>
                                             )}
                                         </div>
@@ -139,35 +163,41 @@ export default function AIAgentPanel({
 
                 {/* Empty State */}
                 {transcriptLines.length === 0 && !isAnalyzing && !analysisResult && (
-                    <div className="flex flex-col items-center justify-center h-full text-zinc-600 space-y-3 opacity-60">
-                        <div className="p-4 rounded-full bg-white/5 ring-1 ring-white/5 mb-2">
-                            <Mic className="h-8 w-8" />
+                    <div className="flex flex-col items-center justify-center h-full text-zinc-700 space-y-6 animate-pulse">
+                        <div className="p-6 rounded-[2.5rem] bg-white/5 ring-1 ring-white/10 relative">
+                            <div className="absolute inset-0 bg-indigo-500/20 blur-3xl rounded-full" />
+                            <Mic className="h-10 w-10 relative z-10 text-indigo-400" />
                         </div>
-                        <p className="text-sm font-medium text-center">Waiting for speech...</p>
-                        <p className="text-xs text-center max-w-[200px]">Start speaking to see real-time transcription and AI analysis.</p>
+                        <div className="text-center space-y-1 relative z-10">
+                            <p className="text-xs font-black uppercase tracking-[0.4em] text-zinc-500">Awaiting Signal</p>
+                            <p className="text-[10px] text-zinc-600 font-bold max-w-[180px]">Artificial Intelligence is connected and ready to analyze your conversation.</p>
+                        </div>
                     </div>
                 )}
 
                 {/* Transcript Lines */}
-                <div className="space-y-6">
+                <div className="space-y-8">
                     {transcriptLines.map((msg, idx) => (
-                        <div key={idx} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <div className="flex gap-3 group">
-                                <Avatar className="h-8 w-8 border border-white/10 mt-1 ring-2 ring-transparent group-hover:ring-white/10 transition-all">
-                                    <AvatarImage src={msg.avatar} />
-                                    <AvatarFallback className="bg-zinc-800 text-xs text-zinc-400 font-bold">
-                                        {msg.userName[0]}
-                                    </AvatarFallback>
-                                </Avatar>
-                                <div className="flex-1 space-y-1">
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-xs font-bold text-zinc-300">{msg.userName}</span>
-                                        <span className="text-[10px] text-zinc-600 font-mono">
-                                            {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        <div key={idx} className="animate-in fade-in slide-in-from-bottom-6 duration-700">
+                            <div className="flex gap-4 group">
+                                <div className="shrink-0 pt-1">
+                                    <Avatar className="h-10 w-10 border border-white/10 rounded-2xl ring-2 ring-transparent group-hover:ring-indigo-500/20 transition-all duration-500 shadow-xl">
+                                        <AvatarImage src={msg.avatar} />
+                                        <AvatarFallback className="bg-zinc-900 text-[10px] text-zinc-500 font-black">
+                                            {msg.userName[0]}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                </div>
+                                <div className="flex-1 min-w-0 space-y-1.5">
+                                    <div className="flex items-end justify-between px-1">
+                                        <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest group-hover:text-white transition-colors">{msg.userName}</span>
+                                        <span className="text-[9px] text-zinc-700 font-bold tabular-nums">
+                                            {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                                         </span>
                                     </div>
                                     <div className="relative">
-                                        <p className="text-sm text-zinc-300 leading-relaxed bg-zinc-900/50 p-3 rounded-2xl rounded-tl-none border border-white/5 shadow-sm">
+                                        <div className="absolute -left-1.5 top-3 w-1.5 h-1.5 bg-zinc-900 border-l border-t border-white/5 rotate-[-45deg] z-10" />
+                                        <p className="text-sm text-zinc-200 leading-relaxed bg-black/40 p-4 rounded-2xl rounded-tl-none border border-white/5 group-hover:border-white/10 transition-colors shadow-2xl backdrop-blur-md">
                                             {msg.text}
                                         </p>
                                     </div>
@@ -178,35 +208,57 @@ export default function AIAgentPanel({
                 </div>
 
                 {isAnalyzing && (
-                    <div className="space-y-4 animate-pulse">
-                        <div className="flex gap-3 pl-2 border-l-2 border-indigo-500/20 ml-3 py-1">
-                            <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-1.5">
+                    <div className="space-y-6 animate-pulse p-4 bg-indigo-500/5 rounded-3xl border border-indigo-500/10">
+                        <div className="flex gap-4">
+                            <div className="h-10 w-10 rounded-2xl bg-indigo-500/20 flex items-center justify-center shrink-0">
+                                <Loader2 className="h-5 w-5 animate-spin text-indigo-400" />
+                            </div>
+                            <div className="flex-1 space-y-2">
+                                <div className="flex items-center gap-2">
                                     <Wand2 className="h-3 w-3 text-indigo-400" />
-                                    <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">AI Thought Process</span>
+                                    <span className="text-[9px] font-black text-indigo-400 uppercase tracking-[0.2em]">Processing Synapses</span>
                                 </div>
-                                <div className="flex items-center gap-3 text-xs text-zinc-400/80 italic bg-indigo-500/5 p-2 rounded-lg border border-indigo-500/10">
-                                    <Loader2 className="h-3 w-3 animate-spin text-indigo-500" />
-                                    Analyzing meeting transcript and extracting action items...
-                                </div>
+                                <p className="text-[11px] text-zinc-400 font-bold italic">
+                                    Distilling conversation into strategic action items and executive summary...
+                                </p>
                             </div>
                         </div>
-                        <div className="ml-11 flex items-center gap-1 py-2">
-                            <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                            <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                            <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                        <div className="flex items-center gap-2 pl-2">
+                            <div className="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
+                                <div className="h-full bg-indigo-500/50 w-1/3 animate-[shimmer_2s_infinite]" />
+                            </div>
                         </div>
                     </div>
                 )}
             </div>
 
-            {/* Input Overlay / Controls - Optional improvement */}
-            <div className="p-4 border-t border-white/5 bg-black/20 backdrop-blur-md">
-                <button className="w-full py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 text-xs font-medium text-zinc-400 hover:text-white transition-all flex items-center justify-center gap-2 group">
-                    <Sparkles className="h-3 w-3 text-indigo-400 group-hover:animate-spin" />
-                    AI Agent Active
-                </button>
+            {/* Input Overlay / Controls - Professional Status */}
+            <div className="p-6 border-t border-white/10 bg-black/60 backdrop-blur-3xl shrink-0">
+                <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-2">
+                        <div className="h-2 w-2 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(79,70,229,0.8)]" />
+                        <span className="text-[9px] font-black text-zinc-500 uppercase tracking-widest">Neural Link SECURE</span>
+                    </div>
+                    <button className="px-5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[9px] font-black text-zinc-300 hover:text-white transition-all duration-300 uppercase tracking-[0.2em] group flex items-center gap-2">
+                        <Bot className="h-3 w-3 text-indigo-400 group-hover:scale-110 transition-transform" />
+                        Configure AI Agent
+                    </button>
+                </div>
             </div>
+
+            <style jsx global>{`
+                @keyframes shimmer {
+                    0% { transform: translateX(-100%); }
+                    100% { transform: translateX(300%); }
+                }
+                .no-scrollbar::-webkit-scrollbar {
+                    display: none;
+                }
+                .no-scrollbar {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+            `}</style>
         </div>
     );
 }

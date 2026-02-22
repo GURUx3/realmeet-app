@@ -133,40 +133,42 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
                     {/* Left Col: Analysis */}
                     <div className="lg:col-span-2 space-y-6">
                         {/* Executive Summary */}
-                        <Card className="bg-zinc-900/50 border-white/10 backdrop-blur-md overflow-hidden">
-                            <div className="absolute top-0 left-0 w-1 h-full bg-linear-to-b from-orange-500 to-purple-500" />
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-3 text-white">
-                                    <FileText className="h-5 w-5 text-orange-500" />
-                                    Executive Summary
+                        <Card className="bg-black/60 border-white/10 backdrop-blur-2xl shadow-2xl relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-full h-[2px] bg-linear-to-r from-orange-500 via-purple-500 to-indigo-500" />
+                            <CardHeader className="pb-2">
+                                <CardTitle className="flex items-center gap-3 text-white text-xl font-black italic uppercase tracking-tighter">
+                                    <TrendingUp className="h-6 w-6 text-orange-500" />
+                                    Executive synopsis
                                 </CardTitle>
                             </CardHeader>
-                            <CardContent className="text-zinc-300 leading-relaxed">
-                                {analysis ? analysis.summary : "No AI summary available."}
+                            <CardContent className="text-zinc-200 text-lg leading-relaxed font-medium italic py-6 select-none bg-linear-to-b from-white/5 to-transparent rounded-lg mx-6 mb-6">
+                                &quot;{analysis ? analysis.summary : "Strategic data acquisition pending finalization."}&quot;
                             </CardContent>
                         </Card>
 
-                        {/* Action Items */}
-                        <Card className="bg-zinc-900/50 border-white/10 backdrop-blur-md">
-                            <CardHeader className="flex flex-row items-center justify-between">
-                                <CardTitle className="text-lg text-white flex items-center gap-2">
-                                    <Check className="h-5 w-5 text-emerald-500" />
-                                    Actionable Tasks
-                                </CardTitle>
+                        <Card className="bg-black/80 border-white/10 backdrop-blur-xl shadow-2xl">
+                            <CardHeader className="flex flex-row items-center justify-between pb-6 border-b border-white/5">
+                                <div>
+                                    <CardTitle className="text-xl text-white font-black uppercase tracking-widest flex items-center gap-2">
+                                        <Zap className="h-5 w-5 text-emerald-400" />
+                                        Meeting Roadmap
+                                    </CardTitle>
+                                    <CardDescription className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">High-Impact Actionable Objectives</CardDescription>
+                                </div>
                                 {analysis?.actionItems && analysis.actionItems.length > 0 && (
                                     <Button
-                                        variant="ghost"
+                                        variant="outline"
                                         size="sm"
                                         onClick={copyTasksAsMarkdown}
-                                        className="text-[10px] uppercase font-bold tracking-widest text-zinc-400 hover:text-white hover:bg-white/5"
+                                        className="h-8 rounded-full border-white/10 hover:bg-white/5 text-[9px] uppercase font-black tracking-widest text-zinc-400 hover:text-white"
                                     >
                                         {hasCopiedTasks ? <Check className="h-3 w-3 mr-2" /> : <Copy className="h-3 w-3 mr-2" />}
-                                        {hasCopiedTasks ? "Copied" : "Copy All Tasks"}
+                                        {hasCopiedTasks ? "SECURED" : "EXPORT ROADMAP"}
                                     </Button>
                                 )}
                             </CardHeader>
-                            <CardContent>
-                                <div className="space-y-3">
+                            <CardContent className="pt-8 px-6">
+                                <div className="space-y-4">
                                     {analysis?.actionItems?.length ? analysis.actionItems.map((item, i) => (
                                         <div
                                             key={i}
@@ -229,18 +231,22 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
                                 </CardContent>
                             </Card>
 
-                            <Card className="bg-zinc-900/50 border-white/10 backdrop-blur-md">
-                                <CardHeader>
-                                    <CardTitle className="text-lg text-white">Sentiment</CardTitle>
+                            <Card className="bg-black/60 border-white/10 backdrop-blur-3xl shadow-2xl relative overflow-hidden group">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.3em]">Neural Sentiment</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     {analysis ? (
-                                        <div className={`inline-flex items-center px-4 py-1.5 rounded-full border text-sm font-bold uppercase tracking-wider ${sentimentColor[analysis.sentiment] || sentimentColor.Neutral}`}>
-                                            {analysis.sentiment}
+                                        <div className={cn(
+                                            "inline-flex items-center px-5 py-2 rounded-xl border text-[10px] font-black uppercase tracking-[0.2em] shadow-lg",
+                                            sentimentColor[analysis.sentiment] || sentimentColor.Neutral
+                                        )}>
+                                            <Sparkles className="h-3 w-3 mr-2" />
+                                            {analysis.sentiment} Alignment
                                         </div>
                                     ) : (
-                                        <div className={`inline-flex items-center px-3 py-1 rounded-full border text-sm font-medium ${sentimentColor.Neutral}`}>
-                                            Neutral
+                                        <div className={`inline-flex items-center px-5 py-2 rounded-xl border border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500`}>
+                                            Acquiring Logic...
                                         </div>
                                     )}
                                 </CardContent>
@@ -248,41 +254,41 @@ export function MeetingSummary({ analysis, fileUrls, isLoading }: MeetingSummary
                         </div>
 
                         {/* Downloads */}
-                        <Card className="bg-zinc-900/80 border-white/10">
-                            <CardHeader>
-                                <CardTitle className="text-white text-lg">Transcripts</CardTitle>
-                                <CardDescription className="text-zinc-500">Download recording data</CardDescription>
+                        <Card className="bg-linear-to-br from-zinc-900/80 to-black border-white/10 shadow-2xl relative">
+                            <CardHeader className="pb-4">
+                                <CardTitle className="text-white text-lg font-black uppercase tracking-tight">Artifact retrieval</CardTitle>
+                                <CardDescription className="text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Secure cloud downloads</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <Button
-                                    className="w-full bg-white text-black hover:bg-zinc-200 justify-between h-12"
+                                    className="w-full bg-white text-black hover:bg-zinc-100 justify-between h-14 rounded-2xl group transition-all active:scale-95"
                                     onClick={() => window.open(getDownloadLink(fileUrls.combined), '_blank')}
                                 >
-                                    <span className="flex items-center gap-2 font-bold">
-                                        <FileText className="h-4 w-4" />
-                                        Combined Transcript
+                                    <span className="flex items-center gap-3 font-black text-xs uppercase tracking-tighter">
+                                        <FileText className="h-5 w-5 text-indigo-600 group-hover:scale-110 transition-transform" />
+                                        Complete Transcript
                                     </span>
-                                    <Download className="h-4 w-4 opacity-50" />
+                                    <Download className="h-4 w-4 opacity-50 text-indigo-900" />
                                 </Button>
 
-                                <Separator className="bg-white/10" />
+                                <Separator className="bg-white/5" />
 
-                                <div className="space-y-2">
-                                    <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2 px-1">Individual Streams</p>
-                                    <ScrollArea className="h-[120px] w-full pr-4">
+                                <div className="space-y-3">
+                                    <p className="text-[9px] font-black text-zinc-600 uppercase tracking-[0.4em] mb-4 px-1">Source Stream access</p>
+                                    <ScrollArea className="h-[140px] w-full pr-4">
                                         <div className="space-y-2">
                                             {fileUrls.individual.map((file, i) => (
                                                 <Button
                                                     key={i}
-                                                    variant="outline"
-                                                    className="w-full justify-between items-center border-white/10 text-zinc-300 hover:bg-white/5 hover:text-white h-10"
+                                                    variant="ghost"
+                                                    className="w-full justify-between items-center border border-white/5 bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white h-11 rounded-xl group transition-all"
                                                     onClick={() => window.open(getDownloadLink(file.url), '_blank')}
                                                 >
-                                                    <span className="flex items-center gap-2 truncate text-xs">
-                                                        <User className="h-3 w-3" />
+                                                    <span className="flex items-center gap-3 truncate text-[10px] font-bold uppercase tracking-widest">
+                                                        <User className="h-4 w-4 opacity-50 group-hover:text-indigo-400" />
                                                         <span className="truncate max-w-[120px]">{file.userName}</span>
                                                     </span>
-                                                    <Download className="h-3 w-3 opacity-50" />
+                                                    <Download className="h-3 w-3 opacity-20 group-hover:opacity-100 transition-opacity" />
                                                 </Button>
                                             ))}
                                         </div>

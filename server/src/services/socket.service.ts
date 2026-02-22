@@ -16,6 +16,8 @@ import { analysisService } from './analysis.service';
  */
 export class SocketService {
     private io: Server;
+    private analysisStartedRooms: Set<string> = new Set();
+    private lastLiveAnalysis: Map<string, number> = new Map();
     // Map userId -> socketId
     private userSocketMap = new Map<string, string>();
 
@@ -323,7 +325,27 @@ export class SocketService {
             transcriptService.addChunk(roomId, userId, userName, text, timestamp);
 
             // Broadcast to others for real-time captions in the sidebar
-            socket.to(roomId).emit('live-transcript', { userId, userName, text, timestamp });
+            socket.to(roomId).emit('live-transcript', { userId, userName, text, timestamp, avatar: (data as any).avatar });
+
+            // 10000x: Live Strategic Detection (Throttled to 30s)
+            const now = Date.now();
+            const lastTime = this.lastLiveAnalysis.get(roomId) || 0;
+            if (now - lastTime > 30000) {
+                this.lastLiveAnalysis.set(roomId, now);
+
+                const buffer = transcriptService.getTranscript(roomId);
+                const recentText = buffer.slice(-5).map(c => c.text).join(' '); // Analyze last few chunks
+
+                analysisService.detectLiveInteractions(recentText).then(insights => {
+                    if (insights.tasks.length > 0 || insights.topics.length > 0) {
+                        this.io.to(roomId).emit('live-action-item', {
+                            tasks: insights.tasks,
+                            topics: insights.topics,
+                            timestamp: Date.now()
+                        });
+                    }
+                }).catch(err => console.error("Live detection failed:", err));
+            }
 
             console.log(`📝 Transcript chunk from ${userName} in ${roomId}: "${text.substring(0, 30)}..."`);
         });
