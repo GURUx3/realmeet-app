@@ -112,14 +112,17 @@ export function MeetingSummary({
     };
 
     useEffect(() => {
+        if (isLoading && countdown === 0 && analysis) {
+            onFinished?.();
+        }
+    }, [isLoading, countdown, analysis, onFinished]);
+
+    useEffect(() => {
         if (isLoading) {
             const timer = setInterval(() => {
                 setCountdown(prev => {
                     if (prev <= 1) {
                         clearInterval(timer);
-                        if (analysis) {
-                            onFinished?.();
-                        }
                         return 0;
                     }
                     return prev - 1;
@@ -129,7 +132,7 @@ export function MeetingSummary({
         } else {
             setCountdown(10);
         }
-    }, [isLoading, analysis, onFinished]);
+    }, [isLoading]);
 
     if (isLoading) {
         return (
